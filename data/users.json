@@ -1,0 +1,13 @@
+[
+  {
+    "id": "usr_demo_01",
+    "email": "demo@soloos.io",
+    "name": "홍길동 대표",
+    "businessType": "1인 디지털 프리랜서",
+    "passwordHash": "demo1234",
+    "googleConnected": true,
+    "googleCalendarConnected": true,
+    "googleDriveConnected": true,
+    "createdAt": "2026-10-16T12:00:00Z"
+  }
+]

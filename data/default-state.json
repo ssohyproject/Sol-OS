@@ -1,0 +1,243 @@
+{
+  "viewMode": "dashboard",
+  "plainLanguage": true,
+  "currentWorkstream": "all",
+  "workingCapital": 14200000,
+  "monthlyFixedExpense": 2730000,
+  "scheduleBufferEnabled": false,
+  "scheduleViewMode": "calendar",
+  "clientDeferred": false,
+  "transactions": [
+    {
+      "id": 1,
+      "date": "2026-10-12",
+      "domain": "client",
+      "title": "(주)테크솔루션즈 전자세금계산서 발행",
+      "category": "세금계산서매출(VAT분리)",
+      "gross": 3000000,
+      "tax": 300000,
+      "net": 3300000,
+      "status": "VAT예치필수"
+    },
+    {
+      "id": 2,
+      "date": "2026-10-10",
+      "domain": "publishing",
+      "title": "교보eBook 9월 정산 인세 (3.3%)",
+      "category": "3.3%사업소득매출",
+      "gross": 1200000,
+      "tax": 39600,
+      "net": 1160400,
+      "status": "원천징수완료"
+    },
+    {
+      "id": 3,
+      "date": "2026-10-08",
+      "domain": "knowledge",
+      "title": "인프런 스타트업 기술특강료 (8.8%)",
+      "category": "8.8%기타소득매출",
+      "gross": 1000000,
+      "tax": 88000,
+      "net": 912000,
+      "status": "필요경비60%"
+    },
+    {
+      "id": 4,
+      "date": "2026-10-05",
+      "domain": "client",
+      "title": "AWS 클라우드 서버 이용료",
+      "category": "지급수수료/통신",
+      "gross": -142000,
+      "tax": -14200,
+      "net": -156200,
+      "status": "적격증빙"
+    },
+    {
+      "id": 5,
+      "date": "2026-10-01",
+      "domain": "operation",
+      "title": "작업실 월 임대료 및 관리비",
+      "category": "지급임차료",
+      "gross": -850000,
+      "tax": 0,
+      "net": -850000,
+      "status": "계산서확인"
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "domain": "client",
+      "client": "테크솔루션즈",
+      "title": "MVP 프론트엔드 반응형 마무리",
+      "dueDate": "2026-10-18",
+      "dueTime": "18:00",
+      "priority": "높음",
+      "status": "진행중",
+      "amount": 2500000,
+      "memo": "결제 모듈 최종 API 테스트 및 반응형 모바일 검수 완료 후 납품",
+      "completed": false
+    },
+    {
+      "id": 2,
+      "domain": "publishing",
+      "client": "디지털북스",
+      "title": "타입스크립트 완벽 가이드 원고 4장 교정",
+      "dueDate": "2026-10-22",
+      "dueTime": "15:00",
+      "priority": "보통",
+      "status": "대기",
+      "amount": 1200000,
+      "memo": "코드 블록 문법 검증 및 예제 실행 테스트",
+      "completed": false
+    },
+    {
+      "id": 3,
+      "domain": "knowledge",
+      "client": "자체 런칭",
+      "title": "노션 프리랜서 회계 템플릿 배포 준비",
+      "dueDate": "2026-10-26",
+      "dueTime": "12:00",
+      "priority": "보통",
+      "status": "진행중",
+      "amount": 800000,
+      "memo": "템플릿 상세 페이지 가이드 작성",
+      "completed": false
+    },
+    {
+      "id": 4,
+      "domain": "client",
+      "client": "글로벌이커머스",
+      "title": "프로모션 결제 모듈 연동 (정산 확인 건)",
+      "dueDate": "2026-10-14",
+      "dueTime": "19:00",
+      "priority": "높음",
+      "status": "지연검수",
+      "amount": 1200000,
+      "memo": "상법 제69조 14일 검수 도래 건 잔금 확인",
+      "completed": false
+    }
+  ],
+  "clients": [
+    {
+      "id": 1,
+      "name": "(주)테크솔루션즈",
+      "shortName": "테크솔루션즈",
+      "tier": "우수",
+      "bizNum": "120-88-12345",
+      "settlementCycle": "매월 말일 마감 익월 15일",
+      "manager": "김영민 이사 (010-9123-4567)",
+      "totalRevenue": 8500000,
+      "completedCount": 3,
+      "avgDelay": "0일 (즉시 결제)",
+      "avgRevision": 1.1,
+      "spentHours": 60,
+      "hourlyRate": 75000,
+      "specialClause": "",
+      "checklist": [
+        { "id": "c1", "label": "사업자등록증", "checked": true },
+        { "id": "c2", "label": "통장 사본", "checked": true },
+        { "id": "c3", "label": "견적서 원본", "checked": true },
+        { "id": "c4", "label": "용역 계약서", "checked": true },
+        { "id": "c5", "label": "비밀유지계약(NDA)", "checked": true },
+        { "id": "c6", "label": "개인정보동의서", "checked": true }
+      ],
+      "communication": {
+        "channel": "슬랙 (#tech-dev-soloos)",
+        "meeting": "주간 화상 미팅 (매주 화요일 10시)",
+        "sharing": "피그마 파일 링크 + 깃허브 PR"
+      }
+    },
+    {
+      "id": 2,
+      "name": "디지털북스 출판사",
+      "shortName": "디지털북스",
+      "tier": "양호",
+      "bizNum": "214-87-98765",
+      "settlementCycle": "분기 마감 익월 말일",
+      "manager": "박지현 팀장 (편집기획)",
+      "totalRevenue": 3200000,
+      "completedCount": 2,
+      "avgDelay": "+2.5일 (양호)",
+      "avgRevision": 2,
+      "spentHours": 50,
+      "hourlyRate": 64000,
+      "specialClause": "",
+      "checklist": [
+        { "id": "c1", "label": "출판 배급 계약서", "checked": true },
+        { "id": "c2", "label": "통장 사본", "checked": true },
+        { "id": "c3", "label": "저작권 귀속 합의", "checked": true },
+        { "id": "c4", "label": "원천징수영수증", "checked": true },
+        { "id": "c5", "label": "ISBN 신청 서류", "checked": true },
+        { "id": "c6", "label": "4분기 정산서(대기)", "checked": false }
+      ],
+      "communication": {
+        "channel": "공식 이메일 + 카카오톡 채널",
+        "meeting": "마일스톤 챕터 탈고 시 수시 피드백",
+        "sharing": "구글 독스 + 노션 원고 공유"
+      }
+    },
+    {
+      "id": 3,
+      "name": "글로벌이커머스(주)",
+      "shortName": "글로벌이커머스",
+      "tier": "위험",
+      "bizNum": "312-81-45678",
+      "settlementCycle": "납품 검수 후 14일 (연체)",
+      "manager": "이철우 부장 (마케팅본부)",
+      "totalRevenue": 3000000,
+      "completedCount": 1,
+      "avgDelay": "18일 지연 (미수금 ₩1,200,000)",
+      "avgRevision": 4.5,
+      "spentHours": 165,
+      "hourlyRate": 18180,
+      "specialClause": "착수금 50% 선입금 필수화, 무상 수정 2회 제한, 상법 7일 단축 검수 특약 적용 권장",
+      "checklist": [
+        { "id": "c1", "label": "사업자등록증", "checked": true },
+        { "id": "c2", "label": "견적서", "checked": true },
+        { "id": "c3", "label": "계약서(수정대기)", "checked": false },
+        { "id": "c4", "label": "잔금 계산서(미결)", "checked": false }
+      ],
+      "communication": {
+        "channel": "카카오톡 + 유선 전화 (기록 보존 주의)",
+        "meeting": "비정기 수시 요청",
+        "sharing": "이메일 첨부파일 및 웹 빌드 링크"
+      }
+    }
+  ],
+  "receivables": [
+    {
+      "id": 1,
+      "clientId": 1,
+      "clientName": "(주)테크솔루션즈",
+      "itemTitle": "외주 웹 개발 1차 잔금",
+      "amount": 2500000,
+      "dueDate": "2026-10-25",
+      "status": "정상 (검수 유예 중)",
+      "statusType": "normal",
+      "deferred": false
+    },
+    {
+      "id": 2,
+      "clientId": 2,
+      "clientName": "디지털북스 출판사",
+      "itemTitle": "디지털 전자책 3분기 인세",
+      "amount": 700000,
+      "dueDate": "2026-10-18",
+      "status": "정상 (정산 예정)",
+      "statusType": "normal",
+      "deferred": false
+    },
+    {
+      "id": 3,
+      "clientId": 3,
+      "clientName": "글로벌이커머스(주)",
+      "itemTitle": "프로모션 웹페이지 제작 잔금",
+      "amount": 1200000,
+      "dueDate": "2026-09-26",
+      "status": "지연 18일 발생",
+      "statusType": "delayed",
+      "deferred": false
+    }
+  ]
+}

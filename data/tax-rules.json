@@ -1,0 +1,64 @@
+{
+  "version": "2.0.0",
+  "taxMatrix": {
+    "vat": {
+      "name": "일반과세 세금계산서",
+      "rate": 0.10,
+      "description": "공급가액의 10% 부가세를 분리 예치하여 익년 1월/7월 부가세 납부 대비",
+      "calc": {
+        "fromGross": "tax = Math.round(gross * 0.10); net = gross + tax;",
+        "fromTotal": "gross = Math.round(total / 1.1); tax = total - gross;"
+      }
+    },
+    "businessWithholding": {
+      "name": "3.3% 프리랜서 사업소득",
+      "rate": 0.033,
+      "incomeTaxRate": 0.030,
+      "localTaxRate": 0.003,
+      "description": "국세 3% + 지방소득세 0.3% 원천징수 후 지급. 5월 종합소득세 신고 대상",
+      "calc": {
+        "fromGross": "incomeTax = Math.floor(gross * 0.03); localTax = Math.floor(incomeTax * 0.1); tax = incomeTax + localTax; net = gross - tax;",
+        "reverseFromNet": "gross = Math.round(net / (1 - 0.033)); incomeTax = Math.floor(gross * 0.03); localTax = Math.floor(incomeTax * 0.1); tax = incomeTax + localTax;"
+      }
+    },
+    "otherIncome": {
+      "tier60": {
+        "name": "8.8% 기타소득 (필요경비 60% 인정)",
+        "expenseRate": 0.60,
+        "taxRate": 0.22,
+        "effectiveRate": 0.088,
+        "appliesTo": ["강연료", "원고료", "자문료", "심사수수료"],
+        "description": "필요경비 60% 공제 후 22% 원천징수 (실효세율 8.8%)"
+      },
+      "tier80": {
+        "name": "4.4% 기타소득 (필요경비 80% 인정)",
+        "expenseRate": 0.80,
+        "taxRate": 0.22,
+        "effectiveRate": 0.044,
+        "appliesTo": ["공모전 상금", "저작권 양도 및 대가", "기술라이선스"],
+        "description": "필요경비 80% 공제 후 22% 원천징수 (실효세율 4.4%)"
+      },
+      "tier0": {
+        "name": "22.0% 기타소득 (필요경비 미인정)",
+        "expenseRate": 0.0,
+        "taxRate": 0.22,
+        "effectiveRate": 0.22,
+        "appliesTo": ["사례금", "위약금", "기타 무경비 소득"],
+        "description": "필요경비 없이 전액에 대해 22% 원천징수"
+      }
+    }
+  },
+  "waterfallFlow": {
+    "steps": [
+      { "id": "grossRevenue", "name": "총매출", "type": "incoming" },
+      { "id": "directExpense", "name": "직접비/경비", "type": "outgoing" },
+      { "id": "netProfit", "name": "당기순이익", "type": "result" },
+      { "id": "taxProvision", "name": "세무 분리 예치금 (부가세+소득세)", "type": "reserve" },
+      { "id": "pureRunwayProfit", "name": "진짜 사업 잉여금", "type": "final" }
+    ]
+  },
+  "runwayFormula": {
+    "formula": "runwayMonths = workingCapital / monthlyFixedExpense",
+    "description": "사업통장 즉시 가용 현금을 월 고정 지출액(임대료, 통신, 호스팅, 기본생계비)으로 나눈 생존 가능 개월 수"
+  }
+}

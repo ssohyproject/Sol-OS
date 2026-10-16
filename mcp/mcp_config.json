@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "soloos-erp": {
+      "command": "node",
+      "args": [
+        "/Users/ssohy/Desktop/Project/DAY22-27/solo-os/mcp/server.js"
+      ],
+      "env": {
+        "SOLOOS_API_URL": "http://localhost:3000",
+        "NODE_ENV": "development"
+      }
+    }
+  }
+}
