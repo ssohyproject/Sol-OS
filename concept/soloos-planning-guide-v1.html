@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="ko" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoloOS - 1인 사업가 올인원 ERP 기획안 (v1.0 명세서)</title>
+  
+  <!-- Pretendard Font & Tailwind CDN -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            }
+          },
+          fontFamily: {
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+      scroll-behavior: smooth;
+    }
+    .prose-custom h2 {
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.5rem;
+      margin-top: 2.5rem;
+      margin-bottom: 1.25rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .prose-custom h3 {
+      margin-top: 1.75rem;
+      margin-bottom: 0.75rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #1e293b;
+    }
+    .toc-item.active {
+      color: #4f46e5;
+      font-weight: 600;
+      border-left: 2px solid #4f46e5;
+      background-color: #f5f3ff;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- Version Header Banner -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur border-b border-slate-200 px-6 py-3.5 shadow-sm">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-black shadow-md shadow-indigo-100">
+          S1
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="text-lg font-bold text-slate-900">SoloOS 기획안 v1.0</h1>
+            <span class="px-2 py-0.5 text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-full">상세 기획 명세서 (Original)</span>
+          </div>
+          <p class="text-xs text-slate-500">1인 디지털 프리랜서(디자이너·개발자·출판·지식창업)를 위한 올인원 ERP &amp; 워크웨어</p>
+        </div>
+      </div>
+      
+      <!-- Version & App Switcher -->
+      <div class="flex items-center space-x-2">
+        <span class="text-xs text-slate-400 mr-1 hidden sm:inline">문서 전환:</span>
+        <span class="px-3 py-1.5 text-xs font-bold bg-indigo-600 text-white rounded-lg shadow-sm">
+          v1.0 기획 명세서
+        </span>
+        <a href="soloos-planning-guide-v2.html" class="px-3 py-1.5 text-xs font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors flex items-center space-x-1">
+          <span>v2.0 Vibe 플레이북</span>
+          <i data-lucide="arrow-right" class="w-3 h-3"></i>
+        </a>
+        <a href="index.html" class="px-3.5 py-1.5 text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg shadow-sm transition-colors flex items-center space-x-1.5">
+          <i data-lucide="layout-dashboard" class="w-3.5 h-3.5"></i>
+          <span>SoloOS 웹앱 실행</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 flex-1 w-full grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <!-- Sidebar / Sticky Table of Contents -->
+    <aside class="hidden lg:block lg:col-span-3">
+      <div class="sticky top-20 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+          <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">목차 (Index)</span>
+          <span class="text-xs text-indigo-600 font-semibold">10개 섹션</span>
+        </div>
+        <nav class="space-y-1 text-sm">
+          <a href="#sec-01" class="toc-item block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">01. 프로젝트 비전 &amp; 문제 정의</a>
+          <a href="#sec-02" class="toc-item block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">02. 듀얼 모드 &amp; 업무 토글</a>
+          <a href="#sec-03" class="toc-item block px-3 py-2 rounded-lg text-indigo-600 font-bold bg-indigo-50/70 border-l-2 border-indigo-600">03. UX Writing 헌장 &amp; 대조표 ★</a>
+          <a href="#sec-04" class="toc-item block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">04. 3대 세무 자동분개 &amp; 세금·정산 관리 체계</a>
+          <a href="#sec-05" class="toc-item block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">05. 안심 자금 수집 (Privacy-First)</a>
+          <a href="#sec-06" class="toc-item block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">06. 자금 현황 &amp; 3초 비주얼 손익표 UX</a>
+          <a href="#sec-07" class="toc-item block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">07. 실제 작업 기록 기반 일정 도우미</a>
+          <a href="#sec-08" class="toc-item block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">08. 계약 안전망 &amp; 법적 보호</a>
+          <a href="#sec-09" class="toc-item block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">09. 클라이언트 신뢰 지수 자동화</a>
+          <a href="#sec-10" class="toc-item block px-3 py-2 rounded-lg text-slate-600 hover:bg-slate-50 transition-colors">10. 기술 스택 &amp; PWS 아키텍처</a>
+        </nav>
+
+        <div class="pt-4 border-t border-slate-100">
+          <div class="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 space-y-1">
+            <div class="font-bold flex items-center space-x-1">
+              <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-600"></i>
+              <span>v1.0 핵심 원칙 안내</span>
+            </div>
+            <p class="leading-relaxed">사용자가 확립한 <strong>Reliable UX 라이팅</strong> 및 <strong>비문 없는 품격 있는 문장</strong> 원칙이 보존되어 있습니다.</p>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="lg:col-span-9 space-y-10 prose-custom">
+
+      <!-- Hero Introduction Banner -->
+      <section class="bg-gradient-to-br from-indigo-900 via-slate-900 to-indigo-950 text-white rounded-3xl p-8 sm:p-10 shadow-xl relative overflow-hidden">
+        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="inline-flex items-center space-x-2 px-3 py-1 bg-white/10 border border-white/20 rounded-full text-xs font-semibold text-indigo-200 mb-4">
+          <i data-lucide="file-check-2" class="w-3.5 h-3.5"></i>
+          <span>SoloOS Product Specification v1.0</span>
+        </div>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white !border-none !p-0 !m-0 mb-3 tracking-tight">
+          1인 디지털 프리랜서를 위한 올인원 ERP &amp; 워크웨어 기획안 (v1.0)
+        </h2>
+        <p class="text-indigo-200 text-sm sm:text-base leading-relaxed max-w-2xl mb-6">
+          복잡한 세무와 불투명한 자금 흐름, 법적 보호 사각지대에 놓인 디자이너·개발자·출판·지식창업가를 위한 신뢰 기반 비즈니스 운영 체제입니다.
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+          <div class="bg-white/10 rounded-xl p-3 border border-white/10">
+            <span class="text-slate-400 block mb-1">핵심 콘셉트</span>
+            <span class="font-bold text-white">Reliable (신뢰성)</span>
+          </div>
+          <div class="bg-white/10 rounded-xl p-3 border border-white/10">
+            <span class="text-slate-400 block mb-1">자금 수집 철학</span>
+            <span class="font-bold text-emerald-300">Privacy-First 로컬 파싱</span>
+          </div>
+          <div class="bg-white/10 rounded-xl p-3 border border-white/10">
+            <span class="text-slate-400 block mb-1">배포 아키텍처</span>
+            <span class="font-bold text-indigo-300">PWS (Cloud Run &amp; Firebase)</span>
+          </div>
+          <div class="bg-white/10 rounded-xl p-3 border border-white/10">
+            <span class="text-slate-400 block mb-1">표준 법적 지원</span>
+            <span class="font-bold text-amber-300">KIDP·MSIT 표준계약서 &amp; 132</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 01. 프로젝트 비전 & 핵심 문제점 -->
+      <section id="sec-01" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center space-x-3 text-indigo-600 mb-2">
+          <span class="text-xs font-bold px-2 py-0.5 bg-indigo-50 rounded">SECTION 01</span>
+          <span class="text-xs font-semibold text-slate-400">배경 및 필요성</span>
+        </div>
+        <h2>프로젝트 비전 &amp; 1인 프리랜서의 현실적 고통</h2>
+        
+        <p class="text-slate-600 text-sm leading-relaxed mb-6">
+          1인 디지털 사업자는 본업(디자인, 개발, 글쓰기, 강의) 외에 <strong>견적·계약, 세금 분리, 입금 확인, 일정 조율</strong>을 혼자 감당하느라 생산성의 40% 이상을 비본업 행정에 소모하고 있습니다.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="flex items-center space-x-2 text-rose-600 font-bold text-sm">
+              <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+              <span>1. 소득 형태에 따른 세무 혼선과 세금 폭탄</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              사업자등록 여부에 따라 10% 부가가치세(VAT)가 포함되어 입금되는지, 3.3% 사업소득세가 원천징수되는지, 8.8% 기타소득세가 적용되는지 구분하지 못해 통장 잔고를 모두 가용 자금으로 오인하는 문제가 발생합니다.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="flex items-center space-x-2 text-rose-600 font-bold text-sm">
+              <i data-lucide="shield-x" class="w-4 h-4"></i>
+              <span>2. 법적 보호 사각지대와 계약 리스크</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              근로기준법의 보호를 받지 못하는 프리랜서는 클라이언트의 무제한 수정 요구(Scope Creep), 대금 정산 지연(DSO 악화), 산출물 검수 지연으로 인한 분쟁에 무방비로 노출되어 있습니다.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="flex items-center space-x-2 text-rose-600 font-bold text-sm">
+              <i data-lucide="key-round" class="w-4 h-4"></i>
+              <span>3. 공인인증서·스크래핑의 보안 거부감</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              기존 회계 SaaS는 공인인증서와 홈택스 비밀번호를 서버에 등록하도록 요구하여 1인 사업자의 불안감이 극심합니다. 외부 유출 없는 100% 브라우저 로컬 데이터 처리가 필수적입니다.
+            </p>
+          </div>
+
+          <div class="p-5 rounded-xl bg-slate-50 border border-slate-200 space-y-2">
+            <div class="flex items-center space-x-2 text-rose-600 font-bold text-sm">
+              <i data-lucide="clock-alert" class="w-4 h-4"></i>
+              <span>4. 마감 일정 지연과 번아웃 위험</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              "이 정도 작업은 이틀이면 되겠지"라는 주관적 낙관으로 일정을 잡다 마감을 넘기기 일쑤입니다. 실제 과거 작업 소요 기록에 기반한 비상 여유일 권장이 필요합니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02. 온보딩 모드 셀렉터 & 업무 토글 -->
+      <section id="sec-02" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center space-x-3 text-indigo-600 mb-2">
+          <span class="text-xs font-bold px-2 py-0.5 bg-indigo-50 rounded">SECTION 02</span>
+          <span class="text-xs font-semibold text-slate-400">인터페이스 구조</span>
+        </div>
+        <h2>듀얼 모드 온보딩 &amp; 글로벌 업무 토글</h2>
+
+        <div class="space-y-6 text-sm text-slate-600">
+          <div>
+            <h3 class="text-slate-900 font-bold flex items-center space-x-2">
+              <i data-lucide="split" class="w-4 h-4 text-indigo-600"></i>
+              <span>1) 첫 접속 온보딩: 대화형 vs 대시보드형 선택 모달</span>
+            </h3>
+            <p class="mt-1 text-xs text-slate-600 leading-relaxed">
+              처음 접속한 사용자의 업무 성향에 맞춰 진입 방식을 선택할 수 있습니다. 1차는 <strong>메인 대시보드형</strong>을 우선 구축하고, 헤더 스위처를 통해 언제든 <strong>대화형 비서 모드</strong>와 상호 전환할 수 있도록 구현합니다.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
+              <div class="p-4 rounded-xl border border-indigo-200 bg-indigo-50/40">
+                <span class="text-xs font-bold text-indigo-700 block mb-1">모드 A: 메인 대시보드 (기본)</span>
+                <p class="text-xs text-slate-600 leading-relaxed">자금, 일정, 법적 현황, 세금 통장에 모아둘 돈을 한눈에 조망하고 데이터 파싱과 일괄 처리에 최적화된 고밀도 화면.</p>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <span class="text-xs font-bold text-slate-700 block mb-1">모드 B: 대화형 스마트 비서 (연동)</span>
+                <p class="text-xs text-slate-600 leading-relaxed">"오늘 뭐 해야 해?", "통장에 찍힌 돈 다 써도 돼?" 같은 자연어 질문으로 재정과 일정을 확인하는 대화형 인터페이스.</p>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-slate-900 font-bold flex items-center space-x-2">
+              <i data-lucide="layers" class="w-4 h-4 text-indigo-600"></i>
+              <span>2) 업무별 분리 UI: 컴팩트 글로벌 통합 드롭다운 &amp; 메인 2대 집중 뷰</span>
+            </h3>
+            <p class="mt-1 text-xs text-slate-600 leading-relaxed">
+              외주 디자인 일정과 디지털 출판(전자책) 정산, 온라인 강의 준비가 뒤섞여 혼란이 생기지 않도록 상단 헤더에 단일 통합 드롭다운을 배치합니다. 또한 메인 화면은 오직 <strong>실시간 캐시플로우 타임라인 그래프</strong>와 <strong>분야별 업무 일정 캘린더</strong> 2개 핵심 컴포넌트에만 집중시키고, 세부 손익표, 분개장, 계약안전망, 고객CRM은 좌측 반응형 고정 사이드바를 통해 서브뷰로 격리 전환합니다.
+            </p>
+            <div class="flex items-center gap-3 mt-3">
+              <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800">
+                <i data-lucide="layers" class="w-3.5 h-3.5 text-indigo-600"></i>
+                <span>전체 통합 ▾</span>
+              </div>
+              <span class="text-xs text-slate-400">→ 클릭 시 외주 프로젝트 / 디지털 출판 / 지식창업·강의 1초 전환</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 03. UX Writing 헌장 & 대조표 ★ (핵심 복원) -->
+      <section id="sec-03" class="bg-white rounded-2xl border-2 border-indigo-200 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center space-x-3 text-indigo-600 mb-2">
+          <span class="text-xs font-bold px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded">SECTION 03 ★ 핵심 규약</span>
+          <span class="text-xs font-semibold text-slate-400">사용자 확립 표준</span>
+        </div>
+        <h2 class="text-indigo-950">UX Writing 헌장 &amp; 지양 vs 지향 대조표</h2>
+
+        <div class="p-4 bg-indigo-50 border border-indigo-100 rounded-xl mb-6 text-xs text-indigo-900 space-y-2">
+          <div class="font-bold text-sm text-indigo-900 flex items-center space-x-1.5">
+            <i data-lucide="award" class="w-4 h-4 text-indigo-600"></i>
+            <span>SoloOS 언어 철학 3대 원칙 (Reliable Voice)</span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 pt-1">
+            <div class="bg-white p-3 rounded-lg border border-indigo-100">
+              <span class="font-bold text-indigo-700 block mb-0.5">1. 서비스 콘셉트: Reliable</span>
+              <span class="text-slate-600">안심하고 돈과 비즈니스를 맡길 수 있을 정도의 확고한 신뢰감을 제공하는 언어 사용.</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-indigo-100">
+              <span class="font-bold text-indigo-700 block mb-0.5">2. 라이팅 콘셉트: 신뢰를 주는 글쓰기</span>
+              <span class="text-slate-600">비문이 없고 일관적이며, 최고의 품질을 지향하는 정제된 비즈니스 문장 체계.</span>
+            </div>
+            <div class="bg-white p-3 rounded-lg border border-indigo-100">
+              <span class="font-bold text-indigo-700 block mb-0.5">3. 어휘 기준: 명료하지만 기계 같지 않음</span>
+              <span class="text-slate-600">건조한 번역투나 시스템 에러 코드가 아닌, 품격 있는 전문 파트너다운 자연스러운 한국어.</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 class="text-slate-900 font-bold mb-3 flex items-center space-x-2">
+          <i data-lucide="table" class="w-4 h-4 text-indigo-600"></i>
+          <span>UX Writing 지양 vs 지향 전수 대비표</span>
+        </h3>
+
+        <div class="overflow-x-auto rounded-xl border border-slate-200 shadow-xs">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+              <tr>
+                <th class="p-3.5 w-1/5">화면 영역 및 상황</th>
+                <th class="p-3.5 w-2/5 text-rose-700 bg-rose-50/50">지양하는 표현 (불안 조장 / 경박한 구어체 / 비문)</th>
+                <th class="p-3.5 w-2/5 text-emerald-800 bg-emerald-50/50">지향하는 표준 표현 (신뢰성 / 명료함 / 객관적 근거)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr class="hover:bg-slate-50">
+                <td class="p-3.5 font-bold text-slate-800">
+                  대시보드 상단 잔고 지표
+                </td>
+                <td class="p-3.5 text-rose-700 bg-rose-50/20 leading-relaxed">
+                  "수입이 없어도 5달 버틸 수 있어요!"<br>
+                  "돈 다 떨어지기 전에 프로젝트 잡으세요"
+                </td>
+                <td class="p-3.5 text-emerald-800 bg-emerald-50/20 leading-relaxed font-medium">
+                  <strong>"현재 사업 통장 잔고(₩14,200,000)로 약 5.2개월간 안정적으로 운영할 수 있습니다."</strong>
+                  <div class="text-[11px] text-slate-500 mt-1 font-normal">→ 불안감을 조성하지 않고, 통장의 실제 보유 잔고와 월평균 고정비에 근거한 객관적 여력을 전달.</div>
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-50">
+                <td class="p-3.5 font-bold text-slate-800">
+                  세금 분리 권고 모달 &amp; 알림
+                </td>
+                <td class="p-3.5 text-rose-700 bg-rose-50/20 leading-relaxed">
+                  "이번 달 45만원은 세금이니까 절대 건드리지 마세요!"
+                </td>
+                <td class="p-3.5 text-emerald-800 bg-emerald-50/20 leading-relaxed font-medium">
+                  <strong>"5월 종합소득세와 부가가치세(10%) 납부를 위해 ₩520,000은 세금 통장에 별도로 분리하여 보관하세요."</strong>
+                  <div class="text-[11px] text-slate-500 mt-1 font-normal">→ '분리 예치' 등 생소한 회계 표현 대신 '세금 통장에 별도 분리 보관'이라는 표준 비즈니스 어휘 사용.</div>
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-50">
+                <td class="p-3.5 font-bold text-slate-800">
+                  전자세금계산서 부가세 안내
+                </td>
+                <td class="p-3.5 text-rose-700 bg-rose-50/20 leading-relaxed">
+                  "10%는 꽁돈 아니니까 쓰면 큰일납니다!"
+                </td>
+                <td class="p-3.5 text-emerald-800 bg-emerald-50/20 leading-relaxed font-medium">
+                  <strong>"입금액 중 부가가치세(10%) ₩100,000은 추후 정기 신고 시 납부해야 하므로 세금 통장에 별도로 분리하여 보관하세요."</strong>
+                  <div class="text-[11px] text-slate-500 mt-1 font-normal">→ '예수금' 등 어려운 회계 용어 대신 '납부해야 하는 부가가치세'로 명확하고 알기 쉽게 안내.</div>
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-50">
+                <td class="p-3.5 font-bold text-slate-800">
+                  지출 최적화 &amp; 예산 누수 진단
+                </td>
+                <td class="p-3.5 text-rose-700 bg-rose-50/20 leading-relaxed">
+                  "돈이 줄줄 새고 있어요! 넷플릭스 당장 끊으세요"
+                </td>
+                <td class="p-3.5 text-emerald-800 bg-emerald-50/20 leading-relaxed font-medium">
+                  <strong>"최근 60일간 사용 이력이 없는 구독 서비스 2건을 정리하면 연간 ₩480,000의 사업 예산을 절감할 수 있습니다."</strong>
+                  <div class="text-[11px] text-slate-500 mt-1 font-normal">→ 감정적/과장된 표현 없이 절감 가능한 구체적 금액과 객관적 근거를 제시.</div>
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-50">
+                <td class="p-3.5 font-bold text-slate-800">
+                  스마트 작업 일정 추천
+                </td>
+                <td class="p-3.5 text-rose-700 bg-rose-50/20 leading-relaxed">
+                  "이러다 또 마감 펑크나요! 밤샘 각입니다"
+                </td>
+                <td class="p-3.5 text-emerald-800 bg-emerald-50/20 leading-relaxed font-medium">
+                  <strong>"이전 작업 소요 시간을 바탕으로 마감 여유일(+1.5일)을 선택 적용할 수 있도록 제안합니다."</strong>
+                  <div class="text-[11px] text-slate-500 mt-1 font-normal">→ 강제 부과가 아닌 프리랜서가 자율적으로 판단하여 켤 수 있는 선택 옵션(토글)으로 제공.</div>
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-50">
+                <td class="p-3.5 font-bold text-slate-800">
+                  미수금 정산 및 법적 증빙
+                </td>
+                <td class="p-3.5 text-rose-700 bg-rose-50/20 leading-relaxed">
+                  "돈 안 주는 악덕 클라이언트한테 독촉장 보내기"
+                </td>
+                <td class="p-3.5 text-emerald-800 bg-emerald-50/20 leading-relaxed font-medium">
+                  <strong>"지연 일수와 사전 협의 여부에 맞춰 정중한 카톡 리마인더, 공식 공문, 우체국 내용증명 단계별 서식을 제공합니다."</strong>
+                  <div class="text-[11px] text-slate-500 mt-1 font-normal">→ 정산 연기/분할 협의 시 독촉을 유예하고, 비즈니스 신뢰를 유지하는 단계적 대응 체계 구축.</div>
+                </td>
+              </tr>
+
+              <tr class="hover:bg-slate-50">
+                <td class="p-3.5 font-bold text-slate-800">
+                  클라이언트 신뢰 등급
+                </td>
+                <td class="p-3.5 text-rose-700 bg-rose-50/20 leading-relaxed">
+                  "진상 고객이니까 다음엔 단가 올려 받으세요"
+                </td>
+                <td class="p-3.5 text-emerald-800 bg-emerald-50/20 leading-relaxed font-medium">
+                  <strong>"정산 지연 일수 및 수정 로그에 따라 Tier S~C 등급을 부여하고 착수금 비율 상향 등 계약 전략을 제안합니다."</strong>
+                  <div class="text-[11px] text-slate-500 mt-1 font-normal">→ 감정 소모 없이 실제 데이터와 필요 서류 체크리스트를 기반으로 협상 우위 확보.</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 04. 3대 세무 자동분개 엔진 & 6종 계산기 -->
+      <section id="sec-04" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center space-x-3 text-indigo-600 mb-2">
+          <span class="text-xs font-bold px-2 py-0.5 bg-indigo-50 rounded">SECTION 04</span>
+          <span class="text-xs font-semibold text-slate-400">세무 자동분개 &amp; 정산 관리</span>
+        </div>
+        <h2>1인 사업자 3대 세무 매트릭스 &amp; 정산 관리 체계</h2>
+
+        <p class="text-slate-600 text-sm leading-relaxed mb-5">
+          사업자등록 여부와 용역 성격에 따라 3대 세법 기준을 엄격하게 적용하여 역산 및 자동 분개를 수행하며, 정산 관리 화면에서 수정·삭제 및 사전 협의 유예를 완벽하게 제어합니다. (기준이 불명확했던 '단가개선필요' 항목은 영구 삭제됨)
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+          <div class="p-5 rounded-xl border border-indigo-200 bg-indigo-50/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-2 py-0.5 bg-indigo-100 text-indigo-800 rounded">유형 1: 미등록 프리랜서</span>
+              <span class="text-xs font-bold text-indigo-600">3.3% 역산</span>
+            </div>
+            <h3 class="text-slate-900 font-bold !m-0">사업소득세 원천징수</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              디자이너·개발자의 외주 용역. 실입금액 입력 시 공식 <code>공급가액 = 실입금액 ÷ 0.967</code>에 의해 소득세(3%)와 지방소득세(0.3%)를 선납세금으로 자동 분개합니다.
+            </p>
+            <div class="p-2.5 bg-white rounded-lg border border-indigo-100 text-[11px] text-indigo-900 font-mono">
+              [차] 보통예금 ₩967,000<br>
+              [차] 선납세금 ₩33,000<br>
+              [대] 사업소득매출 ₩1,000,000
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-emerald-200 bg-emerald-50/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded">유형 2: 사업자등록자</span>
+              <span class="text-xs font-bold text-emerald-600">10% VAT 분리</span>
+            </div>
+            <h3 class="text-slate-900 font-bold !m-0">전자세금계산서 발행</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              일반과세 개인사업자. 총 입금액 <code>공급가액 = 입금액 ÷ 1.1</code>로 분리하며, 10% 부가가치세는 추후 정기 신고 시 납부해야 하는 세액이므로 7월/1월 신고일까지 세금 통장에 별도로 분리하여 보관하도록 안내합니다.
+            </p>
+            <div class="p-2.5 bg-white rounded-lg border border-emerald-100 text-[11px] text-emerald-900 font-mono">
+              [차] 보통예금 ₩1,100,000<br>
+              [대] 용역매출 ₩1,000,000<br>
+              [대] 부가세예수금 ₩100,000
+            </div>
+          </div>
+
+          <div class="p-5 rounded-xl border border-purple-200 bg-purple-50/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold px-2 py-0.5 bg-purple-100 text-purple-800 rounded">유형 3: 비정기 일시 소득</span>
+              <span class="text-xs font-bold text-purple-600">기타소득 4대 구분</span>
+            </div>
+            <h3 class="text-slate-900 font-bold !m-0">기타소득세 원천징수</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              국세청 소득구분 기준 4대 경비율 정밀 적용: ① 강연·자문(경비 60% / 실효 8.8%), ② 원고료·저작권(경비 60% / 실효 8.8%), ③ 공모전 상금(경비 80% / 실효 4.4%), ④ 일반 기타소득(경비 0% / 22% 원천징수).
+            </p>
+            <div class="p-2.5 bg-white rounded-lg border border-purple-100 text-[11px] text-purple-900 font-mono">
+              [차] 보통예금 ₩912,000<br>
+              [차] 선납세금 ₩88,000<br>
+              [대] 기타소득매출 ₩1,000,000
+            </div>
+          </div>
+        </div>
+
+        <!-- 정산 관리 체계 & 테이블 액션 -->
+        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3 text-xs mb-6">
+          <div class="font-bold text-slate-900 flex items-center justify-between">
+            <span class="flex items-center gap-1.5"><i data-lucide="receipt" class="w-4 h-4 text-brand-600"></i>정산 관리 체계 (#subview-settlement) &amp; 미수금 회수 액션</span>
+            <span class="text-brand-600 font-semibold">순수 채권·미수금 관리 집중</span>
+          </div>
+          <p class="text-slate-600 text-[11px] leading-relaxed">
+            기존 정산 관리 화면에 혼재되어 시각적 복잡도를 높이던 계산기 블록을 신설된 <strong>'세금 관리'</strong> 페이지로 전면 이관하여, 미수금 회수 점검과 입금 예정일 관리에 온전히 집중할 수 있도록 개편했습니다.
+          </p>
+          <div class="pt-2 border-t border-slate-200 text-slate-600 text-[11px] flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <span>• 정산 목록 인라인 액션: 연필 아이콘(수정 모달), 휴지통 아이콘(삭제), 사전 협의 유예 상태 토글 지원</span>
+            <span class="text-emerald-700 font-semibold">입금 지연 시 법적 보호 4단계로 즉시 연계</span>
+          </div>
+        </div>
+
+        <!-- 세금 관리 (#subview-tax): 자금 관리 하위 2뎁스 세부 페이지 (주요 세무 일정 & 세금 통장 준비 현황 + 6대 계산기) -->
+        <div class="p-5 bg-amber-50/40 border border-amber-200 rounded-2xl space-y-4 text-xs">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-amber-200/80">
+            <div>
+              <span class="text-[10px] font-bold px-2 py-0.5 bg-amber-100 text-amber-800 rounded">자금 관리 하위 2뎁스</span>
+              <h3 class="text-slate-900 font-bold text-sm mt-1 flex items-center gap-1.5">
+                <i data-lucide="receipt-text" class="w-4 h-4 text-amber-600"></i>
+                <span>세금 관리 (#subview-tax) — 자금 관리 하위 2뎁스 세무 점검 &amp; 6대 전문 계산기</span>
+              </h3>
+            </div>
+            <span class="text-[11px] font-medium text-amber-800 bg-amber-100/80 px-2.5 py-1 rounded-lg">UX Writing 헌장 전면 준수</span>
+          </div>
+
+          <!-- 4대 정기 세무 일정 D-day -->
+          <div class="space-y-1.5">
+            <div class="font-bold text-slate-800 flex items-center gap-1">
+              <i data-lucide="calendar-clock" class="w-3.5 h-3.5 text-amber-600"></i>
+              <span>1) 4대 정기 세무 일정 캘린더 (불안감 없는 친절한 안내)</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 text-[11px]">
+              <div class="p-2.5 bg-white rounded-lg border border-amber-200">
+                <div class="flex items-center justify-between text-amber-900 font-bold">
+                  <span>11월 30일</span><span class="px-1.5 py-0.2 bg-amber-100 text-[10px] rounded">D-30 (임박)</span>
+                </div>
+                <div class="font-bold text-slate-800 mt-0.5">종소세 중간예납</div>
+                <p class="text-[10px] text-slate-500 mt-1">작년 종합소득세의 50%를 국세청 고지서로 납부</p>
+              </div>
+              <div class="p-2.5 bg-white rounded-lg border border-slate-200">
+                <div class="flex items-center justify-between text-slate-700 font-bold">
+                  <span>1월 25일</span><span class="px-1.5 py-0.2 bg-slate-100 text-[10px] rounded">D-72</span>
+                </div>
+                <div class="font-bold text-slate-800 mt-0.5">2기 부가세 확정</div>
+                <p class="text-[10px] text-slate-500 mt-1">하반기 세금계산서 발행분 부가세(10%) 신고·납부</p>
+              </div>
+              <div class="p-2.5 bg-white rounded-lg border border-slate-200">
+                <div class="flex items-center justify-between text-slate-700 font-bold">
+                  <span>5월 31일</span><span class="px-1.5 py-0.2 bg-slate-100 text-[10px] rounded">D-194</span>
+                </div>
+                <div class="font-bold text-slate-800 mt-0.5">종합소득세 정기</div>
+                <p class="text-[10px] text-slate-500 mt-1">지난 1년간 사업소득(3.3%)·기타소득(8.8%) 합산 정산</p>
+              </div>
+              <div class="p-2.5 bg-white rounded-lg border border-slate-200">
+                <div class="flex items-center justify-between text-slate-700 font-bold">
+                  <span>7월 25일</span><span class="px-1.5 py-0.2 bg-slate-100 text-[10px] rounded">D-255</span>
+                </div>
+                <div class="font-bold text-slate-800 mt-0.5">1기 부가세 확정</div>
+                <p class="text-[10px] text-slate-500 mt-1">상반기 세금계산서 발행분 부가세(10%) 신고·납부</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 세금 통장 준비율 현황 바 -->
+          <div class="p-3 bg-white rounded-xl border border-amber-200 space-y-2">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="font-bold text-slate-800">예상 세액 대비 세금 통장 준비율</span>
+              <span class="font-mono font-bold text-indigo-700">48.3% 준비 완료 (₩580,000 / ₩1,200,000)</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+              <div class="bg-indigo-600 h-2 rounded-full" style="width: 48.3%"></div>
+            </div>
+            <div class="flex items-center justify-between text-[10px] text-slate-600 pt-1 border-t border-slate-100">
+              <span>현재 세금 통장 분리액: <strong>₩580,000</strong> | 권장 추가 분리: <strong>₩620,000</strong></span>
+              <span class="text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded">💡 다음 세무 신고까지 ₩620,000을 추가 분리하면 납부 시 자금 부담이 없습니다.</span>
+            </div>
+          </div>
+
+          <!-- 6대 전문 계산기 엔진 -->
+          <div class="space-y-1.5 pt-1">
+            <div class="font-bold text-slate-800 flex items-center justify-between">
+              <span class="flex items-center gap-1"><i data-lucide="calculator" class="w-3.5 h-3.5 text-indigo-600"></i>2) 프리랜서 맞춤형 6대 전문 계산기 (정산 관리에서 완벽 이관)</span>
+              <span class="text-indigo-600 font-semibold text-[11px]">단일 탭 전환 UI</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[11px] text-slate-700">
+              <div class="p-2 bg-white rounded-lg border border-slate-200"><strong>① 단가(시급) 계산기</strong>: 작업 시간 슬라이더 연동 및 실질 시급 역산</div>
+              <div class="p-2 bg-white rounded-lg border border-slate-200"><strong>② 종합소득세 모의 계산기</strong>: 단순경비율(64.1%) 기반 모의 세액 시뮬레이션</div>
+              <div class="p-2 bg-white rounded-lg border border-slate-200"><strong>③ 가산세 모의 계산기</strong>: 신고불성실 및 납부지연 일수별 법정 가산세율 산정</div>
+              <div class="p-2 bg-white rounded-lg border border-slate-200"><strong>④ 지역 건보료 계산기</strong>: 직장 탈퇴 후 지역가입자 소득·재산 점수제 추정</div>
+              <div class="p-2 bg-white rounded-lg border border-slate-200"><strong>⑤ 기타소득세 원천징수기</strong>: 4대 법정 경비율(60%, 80%, 0%)별 세액 산정</div>
+              <div class="p-2 bg-white rounded-lg border border-slate-200"><strong>⑥ 국세청 업종코드 조회기</strong>: 프리랜서 940909 등 주요 업종코드 즉시 검색</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 05. 안심 자금 수집 (Privacy-First) -->
+      <section id="sec-05" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center space-x-3 text-indigo-600 mb-2">
+          <span class="text-xs font-bold px-2 py-0.5 bg-indigo-50 rounded">SECTION 05</span>
+          <span class="text-xs font-semibold text-slate-400">데이터 보안 &amp; 자금 등록</span>
+        </div>
+        <h2>안심 자금 데이터 수집 (Privacy-First Architecture)</h2>
+
+        <!-- UX Writing 안심 배너 -->
+        <div class="mb-5 p-4 bg-emerald-50/80 border border-emerald-200 rounded-xl text-xs text-emerald-950 flex items-start space-x-3">
+          <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600 shrink-0 mt-0.5"></i>
+          <div>
+            <div class="font-bold mb-0.5">Zero-Retention 안심 보호 원칙 (Reliable Voice 가이드라인)</div>
+            <p class="leading-relaxed text-emerald-900">
+              금융 인증서나 비밀번호를 요구하지 않습니다. 업로드하신 파일과 텍스트는 브라우저 내부에서만 안전하게 처리되며, 서버로 전송되거나 저장되지 않습니다.
+            </p>
+          </div>
+        </div>
+
+        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+          공인인증서나 홈택스 비밀번호를 요구하지 않는 100% 브라우저 클라이언트 사이드 파싱 엔진입니다. 실제 엑셀(.xlsx/.xls), 영수증/명세서 이미지(jpg, png), PDF 문서를 드롭하면 즉시 수입·지출과 공급가액, 원천징수 세액을 자동으로 분개하여 장부에 등록합니다.
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs mb-4">
+          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
+            <div class="font-bold text-slate-900 flex items-center space-x-1.5">
+              <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i>
+              <span>1. 실제 엑셀 파일 드롭</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed text-[11px]">SheetJS 기반 로컬 파서로 시중은행/카드사 거래내역 엑셀을 드롭하면 계좌 마스킹 후 거래 데이터 즉시 추출 등록.</p>
+          </div>
+
+          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
+            <div class="font-bold text-slate-900 flex items-center space-x-1.5">
+              <i data-lucide="image" class="w-4 h-4 text-blue-600"></i>
+              <span>2. 영수증 이미지 드롭</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed text-[11px]">JPG, PNG 영수증 및 카드 전표 이미지를 드롭하면 클라이언트 OCR 엔진으로 가맹점명, 거래일자, 금액을 자동 인식.</p>
+          </div>
+
+          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
+            <div class="font-bold text-slate-900 flex items-center space-x-1.5">
+              <i data-lucide="file-text" class="w-4 h-4 text-rose-600"></i>
+              <span>3. 정산서 PDF 드롭</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed text-[11px]">홈택스 세금계산서 PDF나 플랫폼(크몽, 숨고 등) 정산서 PDF를 드롭하면 공급가액과 부가세/원천징수 항목을 자동 분리.</p>
+          </div>
+
+          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
+            <div class="font-bold text-slate-900 flex items-center space-x-1.5">
+              <i data-lucide="edit-3" class="w-4 h-4 text-indigo-600"></i>
+              <span>4. 거래 일자 직접 입력</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed text-[11px]">거래 일자(Date) 필드가 완비된 직접 입력 폼에서 3대 세무 유형을 선택하고 금액을 입력하면 공급가액과 세액을 즉시 역산.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div class="p-3.5 bg-indigo-50/60 border border-indigo-200 rounded-xl space-y-1">
+            <div class="font-bold text-indigo-950 flex items-center gap-1.5">
+              <i data-lucide="table" class="w-4 h-4 text-indigo-600"></i>
+              <span>엑셀 모드 (전체 일괄 편집)</span>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-relaxed">
+              건별 개별 수정 외에도, 엑셀 시트처럼 전체 거래 내역을 테이블 인라인 셀에서 직접 수정하고 원클릭으로 일괄 저장하는 모드를 탑재하여 대량 데이터 정리 편의성을 극대화합니다.
+            </p>
+          </div>
+
+          <div class="p-3.5 bg-emerald-50/60 border border-emerald-200 rounded-xl space-y-1">
+            <div class="font-bold text-emerald-950 flex items-center gap-1.5">
+              <i data-lucide="download" class="w-4 h-4 text-emerald-600"></i>
+              <span>한 해 정산 요약표 리포트</span>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-relaxed">
+              기존 '1년 수입.지출 정산 요약표'를 직관적인 UX Writing에 맞춰 '한 해 정산 요약표'로 전면 개선하였으며, 5월 종합소득세 및 정기 부가가치세 신고 시 세무사 제출용 단일 리포트로 즉시 다운로드됩니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 06. 자금 현황 & 3초 비주얼 손익표 UX -->
+      <section id="sec-06" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center space-x-3 text-indigo-600 mb-2">
+          <span class="text-xs font-bold px-2 py-0.5 bg-indigo-50 rounded">SECTION 06</span>
+          <span class="text-xs font-semibold text-slate-400">자금 현황 &amp; 시각화</span>
+        </div>
+        <h2>자금 현황 (3초 비주얼 손익표 &amp; 재무 대시보드)</h2>
+
+        <p class="text-slate-600 text-sm leading-relaxed mb-5">
+          기존의 번잡했던 6대 KPI 및 대차대조표 박스를 <strong>통합 마스터 히어로 카드</strong>로 전면 개편했습니다. <strong>사업 통장 가용 잔고(₩14,200,000)</strong>와 <strong>잔여 런웨이(5.2개월, 월 고정비 ₩2.73M 기준)</strong>를 최상단에 직관적으로 제시하고, 복잡하던 세무 D-day 캘린더는 신설된 <strong>'세금 관리'</strong> 페이지로 완전 이관하여 본 화면에서는 순수한 자금 흐름과 사업 지속성에만 집중하도록 UX를 고도화했습니다.
+        </p>
+
+        <div class="space-y-6">
+          <!-- 1) 통합 마스터 히어로 카드 & 3열 직관적 재무 구조 -->
+          <div>
+            <h3 class="text-slate-900 font-bold flex items-center space-x-2">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+              <span>1) 통합 마스터 히어로 카드 (가용 현금 &amp; 3열 비주얼 재무 구조)</span>
+            </h3>
+            <p class="mt-1 text-xs text-slate-600 leading-relaxed">
+              분산되어 혼란을 주던 잔고 지표를 최상단 단일 마스터 카드로 집약하고, 하단에 3열 재무 구조(자산·부채·순자본)를 유기적으로 결합했습니다:
+            </p>
+            <div class="p-5 bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl border border-slate-800 space-y-4 mt-3 shadow-md">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
+                <div>
+                  <span class="text-xs text-indigo-300 font-medium">현재 즉시 가용 현금 (사업 통장 잔고)</span>
+                  <div class="text-3xl font-black font-mono tracking-tight text-white mt-0.5">₩14,200,000</div>
+                </div>
+                <div class="sm:text-right">
+                  <span class="text-xs text-slate-300">현재 자금 기준 사업 지속 기간</span>
+                  <div class="flex items-center sm:justify-end gap-1.5 mt-0.5">
+                    <span class="text-2xl font-black text-emerald-400 font-mono">5.2개월</span>
+                    <span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">안정</span>
+                  </div>
+                  <span class="text-[10px] text-slate-400 block mt-0.5">월 고정비 ₩2.73M 지출 기준</span>
+                </div>
+              </div>
+
+              <!-- 하단 3열 재무 구조 -->
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                  <span class="text-indigo-300 block text-[11px]">입금 대기 미수금 (+)</span>
+                  <span class="text-lg font-bold text-white font-mono mt-0.5 block">+₩4,000,000</span>
+                  <span class="text-[10px] text-slate-400 mt-1 block">3건 (정산 관리 연동)</span>
+                </div>
+                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                  <span class="text-rose-300 block text-[11px]">예정 지출 및 세금 (-)</span>
+                  <span class="text-lg font-bold text-rose-300 font-mono mt-0.5 block">-₩3,800,000</span>
+                  <span class="text-[10px] text-slate-400 mt-1 block">카드 2.8M + 세금 준비금 1.0M</span>
+                </div>
+                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                  <span class="text-emerald-300 block text-[11px]">실질 사업 순자본 (=)</span>
+                  <span class="text-lg font-bold text-emerald-300 font-mono mt-0.5 block">₩14,400,000</span>
+                  <span class="text-[10px] text-emerald-400 mt-1 block">자본 건전도 79.1% (매우 안전)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2) 5단계 비주얼 워터폴 손익 여정 -->
+          <div>
+            <h3 class="text-slate-900 font-bold flex items-center space-x-2">
+              <i data-lucide="git-commit" class="w-4 h-4 text-indigo-600"></i>
+              <span>2) 5단계 비주얼 워터폴 손익 흐름 (Waterfall Flow)</span>
+            </h3>
+            <p class="mt-1 text-xs text-slate-600 leading-relaxed">
+              복식부기 대신 매출 발생부터 세후 실질 순이익에 도달하기까지의 과정을 5단계 막대 바로 직관화합니다:
+            </p>
+            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs font-medium space-y-2 mt-3">
+              <div class="flex items-center justify-between text-slate-800">
+                <span>① 총 계약 공급가액</span>
+                <span class="font-bold">₩5,800,000 (100%)</span>
+              </div>
+              <div class="flex items-center justify-between text-indigo-600 pl-4 border-l-2 border-indigo-300">
+                <span>② (-) 세무 공제 (3.3% 원천세 or 10% 부가세 예수금)</span>
+                <span>-₩197,600</span>
+              </div>
+              <div class="flex items-center justify-between text-slate-700 pl-4 border-l-2 border-slate-300">
+                <span>③ (=) 통장 실입금 가용 매출</span>
+                <span>₩5,602,400</span>
+              </div>
+              <div class="flex items-center justify-between text-rose-600 pl-4 border-l-2 border-rose-300">
+                <span>④ (-) 필수 사업 경비 (SaaS 구독료, 작업실, 장비 리스)</span>
+                <span>-₩1,000,000</span>
+              </div>
+              <div class="flex items-center justify-between text-emerald-700 bg-emerald-50 p-2 rounded-lg font-bold">
+                <span>⑤ (=) 세후 실질 순이익 (실질 사업 소득)</span>
+                <span>₩4,602,400 (79.3%)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3) 런웨이 시뮬레이터 & 스마트 지출 최적화 2열 대칭 나란히 배치 -->
+          <div>
+            <h3 class="text-slate-900 font-bold flex items-center space-x-2 mb-2">
+              <i data-lucide="layout-grid" class="w-4 h-4 text-indigo-600"></i>
+              <span>3) 런웨이 시뮬레이터 &amp; 지출 최적화 (2열 대칭 배치 &amp; UX Writing)</span>
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                <div class="font-bold text-slate-900 flex items-center justify-between">
+                  <span>런웨이 시뮬레이터 (생존 가능 개월 수)</span>
+                  <span class="px-2 py-0.5 bg-indigo-100 text-indigo-700 rounded font-semibold text-[11px]">안심 지표</span>
+                </div>
+                <div class="text-sm font-bold text-indigo-900">
+                  현재 사업 통장 잔고(₩14,200,000) 기준 <span class="text-indigo-600 font-extrabold text-base">5.2개월</span>간 안정적인 사업 운영이 가능합니다.
+                </div>
+                <p class="text-slate-600 leading-relaxed text-[11px]">
+                  월평균 고정비(₩2,730,000) 지출 기준. 불안감을 주는 표현 대신 품격 있는 Reliable 보이스로 잔여 런웨이를 안내합니다.
+                </p>
+              </div>
+
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+                <div class="font-bold text-slate-900 flex items-center justify-between">
+                  <span>스마트 지출 최적화 (고정비·변동비 분석)</span>
+                  <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded font-semibold text-[11px]">연 ₩720,000 절감</span>
+                </div>
+                <div class="text-sm font-bold text-slate-800">
+                  매월 나가는 구독료 6건 중 미사용 2건 정리 권장
+                </div>
+                <p class="text-slate-600 leading-relaxed text-[11px]">
+                  최근 30일간 실행 이력이 없는 디자인 에셋·개발 플러그인 구독을 자동 감지하여 불필요한 고정 지출을 절감합니다.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07. 세부 일정 관리 & 2단 뷰 모드 -->
+      <section id="sec-07" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center space-x-3 text-indigo-600 mb-2">
+          <span class="text-xs font-bold px-2 py-0.5 bg-indigo-50 rounded">SECTION 07</span>
+          <span class="text-xs font-semibold text-slate-400">일정 관리</span>
+        </div>
+        <h2>세부 일정 관리 &amp; 2단 뷰 모드 (캘린더 vs 간트·칸반)</h2>
+
+        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+          우측에 불필요하게 노출되던 라벨지를 완전히 제거하고, 직관적인 2단 뷰 모드로 일정을 전환하여 조망할 수 있도록 개편했습니다:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs mb-4">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="font-bold text-slate-900 flex items-center space-x-1.5">
+              <i data-lucide="calendar" class="w-4 h-4 text-indigo-600"></i>
+              <span>뷰 모드 1: 월간 캘린더 &amp; 타임라인</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed text-[11px]">
+              날짜별 도메인 칩과 함께 <strong>일정 시간(예: 14:00, 10:00~18:00)</strong>을 명확하게 표기. 하단에는 전폭(Full Width)으로 <strong>'세부 프로젝트 및 일정 목록'</strong>을 배치하고 각 행 우측에 <strong>'수정'</strong> 모달 버튼을 지원하여 일정명·일시·상태를 즉시 변경할 수 있습니다.
+            </p>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="font-bold text-slate-900 flex items-center space-x-1.5">
+              <i data-lucide="trello" class="w-4 h-4 text-emerald-600"></i>
+              <span>뷰 모드 2: 월간 마감 타임라인(간트) &amp; 5단계 칸반 단일 통합 보드</span>
+            </div>
+            <p class="text-slate-600 leading-relaxed text-[11px]">
+              기존 2개 카드로 분리·나열되어 있던 '간트 차트'와 '5단계 칸반 보드'를 단일 통합 보드 카드로 완전히 결합. 상단 간트 타임라인 트랙 클릭 시 하단 5단계 칸반 컬럼이 즉시 하이라이트되고, 칸반 카드마다 미니 간트 일정·진행률 바가 내장되어 단일 컴포넌트에서 프로젝트 마감과 정산 파이프라인을 동시 통제합니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-3.5 bg-indigo-50/50 border border-indigo-200 rounded-xl text-xs space-y-2">
+          <div class="font-bold text-indigo-950 flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
+            <span>3대 직군별 표준 마일스톤 가이드 &amp; 마감 여유일 토글</span>
+          </div>
+          <p class="text-slate-600 text-[11px] leading-relaxed">
+            신규 일정 등록 시 외주 5단계(기획확정-1차시안-피드백-검수요청-잔금청구), 디지털 출판 5단계(목차-원고-조판-심사-출시), 지식창업 5단계(기획-교안-모집-강의-정산) 마일스톤 템플릿을 자동 생성하며, 사용자의 판단에 따라 마감 여유일(+1.5일) 옵션을 켜고 끌 수 있습니다.
+          </p>
+        </div>
+      </section>
+
+      <!-- 08. 계약 안전망 & 정산 가이드라인 -->
+      <section id="sec-08" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center space-x-3 text-indigo-600 mb-2">
+          <span class="text-xs font-bold px-2 py-0.5 bg-indigo-50 rounded">SECTION 08</span>
+          <span class="text-xs font-semibold text-slate-400">법적 안전망 &amp; 계약</span>
+        </div>
+        <h2>계약 및 법적 보호 실전 시스템</h2>
+
+        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+          공식 용역 표준계약서 탑재, 4단계 정산 가이드라인, 대한법률구조공단 무료 상담 및 대법원 전자소송 연계를 통해 1인 사업자가 현장에서 대항력을 갖출 수 있도록 실전 법률 도구를 제공합니다. (지자체 무료 사전 검토 및 서울시 정책 연계는 전면 정리됨)
+        </p>
+
+        <div class="space-y-4 text-xs text-slate-600">
+          <!-- 1. 표준계약서 라이브러리 -->
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span class="flex items-center space-x-2">
+                <i data-lucide="file-text" class="w-4 h-4 text-indigo-600"></i>
+                <span>1. 정부 공식 용역 표준계약서 직결 포털</span>
+              </span>
+              <span class="text-xs text-indigo-600 font-semibold">KIDP · MSIT · 문체부 공식 서식</span>
+            </div>
+            <p class="leading-relaxed">
+              임의 서식이 아닌 국가 표준계약서 연계: ① <strong>한국디자인진흥원(KIDP) 디자인 용역 표준계약서 4개 분야</strong> (시각디자인, 제품디자인, 멀티미디어 디자인, 서비스·경험디자인), ② <strong>과학기술정보통신부(MSIT) SW 용역 표준계약서</strong>, ③ <strong>문화체육관광부 디지털 출판 표준계약서</strong>. 3대 표준 안전 특약(지체상금 0.1% 상한, 대금 완납 시 저작권 이전, 무상 수정 2회 한정) 원클릭 복사 지원.
+            </p>
+          </div>
+
+          <!-- 2. 검수 확인 -->
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="font-bold text-slate-900 flex items-center space-x-2">
+              <i data-lucide="clock" class="w-4 h-4 text-blue-600"></i>
+              <span>2. 산출물 전달 및 검수 확인 2단계 프로세스</span>
+            </div>
+            <p class="leading-relaxed">
+              <strong>1차 (21일 전 정중한 사전 검수 요청)</strong>: 신뢰 관계를 유지하며 편안하게 피드백을 요청하는 안내문 발송 ➔ <strong>2차 (상법 제69조 법적 검수 완료 효력 연계)</strong>: 고의 기피나 14일 무응답 시 상법 제69조에 따라 목적물 검수가 법적으로 완료되었음을 확인하는 불변 타임스탬프 인증서 PDF 발급.
+            </p>
+          </div>
+
+          <!-- 3. 4단계 정산 가이드라인 -->
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="font-bold text-slate-900 flex items-center justify-between">
+              <span class="flex items-center space-x-2">
+                <i data-lucide="send" class="w-4 h-4 text-emerald-600"></i>
+                <span>3. 4단계 정산 가이드라인 (법적 보호 화면 이관 통합)</span>
+              </span>
+              <span class="text-xs text-emerald-700 font-semibold">단계별 회수 파이프라인</span>
+            </div>
+            <p class="leading-relaxed">
+              기존 정산 관리 화면에 있던 회수 가이드를 법적 보호의 <strong>'정산 가이드라인'</strong>으로 완전 이관:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-4 gap-2 pt-1 text-[11px]">
+              <div class="p-2.5 bg-white rounded-lg border border-slate-200">
+                <strong class="text-slate-900 block mb-0.5">1단계: 카톡 안내</strong>
+                <span class="text-slate-500">부드럽고 명확한 정산 확인 메시지 전송</span>
+              </div>
+              <div class="p-2.5 bg-white rounded-lg border border-slate-200">
+                <strong class="text-slate-900 block mb-0.5">2단계: 메일 리마인드</strong>
+                <span class="text-slate-500">이메일 요청서 서식 기반 공식 지급 요청</span>
+              </div>
+              <div class="p-2.5 bg-white rounded-lg border border-slate-200">
+                <strong class="text-slate-900 block mb-0.5">3단계: 공식 안내문 발송</strong>
+                <span class="text-slate-500">지연손해금(연 6%) 기재 공문서 서식 발송</span>
+              </div>
+              <div class="p-2.5 bg-white rounded-lg border border-slate-200">
+                <strong class="text-slate-900 block mb-0.5">4단계: 미수금 해결 지원</strong>
+                <span class="text-slate-500">상담 및 내용증명 HWPX·작성 가이드 제공</span>
+              </div>
+            </div>
+            <div class="p-2.5 bg-emerald-50 rounded-lg border border-emerald-200 text-[11px] text-emerald-900">
+              💡 <strong>4단계 세부 구성</strong>: 상단 안심 툴팁("여러 차례 안내 후에도 대금이 지급되지 않았다면, 미수금 해결을 위한 추가 대응 방법을 확인해 보세요") + <strong>대한법률구조공단(132 / klac.or.kr) 무료 법률 상담</strong> + <strong>내용증명 표준 서식 HWPX 다운로드 및 4단계 작성 가이드</strong>.
+            </div>
+          </div>
+
+          <!-- 4. 공공 법률 상담 & 전자소송 연계 -->
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <div class="font-bold text-slate-900 flex items-center space-x-2">
+              <i data-lucide="scale" class="w-4 h-4 text-purple-600"></i>
+              <span>4. 대한법률구조공단 및 대법원 전자소송 공식 포털 연계</span>
+            </div>
+            <p class="leading-relaxed">
+              임의로 소장을 모두 써주는 비현실적 방식 대신, <strong>대한법률구조공단 '혼자하는 소송' 서식 자료실</strong> 및 <strong>대법원 전자소송(ecfs.scourt.go.kr)</strong> 포털로 직결하여 합법적이고 안전한 소액지급명령 신청 절차를 안내합니다. (국번없이 132 무료 법률 상담 지원)
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 09. 클라이언트 관리 (CRM) -->
+      <section id="sec-09" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center space-x-3 text-indigo-600 mb-2">
+          <span class="text-xs font-bold px-2 py-0.5 bg-indigo-50 rounded">SECTION 09</span>
+          <span class="text-xs font-semibold text-slate-400">고객 관계 관리</span>
+        </div>
+        <h2>클라이언트 관리 (CRM &amp; 거래 신뢰 지수)</h2>
+
+        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+          거래처별 정산 신뢰도(Tier S~C), 필요 서류 동적 관리, 업무 및 소통 방식, 미수금 채권 에이징 및 실질 시급을 다각도로 관리합니다:
+        </p>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-xs mb-4">
+          <div class="p-3.5 bg-emerald-50/50 border border-emerald-200 rounded-xl">
+            <span class="font-bold text-emerald-800 block mb-1">Tier S: 최우수 파트너</span>
+            <span class="text-[11px] text-slate-600 block">정산 지연 0일, 수정 요구 명확. 차기 프로젝트 일정 최우선 배정 권장.</span>
+          </div>
+          <div class="p-3.5 bg-blue-50/50 border border-blue-200 rounded-xl">
+            <span class="font-bold text-blue-800 block mb-1">Tier A: 양호 파트너</span>
+            <span class="text-[11px] text-slate-600 block">납기 내 대부분 결제, 지연 1~3일 이내. 표준 계약 조건 유지 권장.</span>
+          </div>
+          <div class="p-3.5 bg-amber-50/50 border border-amber-200 rounded-xl">
+            <span class="font-bold text-amber-800 block mb-1">Tier B: 일반 파트너</span>
+            <span class="text-[11px] text-slate-600 block">정산 지연 14일 이내. 검수 마감 기한 및 수정 횟수 사전 명시 권장.</span>
+          </div>
+          <div class="p-3.5 bg-rose-50/50 border border-rose-200 rounded-xl">
+            <span class="font-bold text-rose-800 block mb-1">Tier C: 주의 및 고위험</span>
+            <span class="text-[11px] text-slate-600 block">지연 18일 이상 혹은 무상 수정 다발. 차기 계약 시 착수금 50% 필수 설정 권장.</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
+            <span class="font-bold text-slate-900 block flex items-center gap-1.5"><i data-lucide="file-check-2" class="w-3.5 h-3.5 text-blue-600"></i>필요 서류 체크리스트 &amp; 동적 삭제/추가</span>
+            <p class="text-slate-600 leading-relaxed text-[11px]">헤더 툴팁 텍스트 짤림을 개선하고, 기업 정보 수정 모달에서 불필요한 체크박스를 없애고 서류 목록 추가 및 각 행 우측 휴지통(삭제) 버튼을 적용하여 유연하게 서류를 관리합니다.</p>
+          </div>
+          <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
+            <span class="font-bold text-slate-900 block flex items-center gap-1.5"><i data-lucide="calculator" class="w-3.5 h-3.5 text-emerald-600"></i>클라이언트별 실질 시급(수익성) 분석기</span>
+            <p class="text-slate-600 leading-relaxed text-[11px]">계약 금액 대비 실제 회의, 소통, 수정 작업에 투입된 총 시간을 나누어 거래처별 실질 시급을 계산하여 우량 클라이언트를 식별.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 10. 기술 스택 & PWS 아키텍처 -->
+      <section id="sec-10" class="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+        <div class="flex items-center space-x-3 text-indigo-600 mb-2">
+          <span class="text-xs font-bold px-2 py-0.5 bg-indigo-50 rounded">SECTION 10</span>
+          <span class="text-xs font-semibold text-slate-400">구현 아키텍처</span>
+        </div>
+        <h2>기술 스택 &amp; PWS 아키텍처 (Cloud Run &amp; Firebase 호환)</h2>
+
+        <p class="text-slate-600 text-sm leading-relaxed mb-4">
+          단순한 단독 PWA를 넘어, 향후 <strong>Google Cloud Run 백엔드 컨테이너</strong> 및 <strong>Firebase(Firestore, Auth, App Hosting)</strong>와의 엔터프라이즈급 연동을 지원하는 <strong>PWS (Progressive Web Service)</strong> 아키텍처로 정립되었습니다. (서비스 사이드바 하단 불필요한 v1/v2 링크 및 서울시 정책 연계 버튼은 영구 삭제됨)
+        </p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-600">
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="font-bold text-slate-900 block">프론트엔드 및 시각화</span>
+            <ul class="list-disc list-inside space-y-1">
+              <li>HTML5 / React 18 + Tailwind CSS</li>
+              <li>Lucide Icons + Chart.js (Cashflow 라인 차트)</li>
+              <li>Light / Night 반응형 테마 지원</li>
+              <li>SheetJS 로컬 엑셀 파서 &amp; 클라이언트 OCR 엔진</li>
+            </ul>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="font-bold text-slate-900 block">저장소 및 PWS 클라우드 확장</span>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Local-First (IndexedDB / LocalStorage 암호화 무결성)</li>
+              <li>PWS Web App Manifest (manifest.json) &amp; sw.js 오프라인 캐싱</li>
+              <li>Google Cloud Run 마이크로서비스 백엔드 호환 구조</li>
+              <li>Firebase Firestore &amp; Auth 클라우드 동기화 브릿지 준비</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400 mt-12">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div>SoloOS Product Specification v1.0 • Confidential &amp; Proprietary</div>
+      <div class="flex space-x-4">
+        <a href="soloos-planning-guide-v2.html" class="text-indigo-600 hover:underline">v2.0 Vibe 플레이북 보기</a>
+        <a href="index.html" class="text-indigo-600 hover:underline">SoloOS 웹앱 실행</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

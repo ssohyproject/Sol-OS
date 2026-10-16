@@ -1,0 +1,1709 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="디자이너, 개발자, 디지털 출판, 지식창업 1인 사업가를 위한 자금 수집, 3대 세무 자동분개, 비주얼 재무제표, 실제 작업 기록 기반 스마트 일정 도우미, 계약 안전망 3대 서비스 기획 가이드 및 플레이북 v2.0">
+<title>SoloOS · 1인 사업가 ERP & 워크웨어 바이브 코딩 기획 가이드 v2.0</title>
+<style>
+:root{
+  --paper:#f7f6f2;
+  --card:#ffffff;
+  --ink:#152329;
+  --muted:#53646e;
+  --line:#dce1dd;
+  --accent:#3f51b5; /* Indigo/Navy primary for fintech reliability */
+  --soft:#eef0fb;
+  --green:#1b6348;
+  --green-soft:#eaf3ee;
+  --amber:#b45309;
+  --amber-soft:#fef3c7;
+  --nav:#122026;
+  --nav-text:#d8e4e8;
+  --blue:#1e4d82;
+  --blue-soft:#eef4fb;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:95px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;font-size:16px;line-height:1.75;word-break:keep-all}
+a{color:var(--blue);text-underline-offset:4px}
+button,input,select,textarea{font:inherit}
+button,a,input,textarea,select{-webkit-tap-highlight-color:transparent}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:4px}
+button{border:1px solid var(--line);border-radius:9px;background:var(--card);color:var(--ink);padding:9px 15px;font-weight:650;line-height:1.5}
+button:hover{background:#edf0eb}
+button.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+button.primary:hover{background:#303f9f}
+h1,h2,h3,h4,p{margin:0}
+h1{font-size:clamp(32px,4.1vw,52px);font-weight:800;line-height:1.23;letter-spacing:-1.8px}
+h2{font-size:26px;line-height:1.4;letter-spacing:-.8px}
+h3{font-size:18px;line-height:1.5;letter-spacing:-.3px}
+h4{font-size:16px}
+p+p{margin-top:10px}
+ul,ol{padding-left:22px;margin:10px 0}
+li+li{margin-top:6px}
+code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:.89em;background:#ecefe9;padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}
+pre{margin:14px 0 0;background:#15242b;color:#e6eef0;padding:20px;border-radius:12px;font-size:13px;line-height:1.7;overflow:auto;white-space:pre-wrap;word-break:break-word}
+pre code{background:none;padding:0;color:inherit;font-size:inherit}
+.skip{position:absolute;left:20px;top:-70px;background:#fff;padding:10px;z-index:100}
+.skip:focus{top:10px}
+.shell{display:grid;grid-template-columns:260px minmax(0,1fr)}
+.sidebar{position:sticky;top:0;height:100vh;overflow:auto;background:var(--nav);color:var(--nav-text);padding:34px 20px 24px}
+.brand{display:flex;gap:12px;align-items:center;color:#fff;text-decoration:none;font-size:16px;font-weight:750;line-height:1.35}
+.brand-mark{width:36px;height:36px;display:grid;place-items:center;background:#4355b9;border-radius:9px;font-size:20px;font-weight:bold;color:#fff}
+.side-intro{font-size:11px;letter-spacing:1.5px;color:#a3bdc4;margin:28px 10px 12px}
+.sidebar nav a{display:flex;gap:12px;align-items:baseline;text-decoration:none;color:var(--nav-text);padding:8px 10px;border-radius:7px;font-size:13.5px}
+.sidebar nav a span{color:#8daab3;font-size:12px;font-variant-numeric:tabular-nums}
+.sidebar nav a:hover,.sidebar nav a.active{background:#233a42;color:#fff}
+.side-bottom{border-top:1px solid #304850;margin:24px 10px 0;padding-top:18px;color:#b2c5cb;font-size:12px}
+.side-bottom strong{color:#fff;font-size:13px}
+.main{min-width:0}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(247,246,242,.96);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:18px;padding:14px 38px;backdrop-filter:blur(12px)}
+.breadcrumb{font-size:13px;color:var(--muted)}
+.actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.actions button{font-size:13px}
+.container{max-width:1120px;margin:auto;padding:0 46px 60px}
+.hero{padding:50px 0 32px}
+.eyebrow{font-size:12px;font-weight:750;letter-spacing:1.7px;color:var(--accent);margin-bottom:16px}
+.hero h1 em{color:var(--accent);font-style:normal}
+.lead{font-size:17.5px;color:var(--muted);max-width:760px;margin-top:20px;line-height:1.8}
+.meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+.pill{font-size:12px;padding:4px 10px;border-radius:5px;background:#e7ebe4;color:#41535b}
+.pill.accent{background:var(--soft);color:var(--accent)}
+.pill.green{background:var(--green-soft);color:var(--green)}
+.overview{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
+.overview-card{border-top:3px solid var(--ink);background:var(--card);border-radius:0 0 10px 10px;padding:21px}
+.overview-card .index{font-size:12px;color:var(--accent);font-weight:750;margin-bottom:8px}
+.overview-card p{font-size:13.5px;color:var(--muted);margin-top:8px}
+.notice{border-left:3px solid var(--accent);padding:17px 21px;background:var(--soft);border-radius:0 10px 10px 0;margin:20px 0;font-size:14px}
+.notice strong{color:var(--accent)}
+.notice.green{border-left-color:var(--green);background:var(--green-soft)}
+.notice.green strong{color:var(--green)}
+.reading{display:flex;align-items:center;gap:15px;justify-content:space-between;padding:20px 0 28px;border-bottom:1px solid var(--line)}
+.reading p{font-size:14px;color:var(--muted)}
+.switch{display:flex;gap:6px;background:#e5eae3;padding:5px;border-radius:10px;flex-shrink:0}
+.switch button{background:transparent;border:0;box-shadow:none;font-size:13px}
+.switch button[aria-pressed="true"]{background:#fff;box-shadow:0 1px 4px #15232915}
+.section{padding:38px 0;border-bottom:1px solid var(--line)}
+.section-head{display:flex;gap:15px;align-items:baseline;margin-bottom:20px}
+.section-number{font-size:13px;font-weight:750;color:var(--accent);flex-shrink:0;letter-spacing:1px}
+.section-sub{font-size:15px;color:var(--muted);margin-top:9px}
+.sample{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:25px 27px}
+.sample-label{display:flex;align-items:center;gap:8px;font-size:11px;letter-spacing:1px;font-weight:750;color:var(--green);margin-bottom:15px}
+.sample-label:before{content:"";width:7px;height:7px;background:var(--green);border-radius:50%}
+.guide{margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.guide-box{padding:19px 21px;border-radius:12px;background:#edf0ea;font-size:14px;color:#44565e}
+.guide-box h3{font-size:14px;color:var(--ink);margin-bottom:8px}
+.sentence{grid-column:1/-1;border-top:1px dashed #b9c6bd;padding:12px 0 0;font-size:14px;color:var(--muted)}
+.sentence b{color:var(--accent)}
+.sample-only .guide,.sample-only .learning{display:none}
+.sample-only .section-sub{display:none}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.small{font-size:13px;color:var(--muted)}
+.table-wrap{overflow-x:auto;margin-top:14px;border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;font-size:14px;line-height:1.65;min-width:580px}
+th{background:#ebefe8;text-align:left;font-size:12px;font-weight:750;color:#3f5159}
+td,th{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td:first-child{font-weight:650}
+caption{text-align:left;padding:10px 14px;background:#f5f6f1;font-size:13px;color:var(--muted)}
+.status{display:inline-block;border-radius:5px;padding:2px 7px;font-size:12px;background:var(--blue-soft);color:var(--blue);white-space:nowrap}
+.status.green{color:var(--green);background:var(--green-soft)}
+.status.orange{background:var(--amber-soft);color:var(--amber)}
+.flow{display:flex;gap:8px;align-items:stretch;margin:15px 0;flex-wrap:wrap}
+.flow .node{flex:1;min-width:110px;background:#ebf0e9;padding:13px;border-radius:9px;font-size:13px;line-height:1.6}
+.flow .node strong{display:block;margin-bottom:3px}
+.flow .arrow{display:flex;align-items:center;color:#6d7f76}
+.flow .node.dark{background:#1d343c;color:#fff}
+.flow .node.dark p{color:#d3e0e3}
+.feature{border-bottom:1px solid var(--line);padding:20px 0}
+.feature:first-of-type{padding-top:0}
+.feature:last-child{border:0;padding-bottom:0}
+.feature-title{display:flex;gap:10px;align-items:center;margin-bottom:8px;flex-wrap:wrap}
+.feature-id{font-family:ui-monospace,monospace;color:var(--accent);font-size:12px;font-weight:750;background:var(--soft);padding:3px 8px;border-radius:5px}
+.keyvalue{display:grid;grid-template-columns:110px 1fr;gap:6px 15px;font-size:14px}
+.keyvalue dt{font-weight:650;color:var(--muted)}
+.keyvalue dd{margin:0}
+.formula{border-left:3px solid var(--green);background:var(--green-soft);border-radius:0 10px 10px 0;padding:18px 21px;margin:16px 0;font-size:14px}
+.formula code{background:transparent;color:var(--green);font-size:15px;display:block;margin-top:7px}
+.calculator{background:#edf2ec;border-radius:12px;padding:23px;margin-top:22px}
+.calc-head{display:flex;justify-content:space-between;gap:20px;align-items:center}
+.calc-controls{display:flex;gap:16px;flex-wrap:wrap;margin-top:18px;align-items:flex-end}
+label.field{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:650}
+input[type="number"],select{border:1px solid #b5c4b9;border-radius:7px;background:#fff;padding:9px 11px;color:var(--ink)}
+input[type="checkbox"]{width:18px;height:18px;accent-color:var(--green);flex-shrink:0}
+.inline-label{display:flex;align-items:center;gap:8px;font-size:14px;min-height:45px}
+.fee-result{margin-left:auto;text-align:right;min-width:180px}
+.fee-result strong{font-size:29px;line-height:1.3;color:var(--green);font-variant-numeric:tabular-nums}
+.fee-result span{display:block;font-size:12px;color:var(--muted)}
+.calc-detail{margin-top:10px;font-size:13px;color:var(--muted);min-height:24px}
+.architecture{background:#edf1ec;border-radius:12px;padding:22px;margin:18px 0}
+.architecture-row{display:grid;grid-template-columns:1fr 25px 1.3fr 25px 1fr;gap:10px;align-items:stretch}
+.arch-box{padding:19px;background:#fff;border:1px solid var(--line);border-radius:10px;font-size:13px}
+.arch-box strong{display:block;font-size:15px;margin-bottom:8px}
+.arch-box.server{background:#18323c;color:#fff;border-color:#18323c}
+.arch-box.server p{color:#d2e0e4}
+.arch-arrow{display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.architecture .caption{font-size:12px;margin-top:13px;color:var(--muted)}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:18px 0}
+.tabs button{font-size:13px}
+.tabs button[aria-selected="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.platform-panel{padding:18px 20px;border:1px solid var(--line);border-radius:10px;font-size:14px}
+.platform-panel strong{display:block;margin-bottom:7px}
+[hidden]{display:none!important}
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.check-item{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;background:#fff;padding:14px;font-size:14px;cursor:pointer}
+.check-item input{margin:4px 0 0}
+.check-item:has(input:checked){background:var(--green-soft);border-color:#98bca8}
+.progress-row{display:flex;gap:18px;align-items:center;margin-top:18px;font-size:13px;color:var(--muted)}
+progress{width:180px;height:7px;accent-color:var(--green);border:0}
+.milestones{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.milestone{border-top:2px solid var(--accent);padding:15px 0;font-size:13px}
+.milestone strong{display:block;font-size:14px;margin-bottom:8px}
+.editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.editor-actions button{font-size:13px}
+textarea#draft{width:100%;min-height:460px;resize:vertical;border:1px solid #bccdc2;border-radius:12px;padding:20px;font-family:ui-monospace,"Apple SD Gothic Neo",monospace;font-size:13.5px;line-height:1.8;color:var(--ink);background:#fff;word-break:normal}
+.editor-info{display:flex;justify-content:space-between;gap:18px;margin-top:8px;font-size:12px;color:var(--muted)}
+details{background:#fff;border:1px solid var(--line);border-radius:12px;margin-top:14px;padding:18px 21px}
+summary{cursor:pointer;font-weight:650;list-style-position:inside}
+details p{font-size:14px;margin-top:12px}
+.prompt-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:20px}
+.prompt-head h3{font-size:16px}
+.prompt-head button{font-size:12px}
+.glossary{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin:20px 0}
+.glossary div{font-size:13px}
+.glossary strong{display:block;color:var(--ink);margin-bottom:4px}
+.sources{font-size:13px;display:grid;grid-template-columns:1fr 1fr;gap:10px 25px;margin-top:20px}
+.footer{padding:30px 0 0;font-size:12px;color:var(--muted)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:100;background:var(--ink);color:#fff;padding:12px 22px;border-radius:10px;box-shadow:0 6px 25px #15232930;font-size:14px;max-width:calc(100vw - 32px)}
+
+@media(min-width:1450px){.container{padding-left:58px;padding-right:58px}}
+@media(max-width:1100px){
+  .shell{grid-template-columns:220px minmax(0,1fr)}
+  .container{padding:0 30px 50px}
+  .topbar{padding:14px 25px}
+  .breadcrumb{display:none}
+  .overview{gap:10px}
+  .overview-card{padding:18px}
+  .grid2{gap:15px}
+  .milestones{grid-template-columns:1fr 1fr}
+  .architecture-row{grid-template-columns:1fr}
+  .arch-arrow{height:20px;transform:rotate(90deg)}
+}
+@media(max-width:800px){
+  .shell{display:block}
+  .sidebar{position:relative;height:auto;padding:18px 20px}
+  .brand{font-size:15px}
+  .brand-mark{width:30px;height:30px}
+  .side-intro,.side-bottom{display:none}
+  .sidebar nav{display:flex;gap:4px;overflow:auto;margin-top:16px;padding-bottom:5px}
+  .sidebar nav a{white-space:nowrap;font-size:12px;padding:6px 9px}
+  .sidebar nav a span{font-size:11px}
+  .topbar{padding:12px 20px}
+  .container{padding:0 22px 35px}
+  .hero{padding:30px 0 22px}
+  .lead{font-size:16px}
+  .overview{grid-template-columns:1fr}
+  .overview-card{padding:15px 18px}
+  .overview-card .index{margin-bottom:4px}
+  .overview-card p{margin-top:4px}
+  .reading{align-items:flex-start;flex-direction:column;gap:12px}
+  .section{padding:30px 0}
+  .section-head{gap:10px}
+  h2{font-size:22px}
+  .sample{padding:20px}
+  .guide,.grid2,.checklist,.glossary,.sources{grid-template-columns:1fr}
+  .sentence{grid-column:auto}
+  .keyvalue{grid-template-columns:90px 1fr;gap:7px 10px}
+  .calc-head{align-items:flex-start;flex-direction:column;gap:6px}
+  .calculator{padding:18px}
+  .fee-result{margin-left:0;text-align:left;width:100%;padding-top:5px}
+  .actions button{font-size:12px;padding:7px 10px}
+  .actions{gap:6px}
+  .flow .node{min-width:115px}
+  .editor-info{flex-direction:column;gap:4px}
+  .milestones{gap:18px}
+  .notice{padding:14px 17px}
+  h1{letter-spacing:-1px}
+  html{scroll-padding-top:105px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{
+  @page{size:A4;margin:15mm}
+  body{font-size:10.5pt;background:#fff;color:#000}
+  .shell{display:block}
+  .sidebar,.topbar,.reading,.calculator,.editor-actions,#draft,.editor-info,.prompt-head button,.toast,.skip,.no-print{display:none!important}
+  .container{max-width:none;padding:0}
+  .hero{padding:0 0 18px}
+  h1{font-size:26pt}h2{font-size:16pt}h3{font-size:12pt}
+  .lead{font-size:11.5pt}
+  .section{padding:20px 0}
+  .sample{padding:16px;border-radius:8px}
+  .sample,.guide-box,.overview-card{break-inside:avoid}
+  .feature,table tr,.milestone{break-inside:avoid}
+  .table-wrap{overflow:visible}
+  table{min-width:0;font-size:9pt}
+  td,th{padding:7px 8px}
+  .guide{gap:12px}
+  .notice{background:#f8f8f8}
+  .architecture-row{grid-template-columns:1fr 15px 1.2fr 15px 1fr}
+  .arch-arrow{transform:none;height:auto}
+  .arch-box.server{background:#eee;color:#000}
+  .arch-box.server p{color:#000}
+  .sources{grid-template-columns:1fr}
+  a{color:inherit}
+  details{break-inside:avoid}
+  details>pre{display:block}
+  pre{color:#000;background:#eee;font-size:8.5pt}
+  .draft-print{display:block!important;white-space:pre-wrap;font-size:9pt}
+  .checklist{grid-template-columns:1fr 1fr}
+  button{display:none}
+  .footer{padding:15px 0}
+  .sample-only .guide{display:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#content">본문으로 바로 가기</a>
+<div class="shell">
+<aside class="sidebar" aria-label="문서 목차">
+  <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">S</span><span>SoloOS<br>기획 플레이북 v2.0</span></a>
+  <div class="side-intro">SOLOPRENEUR ERP &amp; WORKWARE</div>
+  <nav>
+    <a href="#purpose"><span>01</span>문제와 서비스 목적</a>
+    <a href="#benefits"><span>02</span>구현 효과와 이득</a>
+    <a href="#lifecycle"><span>03</span>가설→배포·검증 순서</a>
+    <a href="#scope"><span>04</span>도메인·권한·MVP 범위</a>
+    <a href="#screens"><span>05</span>사용 흐름과 화면 구조</a>
+    <a href="#ux-writing"><span>06</span>UX Writing &amp; Reliable 언어 규약 ★</a>
+    <a href="#bookkeeping"><span>07</span>3대 세무 자동분개 엔진</a>
+    <a href="#privacy-ingest"><span>08</span>안심 자금 데이터 수집</a>
+    <a href="#statements"><span>09</span>비주얼 재무제표 UX</a>
+    <a href="#tacit-schedule"><span>10</span>스마트 일정 도우미</a>
+    <a href="#legal-shield"><span>11</span>계약 안전망 3대 서비스</a>
+    <a href="#client-crm"><span>12</span>클라이언트 신뢰 지수</a>
+    <a href="#data"><span>13</span>데이터 설계 &amp; Local-First</a>
+    <a href="#architecture"><span>14</span>PWA 웹앱·배포 아키텍처</a>
+    <a href="#validation"><span>15</span>검증 사례 &amp; AI 요청문</a>
+  </nav>
+  <div class="side-bottom">
+    <strong>1인 사업가를 위한 기획 가이드</strong><br>
+    안전한 자금 관리와 실제 작업 기록 기반 일정, 계약 안전망 3대 서비스까지 실전 기획문서로 완성합니다.<br><br>
+    v2.0 · 2026.10.14<br>
+    한국어 · PWA 오프라인 지원
+  </div>
+</aside>
+
+<main class="main" id="content">
+  <div class="topbar">
+    <div class="breadcrumb">기획 플레이북 / 1인 사업가 올인원 ERP &amp; 워크웨어 (SoloOS v2.0)</div>
+    <div class="actions">
+      <a href="soloos-planning-guide-v1.html" style="font-size:12.5px;padding:7px 11px;background:#eef2ff;color:#4338ca;border:1px solid #c7d2fe;border-radius:8px;text-decoration:none;font-weight:700">← v1.0 명세서 보기</a>
+      <a href="index.html" style="font-size:12.5px;padding:7px 11px;background:#ecfdf5;color:#047857;border:1px solid #a7f3d0;border-radius:8px;text-decoration:none;font-weight:700">SoloOS 웹앱 실행 ↗</a>
+      <button type="button" id="copy-sample">샘플 전체 복사</button>
+      <button type="button" id="download-sample">샘플 .txt 저장</button>
+      <button type="button" id="print-document" class="primary">인쇄 / PDF</button>
+    </div>
+  </div>
+
+  <div class="container">
+  <header class="hero" id="top">
+    <div class="eyebrow">SOLOPRENEUR ERP · VIBE CODING PLANNING GUIDE v2.0</div>
+    <h1>1인 사업가의 아이디어를<br><em>실제 동작하는 워크웨어</em>로.</h1>
+    <p class="lead">
+      디자이너, 개발자, 디지털 출판, 지식창업가를 위한 자금 관리, 3.3% 자동분개, 3초 비주얼 손익표, 실제 작업 기록 기반 스마트 일정 도우미, 그리고 계약 안전망 3대 서비스까지. 1인 비즈니스를 지키는 올인원 OS 기획 가이드입니다.
+    </p>
+    <div class="meta">
+      <span class="pill accent">PRD v2.0 완성 샘플</span>
+      <span class="pill green">Privacy-First (인증서 불필요)</span>
+      <span class="pill">비주얼 재무제표 UX</span>
+      <span class="pill">비상 여유일(+1.5일) 자동 권장</span>
+      <span class="pill accent">PWS (Cloud Run &amp; Firebase 호환)</span>
+    </div>
+
+    <div class="overview learning">
+      <div class="overview-card">
+        <div class="index">01 / 금융 개인정보 불안 제거</div>
+        <h3>인증서 요구 없는 자금 수집</h3>
+        <p>위험한 은행 스크래핑 대신, 엑셀·PDF 드롭과 문자 파싱을 브라우저 로컬에서 100% 안전하게 처리합니다.</p>
+      </div>
+      <div class="overview-card">
+        <div class="index">02 / 3초 만에 이해하는 재무표</div>
+        <h3>비전공자 맞춤형 비주얼 손익</h3>
+        <p>복식부기 대신 [총계약액 → 세무 공제 → 통장입금 → 경비 → 진짜 순이익]의 워터폴 흐름으로 시각화합니다.</p>
+      </div>
+      <div class="overview-card">
+        <div class="index">03 / 실제 작업 기록 기반 일정 도우미</div>
+        <h3>과거 작업 기록 기반 일정과 계약 안전망</h3>
+        <p>실제 태스크 완료 시점과 수정 소요 기록을 분석해 +1.5일 비상 여유일을 제안하고, 3대 세부 서비스로 계약과 정산을 지킵니다.</p>
+      </div>
+    </div>
+
+    <div class="notice">
+      <strong>기획서 v2.0 핵심 설계 기준</strong><br>
+      사용자 피드백을 반영하여 <b>공인인증서·홈택스 비밀번호 요구를 전면 폐기</b>하고 시중은행 엑셀/CSV 및 정산서 PDF 클라이언트 사이드 파서를 적용했습니다. 또한 회계 비전공자를 위해 <b>[쉬운 용어 모드 ON/OFF]</b> 토글과 <b>자산·부채·자본의 3초 체력 진단표</b>를 신설했습니다.
+    </div>
+  </header>
+
+  <div class="reading learning">
+    <p><strong>읽는 방법</strong> &nbsp; 녹색 ‘기획 샘플’을 확인하고, 하단의 ‘어떻게 / 왜’ 작성 가이드를 참고하세요.</p>
+    <div class="switch" aria-label="문서 보기 방식">
+      <button type="button" id="show-guide" aria-pressed="true">설명 + 샘플</button>
+      <button type="button" id="show-sample" aria-pressed="false">샘플만 보기</button>
+    </div>
+  </div>
+
+  <!-- SECTION 01: PURPOSE -->
+  <article class="section" id="purpose" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">01</span>
+      <div>
+        <h2>문제와 서비스 목적</h2>
+        <p class="section-sub">기능 나열보다 먼저, 1인 사업가가 겪는 비본업 고통과 해결할 핵심 가치를 정의합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 프로젝트 개요</div>
+      <h3>SoloOS — 1인 디지털 사업가를 위한 올인원 ERP &amp; 워크웨어</h3>
+      <div class="grid2" style="margin-top:18px">
+        <div>
+          <h4>현재의 문제점</h4>
+          <p>
+            디자이너, 개발자, 1인 출판, 지식창업가는 본업 외에 견적서 작성, 3.3% 원천징수 세금 계산, 카드 내역 정리, 입금 지연 독촉, 일정 조율을 혼자 감당해야 한다. 이로 인해 본업 리소스의 40% 이상이 낭비되며, 노동법 사각지대에서 미수금과 무제한 수정(Scope Creep) 피해를 입어도 법적 대응이 어렵다.
+          </p>
+        </div>
+        <div>
+          <h4>해결할 일</h4>
+          <p>
+            개인정보 유출 걱정 없는 로컬 자금 수집과 3.3% 자동분개, 3초 만에 이해하는 비주얼 손익표를 제공한다. 또한 실제 작업 소요 기록을 바탕으로 비상 여유일(+1.5일)을 자동으로 확보해주며, 3대 계약 안전망(독소조항 점검기, 14일 검수 완료 증빙, 3단계 입금 요청·내용증명)을 제공한다.
+          </p>
+        </div>
+      </div>
+      <p style="margin-top:18px"><strong>한 문장 정의:</strong> “1인 사업가가 안심하고 자금과 일정을 맡길 수 있는 가장 신뢰도 높은 디지털 비즈니스 운영 워크웨어.”</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>계획 항목</th><th>샘플 기준 및 확인 방법</th></tr></thead>
+        <tbody>
+          <tr><td>핵심 타깃 페르소나</td><td>디자이너(UI/브랜딩), 개발자(웹/앱 외주), 1인 출판 작가, 지식창업가(강의/노션 템플릿/SaaS).</td></tr>
+          <tr><td>사용성 목표</td><td>신규 1인 사업자가 첫 접속 후 도움말 없이 3분 안에 첫 거래내역을 등록하고 비주얼 손익표를 이해한다.</td></tr>
+          <tr><td>정확성 목표</td><td>3.3% 원천징수 공급가액 역산 오차 0원. 비상 여유일(+1.5일) 자동 권장 적용률 100%.</td></tr>
+          <tr><td>가설 검증 인터뷰</td><td>초기 1인 프리랜서 5명 인터뷰를 통해 가장 번거로운 행정 업무(세금 분리, 일정 지연, 정산 독촉) 우선순위 검증 완료.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>“ERP 구축” 같은 추상적 단어 대신 “3.3% 세금을 일일이 계산기로 두드리지 않고 통장 입금액만 넣으면 자동 역산 분개한다”처럼 행동 중심으로 적습니다.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>1인 사업자용 툴은 대기업용 ERP와 완전히 다릅니다. 불필요한 결재선이나 복잡한 계정과목을 걷어내고 필수적인 가치에 집중할 수 있습니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [1인 프리랜서]가 [비본업 행정·자금 불안]을 겪고 있어, [로컬 자금 수집·비주얼 손익·일정 도우미]로 [본업 몰입과 사업 안전망]을 얻도록 한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 02: BENEFITS -->
+  <article class="section" id="benefits" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">02</span>
+      <div>
+        <h2>서비스 구현 효과와 이득</h2>
+        <p class="section-sub">1인 사업가가 얻는 시간적, 금전적 이득과 측정 지표를 명확히 제시합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 기대 효과와 정량적 지표</div>
+      <p><strong>도입 목적:</strong> 행정·세무 시간 낭비를 80% 줄이고, 불필요한 SaaS 구독료를 차단하며, 마감 펑크 및 미수금 사고를 방지한다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>이득을 얻는 영역</th><th>구현 기능 → 기대 효과</th><th>확인 지표와 측정 방법</th></tr></thead>
+        <tbody>
+          <tr><td>자금 관리 · 시간 절감</td><td>은행 엑셀 스마트 드롭 &amp; 3.3% 자동분개 → 영수증 정리 및 엑셀 장부 작성 시간 월 12시간 절감.</td><td>월말 정산 소요 시간 (월 15시간 → 3시간).</td></tr>
+          <tr><td>세무 준비 · 가산세 방지</td><td>당월 매출의 10% 세무 예비금 자동 분리 권장 → 5월 종합소득세 납부 시 자금 경색 및 연체 방지.</td><td>세무 분리 계좌 예치 달성률 및 종소세 신고 기한 내 완납률.</td></tr>
+          <tr><td>지출 최적화 · 예산 확보</td><td>미사용 SaaS 구독 및 중복 스토리지 자동 감지 → 연간 ₩420,000 상당의 고정비 누수 방지.</td><td>불필요한 정기구독 해지 건수 및 연간 절감 금액.</td></tr>
+          <tr><td>일정 관리 · 번아웃 예방</td><td>실제 작업 소요 기록 기반 비상 여유일(+1.5일 권장) → 촉박한 마감으로 인한 과로 및 납기 지연 방지.</td><td>프로젝트 납기 준수율 (74% → 95% 목표) 및 마감일 연장 횟수.</td></tr>
+          <tr><td>법적 보호 · 미수금 회수</td><td>계약 안전망 3대 서비스 (독소조항 점검, 14일 검수 완료 증빙, 3단계 입금 요청·내용증명) → 대금 정산 지연 일수 단축.</td><td>평균 대금 회수 소요 기간 (35일 → 14일) 및 악성 미수금 0건화.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="formula">
+        <strong>1인 사업가 월간 리소스 절감 시뮬레이션</strong>
+        <p>장부·세무 정리 절감 12시간 + 일정 조율 절감 8시간 + 미수금 독촉/계약 검토 절감 6시간 = <strong>월 26시간의 순수 본업 창작 시간 추가 확보</strong> (시간당 5만원 환산 시 월 130만원 상당의 가치).</p>
+      </div>
+    </div>
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>막연한 편리함 대신 ‘월 몇 시간 절감’, ‘연 몇 만원 절감’, ‘납기 준수율 몇 % 상승’처럼 1인 사업가가 체감할 수 있는 구체적인 숫자로 표현하세요.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>1인 프리랜서는 자신의 시간을 아껴주는 서비스에 기꺼이 비용을 지불합니다. 이 지표가 명확해야 기능 개발의 우선순위를 정확히 결정할 수 있습니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [자동화 기능]으로 [1인 사업가]의 [시간·금전적 누수]를 줄인다. [지표]를 도입 전후로 비교 측정한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 03: LIFECYCLE -->
+  <article class="section" id="lifecycle" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">03</span>
+      <div>
+        <h2>가설부터 배포·검증 순서</h2>
+        <p class="section-sub">핵심 가설 5가지를 수립하고, 단계별 개발 및 출시 통과 기준을 정립합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 검증 가능한 가설 H01~H05</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>가설 ID</th><th>핵심 가설 및 검증 목표</th><th>가설이 틀렸을 때 대안</th></tr></thead>
+        <tbody>
+          <tr><td>H01 · 개인정보 안심</td><td>인증서 없이 엑셀/PDF 드롭 방식만으로도 거래내역의 95% 이상을 로컬에서 정상 파싱할 수 있을 것이다.</td><td>시중 은행별 컬럼 매핑 규칙을 추가 지원하고 수기 보정 UI 개선.</td></tr>
+          <tr><td>H02 · 비주얼 손익 이해도</td><td>워터폴 손익표를 본 사용자의 90% 이상이 복식부기 교육 없이 자신의 진짜 순이익을 즉시 파악할 것이다.</td><td>쉬운 용어 툴팁을 강화하고 그래픽 인터랙션 추가.</td></tr>
+          <tr><td>H03 · 비상 여유일 효과</td><td>실제 작업 소요 기록 기반 비상 여유일(+1.5일)을 적용한 프로젝트는 마감일 재연장 요청이 50% 이상 감소할 것이다.</td><td>프로젝트 유형별(디자인 vs 코딩 vs 원고) 가중치를 세분화.</td></tr>
+          <tr><td>H04 · 지출 최적화 실천</td><td>미사용 SaaS 알림을 받은 사용자의 70%가 30일 이내에 구독을 해지하거나 요금제를 변경할 것이다.</td><td>원클릭 해지 가이드 링크 및 캘린더 리마인더 제공.</td></tr>
+          <tr><td>H05 · 법적 보호 효력</td><td>14일 검수 완료 증빙 및 3단계 입금 요청을 적용한 인보이스는 대금 지급 지연율이 60% 이상 감소할 것이다.</td><td>클라이언트 수신 확인 웹훅 및 친절한 공문 양식 강화.</td></tr>
+        </tbody>
+      </table></div>
+      <h4 style="margin-top:22px">단계별 개발 및 검증 마일스톤</h4>
+      <div class="milestones">
+        <div class="milestone"><strong>Phase 1 · UI &amp; 비주얼 재무</strong>온보딩 모드, 도메인 토글, 워터폴 손익표, 사업 체력표 완성.</div>
+        <div class="milestone"><strong>Phase 2 · 로컬 자금 수집</strong>은행 엑셀/PDF 스마트 드롭, 문자 파서, 3대 세무 역산 분개장 구현.</div>
+        <div class="milestone"><strong>Phase 3 · 일정 &amp; 계약 안전망</strong>과거 작업 기록 기반 비상 여유일, 계약 안전망 3대 세부 서비스 탑재.</div>
+        <div class="milestone"><strong>Phase 4 · PWA &amp; 대화형 연동</strong>오프라인 캐싱, 모바일 설치, AI Agent 자연어 질의응답 연동.</div>
+      </div>
+    </div>
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>“만들면 잘 쓰겠지”가 아니라 “이 기능을 주면 사용자의 행동이 어떻게 바뀔 것인가”를 가설로 정의하고 검증 지표를 함께 적습니다.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>모든 기능을 한 번에 완벽하게 만들 수 없습니다. 가설을 세워두면 실패했을 때도 무엇을 개선해야 할지 명확한 방향을 잡을 수 있습니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [기능]을 제공하면 [사용자 행동]이 [수치]만큼 변화할 것이다. [확인 방법]으로 검증한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 04: SCOPE -->
+  <article class="section" id="scope" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">04</span>
+      <div>
+        <h2>도메인·권한·MVP 범위</h2>
+        <p class="section-sub">업무 간 일정 혼선을 방지하는 글로벌 토글과 1차 MVP 범위를 명확히 합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 글로벌 업무 도메인 &amp; MVP 범위</div>
+      <h4>글로벌 업무 도메인 분리 (Workstream Separation)</h4>
+      <p>외주 프로젝트와 자체 출판, 지식창업 일정이 뒤섞이지 않도록 상단 글로벌 토글을 통해 화면 데이터를 즉시 분리 필터링합니다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>업무 도메인</th><th>해당 비즈니스 활동</th><th>자금 및 일정 특성</th></tr></thead>
+        <tbody>
+          <tr><td>전체 통합 (All)</td><td>모든 사업 활동의 통합 조망</td><td>사업 통장 잔고 (지금 쓸 수 있는 돈), 통합 캘린더, 총 순이익 집계.</td></tr>
+          <tr><td>외주 프로젝트 (Client)</td><td>UI/UX 디자인, 웹/앱 개발 용역</td><td>클라이언트 납기, 3.3% 원천징수, 검수 타임스탬프, 미수금 관리.</td></tr>
+          <tr><td>디지털 출판 (Publishing)</td><td>전자책(eBook), 기술 블로그, 연재 원고</td><td>출판사 인세 정산, 원고 교정 일정, 유통사 수수료 공제.</td></tr>
+          <tr><td>지식창업·강의 (Knowledge)</td><td>인프런 강의, 노션 템플릿, SaaS 프로덕트</td><td>플랫폼 정산서(크몽/인프런), 정기 결제 부수입, 마케팅 일정.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="grid2" style="margin-top:20px">
+        <div>
+          <h4>1차 버전에 포함 (P0 - MVP)</h4>
+          <ul>
+            <li>온보딩 모드 셀렉터 (대시보드형 vs 대화형 선택)</li>
+            <li>글로벌 도메인 분리 토글 (통합/외주/출판/지식창업)</li>
+            <li>인증서 없는 엑셀·PDF·문자 자금 수집 &amp; 3대 세무 자동분개</li>
+            <li>비주얼 워터폴 손익계산서 &amp; 3초 사업 체력표</li>
+            <li>쉬운 용어 모드 토글 (Plain Language vs Accounting)</li>
+            <li>스마트 지출 최적화 조언 &amp; 90일 캐시플로우 타임라인</li>
+            <li>실제 작업 기록 기반 비상 여유일(+1.5일 권장) &amp; 3대 핵심 자금 KPI 집중</li>
+            <li>공식 용역 표준계약서 연계, 14일 검수 증빙, 4단계 정산 가이드라인 &amp; 대한법률구조공단 연계</li>
+            <li>데이터 기반 클라이언트 신뢰 등급(Tier A/B/C) 자동 산출</li>
+            <li>PWS 아키텍처 (Google Cloud Run &amp; Firebase 호환) &amp; Local-First 오프라인 지원</li>
+          </ul>
+        </div>
+        <div>
+          <h4>후속 버전 (P1 / 차기 연동)</h4>
+          <ul>
+            <li>클라우드 백업 및 다중 기기 실시간 암호화 동기화</li>
+            <li>원클릭 견적서 &amp; 인보이스 PDF 자동 발송기</li>
+            <li>대화형 AI 에이전트 음성 인터랙션 지원</li>
+            <li>우체국 내용증명 API 직접 발송 연동</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>1인이 운영하는 다양한 사업 파이프라인(외주, 출판, 강의)이 서로 간섭하지 않도록 범위를 나누고, 1차 버전에 반드시 넣을 것과 뺄 것을 엄격히 구분합니다.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>외주 마감과 책 출판 마감이 한 캘린더에 엉키면 일정이 무너집니다. 도메인을 분리해야 1인 사업가가 머릿속을 정리할 수 있습니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [외주/출판/지식창업]으로 도메인을 분리하고, 1차 MVP는 [P0 목록]까지 구현한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 05: SCREENS -->
+  <article class="section" id="screens" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">05</span>
+      <div>
+        <h2>사용 흐름과 화면 구조</h2>
+        <p class="section-sub">첫 방문 온보딩부터 메인 대시보드, 서브뷰 탐색, 대화형 전환까지 전체 인터랙션 흐름을 정의합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 사용자 여정 &amp; 화면 목록 (v2.2 서브뷰 아키텍처)</div>
+      <h4>전체 사용자 인터랙션 흐름</h4>
+      <div class="flow">
+        <div class="node"><strong>1. 서비스 접속</strong>온보딩 모드 선택</div>
+        <span class="arrow" aria-hidden="true">→</span>
+        <div class="node"><strong>2. 도메인 선택</strong>상단 통합 드롭다운</div>
+        <span class="arrow" aria-hidden="true">→</span>
+        <div class="node dark"><strong>3. 2대 핵심 메인</strong><p>캐시플로우 &amp; 일정 집중</p></div>
+        <span class="arrow" aria-hidden="true">→</span>
+        <div class="node"><strong>4. 사이드바 전환</strong><p>손익·분개·계약·고객 뷰</p></div>
+        <span class="arrow" aria-hidden="true">→</span>
+        <div class="node"><strong>5. 대화형 AI 상담</strong>양방향 에이전트</div>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>화면 ID</th><th>화면명</th><th>핵심 기능 및 표시 정보</th><th>반응형 레이아웃 및 UX 고려사항</th></tr></thead>
+        <tbody>
+          <tr><td>S01</td><td>온보딩 모달</td><td>[메인 대시보드형] vs [대화형 AI Agent] 선택 가이드.</td><td>최초 1회 노출, 이후 상단 헤더 스위처에서 언제든 상호 전환 가능.</td></tr>
+          <tr><td>S02-A</td><td>메인 대시보드 2대 집중 뷰<br>(#subview-overview)</td><td><strong>① 업무 일정 관리</strong> (상단 월 달력 + 하단 최근 2주 업무일정 캘린더 3개 노출 스크롤 박스, 세부 추가 모달 &amp; Google/Notion MCP 연동)<br><strong>② 실시간 자금 흐름 타임라인 그래프</strong> (과거 실적 + 현재 + 미래 예정 및 3대 데이터셋: 잔고 추이, 입금, 지출).</td><td>일정 좌측, 자금 우측 2컬럼 완벽 대칭 배치. 상단 캘린더와 자금 그래프 규격(h-[280px]) 1:1 일치화, 하단 2주 일정 3개 카드와 사업 자금 KPI 3개 카드의 높이(h-[64px]) 및 정보 레이아웃 동일 규격화.</td></tr>
+          <tr><td>S02-A2</td><td>세부 일정 관리<br>(#subview-schedule)</td><td><strong>① 2단 뷰 모드</strong>: [월간 캘린더] 뷰 (확장형 캘린더 내 일정 시간 표기 + 하단 전체 너비 세부 일정 목록 및 수정·삭제 모달 연동) vs [타임라인 &amp; 칸반 보드] 뷰 (월간 마감 타임라인 간트 차트와 5단계 프로젝트 칸반 보드 수직 통합, 우측 돌출 라벨 제거로 클린 보드화)<br><strong>② 표준 마일스톤 가이드</strong> (최하단 배치로 집중도 강화).</td><td>월간 캘린더 뷰에서 일정 시간과 수정 버튼을 제공하고, 타임라인 간트와 칸반 보드를 한 화면에 통합 배치하여 업무 가시성 극대화.</td></tr>
+          <tr><td>S02-S</td><td>정산 관리<br>(#subview-settlement)</td><td><strong>① 미수금 정산 관리표</strong>: 관리 액션 열 내 불필요 버튼 제거 및 연필(수정)·휴지통(삭제) 아이콘 직관 배치, 사전 협의 유예 연동, 정산 상태별 필터링<br><strong>② 세무사 제출용 정산 리포트 연계</strong> (계산기 6종은 세금 관리 화면으로 완전 이관).</td><td>정산 데이터의 관리 편의성을 극대화하고 테이블 내 불필요한 중복 가이드 버튼을 제거하여 직관적인 행 편집 환경 제공.</td></tr>
+          <tr><td>S02-F</td><td>클라이언트 관리<br>(#subview-clients)</td><td>헤더 툴팁(우수/양호/주의/위험 기준 팝오버, 좌측 짤림 방지 left-0 기준 우측 전개) + 기업 관리카드(검색/등급 필터, 좌측 기업 리스트 &amp; 우측 세부 내용, 기업 정보 수정 모달 내 필요 서류 체크박스 제거 및 우측 휴지통 삭제 버튼 적용, 소통 채널 버튼형 선택기 및 기타 직접 입력).</td><td>순수 거래처 프로필·서류·소통 방식 관리에 집중된 2열 마스터-디테일 확장 구조로 대량 거래처 수용.</td></tr>
+          <tr><td>S02-B</td><td>자금 현황<br>(#subview-statements)</td><td><strong>① 통합 마스터 히어로 카드</strong> (사업 통장 잔고 ₩14,200,000 + 런웨이 5.2개월 안정 [월 고정비 ₩2.73M 기준]) + 하단 3열 재무 구조(입금 대기 미수금 +₩4.0M, 예정 지출/세금 -₩3.8M, 실질 사업 순자본 ₩14.4M [자본 건전도 79.1% 매우 안전])<br><strong>② 5단계 비주얼 수입·지출 여정</strong> (계약 총액 → 세무 공제 → 통장 실입금 → 필수 사업 경비 → 세후 실질 순이익 79.3% 산출)<br><strong>③ 2열 대칭 런웨이 시뮬레이터 &amp; 스마트 지출 최적화 탐지기</strong> (복잡하던 세무 D-day는 세금 관리로 이관).</td><td>분산되어 혼란을 주던 6개 KPI/재무제표 박스를 단일 마스터 카드로 통합하고, 사업 통장 잔고를 단일 진실 공급원(Single Source of Truth)으로 완전 통일.</td></tr>
+          <tr><td>S02-C</td><td>자금수집 &amp; 자동분개<br>(#subview-ledger)</td><td>개인정보 안심 보호 배너(UX Writing 가이드라인 적용) + '한 해 정산 요약표' + 엑셀 모드(전체 일괄 편집) + 테이블 내 연필/휴지통 행 액션 + 실제 엑셀/PDF/영수증 이미지 드롭 &amp; 파일 선택 파서 + 직접 입력 일자 필드.</td><td>정규식 전문 용어 대신 사용자 친화적 안심 보호 문구를 적용하고, 엑셀 일괄 수정 모드와 실제 파일 인식 파서를 연동하여 실무 생산성 대폭 강화.</td></tr>
+          <tr><td>S02-T</td><td>세금 관리 (자금 관리 하위 2뎁스)<br>(#subview-tax)</td><td><strong>① 주요 세무 일정 &amp; 세금 통장 준비 현황</strong> (4대 정기 세무 일정 캘린더: 11월 종소세 중간예납 D-30 [임박], 1월 부가세 확정 D-72, 5월 종소세 정기 D-194, 7월 부가세 1기 D-255 + 목표 세액 대비 준비율 48.3% 게이지 [₩580,000 / ₩1,200,000] &amp; 친절한 행동 안내 바, Reliable UX Writing 헌장 전면 준수)<br><strong>② 프리랜서 맞춤형 6대 전문 계산기 컴팩트 패널</strong> (단가(시급) 계산기 [작업시간 슬라이더 연동], 종합소득세 모의 계산기 [단순경비율 64.1%], 가산세 모의 계산기, 지역 건강보험료 계산기, 기타소득세 원천징수 계산기, 국세청 표준 업종코드 조회기).</td><td>불안감을 주는 회계 용어 대신 친절하고 명확한 안내를 제공하며, 정산 관리와 자금 현황에 흩어져 있던 계산기 및 세무 일정을 자금 관리 하위 전용 2뎁스 화면으로 집약.</td></tr>
+          <tr><td>S02-D</td><td>계약<br>(#subview-contract)</td><td>공식 용역 표준계약서 연계(한국디자인진흥원 KIDP 공식 표준계약서 시각·제품·멀티미디어·서비스 4개 세부 분야 + 과기정통부 MSIT 공식 SW 용역 표준계약서 + 문체부 출판 계약서 포털 직결) + 계약서 독소조항 AI 자동 스캐너 + 지자체 중복 카드 정리.</td><td>디자인 세부 전문 분야 및 SW 개발 특성에 맞춘 정부 부처 공인 표준계약서와 포털 링크를 제공하여 실무 활용도 극대화.</td></tr>
+          <tr><td>S02-E</td><td>법적 보호<br>(#subview-legal)</td><td>납품-검수 2단계 프로세스 + 4단계 정산 가이드라인(1단계: 카톡 안내, 2단계: 메일 리마인드, 3단계: 공식 안내문 발송, 4단계: 미수금 해결 지원 [대한법률구조공단 132/klac.or.kr 연계 &amp; 대법원 전자소송 ecfs.scourt.go.kr 공식 안내]) + 내용증명 표준 HWPX 서식.</td><td>법적 리스크가 있는 자의적 송장 생성을 지양하고, 공인 기관(대한법률구조공단 132 및 대법원 전자소송)을 통한 올바른 절차를 체계적으로 안내.</td></tr>
+          <tr><td>S03</td><td>자금 스마트 등록 모달</td><td>시중은행 엑셀 드롭 / 전자계산서·정산서 PDF / 입출금 문자 파서 / 수기 역산 4대 탭.</td><td>형식 불일치 시 직관적인 안내 및 수기 입력 즉시 전환.</td></tr>
+          <tr><td>S04</td><td>대화형 AI 에이전트</td><td>자연어 질의응답 (계약서 독소조항, 미수금 대응, 3대 세무, SaaS 절감 등 10대 전담 의도 분석).</td><td>문맥 파악 실패 시 엉뚱한 수치 복붙을 방지하고 추천 업무 퀵 버튼 제공.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>메인 화면에 모든 데이터를 쏟아붓지 않고, 캐시플로우 타임라인과 일정 2대 핵심에만 집중시킨 뒤 좌측 반응형 사이드바(데스크톱 고정, 모바일 드로어)의 1/2뎁스 계층 메뉴를 통해 세부 서브뷰를 탐색하도록 설계합니다.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>1인 사업가는 여러 분야의 업무를 동시에 처리하므로 시각적 피로도가 높습니다. 불필요한 상단 버튼과 긴 단일 스크롤을 걷어내고 서브뷰로 격리해야 3초 만에 핵심 의사결정이 가능합니다.</p>
+      </div>
+      <div class="sentence"><b>UI 원칙</b> &nbsp; [상단 헤더 간소화] + [메인 2대 핵심 집중] + [1/2뎁스 고정 사이드바 서브뷰] 아키텍처로 인지 피로를 최소화한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 06: UX WRITING (신설) -->
+  <article class="section" id="ux-writing" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">06</span>
+      <div>
+        <h2>UX Writing 헌장 &amp; Reliable 언어 체계</h2>
+        <p class="section-sub">안심하고 돈과 비즈니스를 위탁할 수 있는 신뢰감, 비문 없는 정제된 문장, 품격 있는 어휘 기준을 확립합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · SoloOS UX Writing 표준 헌장 &amp; 지양 vs 지향 대조표</div>
+      
+      <div class="feature">
+        <div class="feature-title"><span class="feature-id">UX-01</span><h3>SoloOS 언어 철학 3대 헌장 (Reliable Voice)</h3></div>
+        <dl class="keyvalue">
+          <dt>서비스 콘셉트</dt>
+          <dd><strong>Reliable (신뢰성)</strong>: 안심하고 자금과 비즈니스를 위탁할 수 있을 정도의 확고한 안정성과 품격을 제공하는 비즈니스 언어를 구사합니다.</dd>
+          <dt>라이팅 콘셉트</dt>
+          <dd><strong>신뢰를 주는 글쓰기</strong>: 비문이 없고, 수동태나 번역투가 배제된 일관적이며 높은 퀄리티의 정제된 표준 문장을 지향합니다.</dd>
+          <dt>어휘 기준</dt>
+          <dd><strong>명료하지만 기계 같지 않음</strong>: 차가운 전산 에러 코드나 감정적인 인터넷 밈을 배제하고, 품격 있는 전문 금융 비즈니스 파트너다운 자연스러운 한국어 표준어를 사용합니다.</dd>
+          <dt>금지 규칙</dt>
+          <dd>불안을 조장하는 생존 프레임("버틸 수 있는 기간"), 억압적 금지어("건드리지 마세요!"), 과장된 느낌표(`!`), 경박한 구어체를 전면 금지합니다.</dd>
+        </dl>
+      </div>
+
+      <div style="margin-top:18px">
+        <h4 style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:10px">UX Writing 지양 vs 지향 전수 대비표</h4>
+        <div class="table-wrap"><table>
+          <thead>
+            <tr>
+              <th style="width:20%">화면 영역</th>
+              <th style="width:40%;color:#991b1b;background:#fef2f2">지양하는 표현 (불안 조장 / 경박한 구어체 / 비문)</th>
+              <th style="width:40%;color:#065f46;background:#ecfdf5">지향하는 표준 표현 (신뢰성 / 명료함 / 객관적 사실 기반)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>대시보드 상단 잔고 지표</strong></td>
+              <td style="color:#b91c1c;background:#fff5f5">"수입이 없어도 5달 버틸 수 있어요!"<br>"돈 다 떨어지기 전에 새 프로젝트 잡으세요"</td>
+              <td style="color:#047857;background:#f0fdf4"><strong>"현재 사업 통장 잔고(₩14,200,000)로 약 5.2개월간 안정적으로 운영할 수 있습니다."</strong></td>
+            </tr>
+            <tr>
+              <td><strong>세금 분리 권고 모달 &amp; 알림</strong></td>
+              <td style="color:#b91c1c;background:#fff5f5">"이번 달 45만원은 세금이니까 절대 건드리지 마세요!"</td>
+              <td style="color:#047857;background:#f0fdf4"><strong>"5월 종합소득세와 부가가치세(10%) 납부를 위해 ₩520,000은 세금 통장에 별도로 분리하여 보관하세요."</strong></td>
+            </tr>
+            <tr>
+              <td><strong>전자세금계산서 부가세 안내</strong></td>
+              <td style="color:#b91c1c;background:#fff5f5">"10%는 꽁돈 아니니까 쓰면 큰일납니다!"</td>
+              <td style="color:#047857;background:#f0fdf4"><strong>"입금액 중 부가가치세(10%) ₩100,000은 추후 정기 신고 시 납부해야 하므로 세금 통장에 별도로 분리하여 보관하세요."</strong></td>
+            </tr>
+            <tr>
+              <td><strong>지출 최적화 &amp; 예산 누수 진단</strong></td>
+              <td style="color:#b91c1c;background:#fff5f5">"돈이 줄줄 새고 있어요! 넷플릭스 당장 끊으세요"</td>
+              <td style="color:#047857;background:#f0fdf4"><strong>"최근 60일간 사용 이력이 없는 구독 서비스 2건을 정리하면 연간 ₩480,000의 사업 예산을 절감할 수 있습니다."</strong></td>
+            </tr>
+            <tr>
+              <td><strong>스마트 작업 일정 추천</strong></td>
+              <td style="color:#b91c1c;background:#fff5f5">"이러다 또 마감 펑크나요! 서두르세요"</td>
+              <td style="color:#047857;background:#f0fdf4"><strong>"이전 작업 소요 시간을 바탕으로 마감 여유일(+1.5일)을 선택 적용할 수 있도록 제안합니다."</strong></td>
+            </tr>
+            <tr>
+              <td><strong>미수금 정산 및 법적 증빙</strong></td>
+              <td style="color:#b91c1c;background:#fff5f5">"돈 안 주는 악덕 클라이언트한테 독촉장 보내기"</td>
+              <td style="color:#047857;background:#f0fdf4"><strong>"지연 일수와 사전 협의 여부에 맞춰 정중한 카톡 리마인더, 공식 공문, 우체국 내용증명 단계별 서식을 제공합니다."</strong></td>
+            </tr>
+            <tr>
+              <td><strong>클라이언트 신뢰 등급</strong></td>
+              <td style="color:#b91c1c;background:#fff5f5">"진상 고객이니까 다음엔 단가 올려 받으세요"</td>
+              <td style="color:#047857;background:#f0fdf4"><strong>"정산 지연 일수 및 수정 로그에 따라 Tier S~C 등급을 부여하고 착수금 비율 상향 등 계약 전략을 제안합니다."</strong></td>
+            </tr>
+          </tbody>
+        </table></div>
+      </div>
+    </div>
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>서비스 내의 버튼, 알림창, 툴팁, 모달 대화상자까지 모든 텍스트를 ‘불안을 자극하는 잔소리’가 아니라 ‘객관적 지표에 근거한 비즈니스 조언’으로 통일 작성합니다.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>1인 사업가는 고립감과 불안에 쉽게 노출됩니다. 금융·세무 워크웨어의 어조가 조급하거나 경박하면 도구에 대한 신뢰가 무너지고 안심할 수 없게 됩니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [기능/상황]에서 감정적·경박한 표현을 배제하고, [객관적 데이터]에 근거하여 [신뢰감 있는 명료한 문장]으로 안내한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 07: BOOKKEEPING -->
+  <article class="section" id="bookkeeping" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">07</span>
+      <div>
+        <h2>3.3% 사업소득 · 10% 부가세(세금계산서) · 8.8% 기타소득 자동분개</h2>
+        <p class="section-sub">사업자등록 유무와 용역 성격에 따른 3대 세무 유형의 정밀 역산 및 자동분개 로직을 정의합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 1인 사업가 3대 세무 매트릭스 (Tax Tri-Matrix)</div>
+      
+      <!-- LOGIC 1: 3.3% 사업소득 -->
+      <div class="feature">
+        <div class="feature-title"><span class="feature-id">TAX-01</span><h3>[미등록 프리랜서] 3.3% 사업소득세 원천징수 역산</h3></div>
+        <dl class="keyvalue">
+          <dt>적용 대상</dt>
+          <dd>사업자등록증이 없는 디자이너, 개발자, 작가의 지속적 외주 용역 수입.</dd>
+          <dt>계산 공식</dt>
+          <dd>
+            <code>계약 공급가액 = round(통장 실입금액 ÷ 0.967)</code><br>
+            <code>소득세 (3.0%) = round(공급가액 × 0.03) | 지방소득세 (0.3%) = round(공급가액 × 0.003)</code>
+          </dd>
+          <dt>분개 및 관리</dt>
+          <dd>[차] 보통예금 (실입금액), 선납세금 (3.3%) / [대] 사업소득매출 (공급가액). 5월 종합소득세 신고 시 선납세금으로 정산 환급.</dd>
+        </dl>
+      </div>
+
+      <!-- LOGIC 2: 10% 전자세금계산서 부가세 -->
+      <div class="feature" style="margin-top:16px">
+        <div class="feature-title"><span class="feature-id">TAX-02</span><h3>[사업자등록 개인사업자] 전자세금계산서 발행 10% 부가가치세 (VAT) 분리</h3></div>
+        <dl class="keyvalue">
+          <dt>적용 대상</dt>
+          <dd>사업자등록증(일반과세자)을 보유하고 클라이언트에게 전자세금계산서를 발급하는 경우.</dd>
+          <dt>계산 공식</dt>
+          <dd>
+            <code>실제 공급가액 (내 매출) = round(통장 입금총액 ÷ 1.1)</code><br>
+            <code>부가가치세 (세금 통장에 따로 모아둘 돈 10%) = 통장 입금총액 − 공급가액</code>
+          </dd>
+          <dt>분개 및 관리</dt>
+          <dd>
+            [차] 보통예금 (110만원) / [대] 용역매출 (100만원), 부가세 (따로 모아둘 세금 10만원).<br>
+            <strong style="color:#b91c1c">⚠️ 핵심 세무 가이드:</strong> 10% 부가세는 내 돈이 아닙니다! 7월/1월 부가세 납부일까지 세금 통장에 100% 따로 모아두도록 안내합니다.
+          </dd>
+        </dl>
+      </div>
+
+      <!-- LOGIC 3: 기타소득 4대 구분 -->
+      <div class="feature" style="margin-top:16px">
+        <div class="feature-title"><span class="feature-id">TAX-03</span><h3>[비정기 일시 인건비] 국세청 4대 기타소득세 원천징수 역산</h3></div>
+        <dl class="keyvalue">
+          <dt>적용 대상</dt>
+          <dd>비정기적 특강료, 기술 자문료, 사외 심사비, 일회성 기고 원고료, 공모전 상금 등 (소득세법상 기타소득).</dd>
+          <dt>4대 경비율 구분</dt>
+          <dd>
+            ① <strong>강연·자문 등 일시적 인적용역</strong>: 필요경비 60% 법정 인정 ➔ 실효 원천징수세율 <strong>8.8%</strong> (소득세 8% + 지방세 0.8%)<br>
+            ② <strong>원고료·저작권료 등 창작소득</strong>: 필요경비 60% 법정 인정 ➔ 실효 원천징수세율 <strong>8.8%</strong><br>
+            ③ <strong>공모전 상금 등 포상금</strong>: 필요경비 80% 법정 인정 ➔ 실효 원천징수세율 <strong>4.4%</strong> (소득세 4% + 지방세 0.4%)<br>
+            ④ <strong>일반 기타소득</strong>: 필요경비 0% (경비 미인정) ➔ 원천징수세율 <strong>22%</strong> (소득세 20% + 지방세 2%)
+          </dd>
+          <dt>분개 및 관리</dt>
+          <dd>[차] 보통예금 (실입금액), 선납세금 (원천세) / [대] 기타소득매출 (계약총액). 연간 기타소득금액 300만원 이하 시 분리과세 선택 가능.</dd>
+        </dl>
+      </div>
+
+      <!-- LOGIC 4: 정산 관리 테이블 관리 액션 -->
+      <div class="feature" style="margin-top:16px">
+        <div class="feature-title"><span class="feature-id">SETTLE-01</span><h3>정산 관리 미수금 관리 액션 &amp; 회수 프로세스 연계</h3></div>
+        <dl class="keyvalue">
+          <dt>정산 테이블</dt>
+          <dd>
+            기존 정산 관리 화면에 혼재되어 있던 계산기 6종을 신설된 '세금 관리' 화면으로 전면 분리·이관. 테이블 내 <strong>연필 아이콘(수정 모달)</strong>과 <strong>휴지통 아이콘(삭제)</strong> 직관적 액션 배치, <strong>'사전 협의 유예'</strong> 토글 연동으로 파트너십과 채권 회수 관리를 정밀화합니다. (불명확했던 '단가개선필요' 기준 영구 삭제 완료)
+          </dd>
+          <dt>법적 보호 연계</dt>
+          <dd>
+            입금 지연 및 미수금 발생 시 '법적 보호' 4단계 정산 가이드라인(카톡 알림 → 이메일 리마인드 → 공식 독촉장 → 대한법률구조공단 132/대법원 전자소송)으로 원클릭 연동.
+          </dd>
+        </dl>
+      </div>
+
+      <!-- LOGIC 5: 세금 관리 주요 세무 일정 점검 & 6대 전문 계산기 -->
+      <div class="feature" style="margin-top:16px;background:var(--amber-soft);border-color:#fcd34d">
+        <div class="feature-title"><span class="feature-id" style="background:#b45309">TAX-03</span><h3 style="color:#92400e">세금 관리 주요 세무 일정 점검 &amp; 6대 전문 계산기 (#subview-tax)</h3></div>
+        <dl class="keyvalue">
+          <dt>4대 세무 D-day</dt>
+          <dd>
+            ① <strong>11월 30일 종소세 중간예납 (D-30, 임박)</strong>: 작년 종합소득세의 50% 국세청 고지서 납부<br>
+            ② <strong>1월 25일 2기 부가가치세 확정 신고 (D-72)</strong>: 하반기 세금계산서 발행분 부가세(10%) 신고·납부<br>
+            ③ <strong>5월 31일 종합소득세 정기 확정 신고 (D-194)</strong>: 지난 1년간 사업소득(3.3%)·기타소득(8.8%) 합산 최종 정산<br>
+            ④ <strong>7월 25일 1기 부가가치세 확정 신고 (D-255)</strong>: 상반기 세금계산서 발행분 부가세(10%) 신고·납부
+          </dd>
+          <dt>세금 통장 준비율</dt>
+          <dd>
+            목표 세금 준비금(₩1,200,000) 대비 현재 분리 보관액(₩580,000)으로 <strong>48.3% 준비 완료</strong> 상태를 직관적인 게이지 바로 안내하며, <em>"💡 다음 세무 신고까지 ₩620,000을 추가 분리하면 납부 시 자금 부담이 없습니다."</em>라는 긍정적이고 실천적인 행동 권장 문구를 제공 (Reliable UX Writing 헌장 전면 준수).
+          </dd>
+          <dt>6대 전문 계산기</dt>
+          <dd>
+            ① <strong>단가(시급) 계산기</strong>: 작업 시간 슬라이더 연동 및 실질 시급 역산<br>
+            ② <strong>종합소득세 모의 계산기</strong>: 단순경비율(64.1%) 기반 모의 세액 시뮬레이션<br>
+            ③ <strong>가산세 모의 계산기</strong>: 신고불성실 및 납부지연 일수별 법정 가산세율 산정<br>
+            ④ <strong>지역 건강보험료 계산기</strong>: 직장 탈퇴 후 지역가입자 소득·재산 점수제 추정<br>
+            ⑤ <strong>기타소득세 원천징수기</strong>: 4대 법정 경비율(60%, 80%, 0%)별 세액 산정<br>
+            ⑥ <strong>국세청 표준 업종코드 조회기</strong>: 프리랜서 940909 등 주요 업종코드 즉시 검색
+          </dd>
+        </dl>
+      </div>
+
+      <div class="table-wrap" style="margin-top:18px"><table>
+        <caption>3대 세무 정산 유형 비교표 (실입금 기준)</caption>
+        <thead><tr><th>정산 유형</th><th>실제 통장 입금액</th><th>공급가액 / 계약총액</th><th>공제 / 분리 세액</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td>3.3% 사업소득</td><td>₩2,901,000</td><td>₩3,000,000</td><td>₩99,000 (3.3%)</td><td>미등록 프리랜서 기본형</td></tr>
+          <tr><td>10% 세금계산서</td><td>₩3,300,000</td><td>₩3,000,000</td><td>₩300,000 (10% 부가세)</td><td>부가세 30만원 별도통장 예치 필수</td></tr>
+          <tr><td>8.8% 기타소득 (강연/자문/원고)</td><td>₩2,736,000</td><td>₩3,000,000</td><td>₩264,000 (8.8%)</td><td>경비 60% 법정 인정</td></tr>
+          <tr><td>4.4% 기타소득 (공모전 상금)</td><td>₩2,868,000</td><td>₩3,000,000</td><td>₩132,000 (4.4%)</td><td>경비 80% 법정 인정</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- INTERACTIVE 3-IN-1 TAX CALCULATOR -->
+    <div class="calculator no-print" aria-label="3대 세무 자동역산 및 분리 계산기">
+      <div class="calc-head">
+        <h3>직접 확인하는 3대 세무 자동역산 &amp; 세무 예비금 계산기</h3>
+        <span class="small">사업자등록 여부와 소득 유형을 선택하고 통장 입금액을 입력하세요</span>
+      </div>
+      <div class="calc-controls">
+        <label class="field" style="min-width:220px">
+          세무 정산 유형 선택
+          <select id="calc-tax-mode" onchange="updateCalculator()">
+            <option value="3.3">[미등록 프리랜서] 3.3% 사업소득</option>
+            <option value="10">[사업자등록] 10% 전자세금계산서 (VAT 분리)</option>
+            <option value="8.8">[비정기 자문·강연] 8.8% 기타소득</option>
+          </select>
+        </label>
+        <label class="field" for="calc-net-amount" style="min-width:180px">
+          통장 실입금액 (원)
+          <input type="number" id="calc-net-amount" min="1000" step="1000" value="2901000">
+        </label>
+        <output class="fee-result" id="calc-result-box" aria-live="polite">
+          <span id="calc-gross-label">계약 공급가액 (매출)</span>
+          <strong id="calc-gross-val">₩3,000,000</strong>
+        </output>
+      </div>
+      <p class="calc-detail" id="calc-tax-detail" style="font-weight:500">
+        선납 소득세(3%): ₩90,000 · 지방소득세(0.3%): ₩9,000 · 5월 종소세 권장 예비금(10%): ₩300,000
+      </p>
+    </div>
+
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>“세금을 알아서 계산한다” 대신 `공급가액 = 실입금액 ÷ 0.967`처럼 구체적인 수학 공식과 반올림/올림 기준을 정확히 기재합니다.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>1원이라도 오차가 나면 5월 종합소득세 신고 시 세무사와의 장부 대조에서 불일치가 발생합니다. 명확한 공식이 버그를 방지합니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [입금액] 입력 시 [역산 공식]으로 [공급가액과 세액]을 산출하고 [계정과목]으로 자동 분개한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 08: PRIVACY INGEST -->
+  <article class="section" id="privacy-ingest" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">08</span>
+      <div>
+        <h2>안심 자금 데이터 수집 (Privacy-First)</h2>
+        <p class="section-sub">공인인증서 없는 3대 현실적 수집 채널과 브라우저 로컬 파싱 구조를 정의합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 개인정보 안심 데이터 수집 &amp; 실전 파싱 아키텍처</div>
+      <!-- UX Writing 안심 배너 -->
+      <div style="margin-bottom:14px;padding:14px;background:#ecfdf5;border:1px solid #a7f3d0;border-radius:10px;font-size:13px;color:#065f46">
+        <strong>🛡️ Zero-Retention 안심 보호 원칙 (Reliable Voice 가이드라인)</strong><br>
+        <span style="font-size:12.5px;color:#047857;line-height:1.6">금융 인증서나 비밀번호를 요구하지 않습니다. 업로드하신 파일과 텍스트는 브라우저 내부에서만 안전하게 처리되며, 서버로 전송되거나 저장되지 않습니다.</span>
+      </div>
+      <p><strong>설계 철학:</strong> 사용자의 금융 비밀번호나 인증서를 서버로 수집하지 않는다. 모든 파일 분석(엑셀·영수증 이미지·PDF)과 민감정보 마스킹은 브라우저(Client-side) 안에서만 100% 안전하게 실행된다.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>수집 채널</th><th>사용자 행동 및 입력 형태</th><th>시스템 처리 방식</th><th>개인정보 보호 조치</th></tr></thead>
+        <tbody>
+          <tr><td>1. 실제 은행·카드 엑셀 드롭</td><td>인터넷뱅킹에서 다운받은 XLSX/CSV 드래그앤드롭.</td><td>SheetJS 기반 로컬 파서로 입출금·거래처·공급가액 즉시 추출 등록.</td><td>계좌번호, 카드번호 끝자리 브라우저 내 즉시 마스킹.</td></tr>
+          <tr><td>2. 영수증 이미지 드롭</td><td>JPG, PNG 영수증 및 카드 영수증 사진 드래그앤드롭.</td><td>클라이언트 OCR 엔진으로 가맹점명, 거래일자, 금액 자동 인식.</td><td>외부 서버 전송 없이 캔버스 메모리에서만 인식 후 폐기.</td></tr>
+          <tr><td>3. 계산서·정산서 PDF 드롭</td><td>홈택스 세금계산서 PDF, 크몽/숨고/출판사 정산서 PDF 드롭.</td><td>클라이언트 PDF 텍스트 추출 엔진으로 공급가액, 세액 자동 분리.</td><td>사업자등록번호 외 주민번호 등 개인 식별번호 자동 가림.</td></tr>
+          <tr><td>4. 직접 입력 (일자 필드 완비)</td><td>거래 일자(Date) 필드가 포함된 직접 입력 모달 활용.</td><td>입력 즉시 3대 세무 역산 엔진 구동하여 공급가액과 원천세 산출.</td><td>로컬 암호화 저장소에 즉시 분개 등록.</td></tr>
+        </tbody>
+      </table></div>
+      
+      <div class="grid2" style="margin-top:14px">
+        <div style="padding:12px;background:#fff;border:1px solid var(--line);border-radius:8px">
+          <strong>📊 엑셀 모드 (전체 일괄 편집)</strong>
+          <p class="small" style="margin-top:4px">건별 수정 외에도 테이블 인라인 셀에서 전체 거래를 엑셀처럼 직접 수정하고 한 번에 저장하는 일괄 편집 모드 탑재.</p>
+        </div>
+        <div style="padding:12px;background:#fff;border:1px solid var(--line);border-radius:8px">
+          <strong>📑 한 해 정산 요약표 리포트</strong>
+          <p class="small" style="margin-top:4px">'1년 수입.지출 정산 요약표'를 '한 해 정산 요약표'로 개선하여 5월 종소세 및 부가세 신고 시 세무사 제출용 단일 리포트 즉시 다운로드.</p>
+        </div>
+      </div>
+
+      <div class="formula" style="border-left-color:var(--accent);background:var(--soft);margin-top:14px">
+        <strong>보안 무결성 보장:</strong> 금융감독원 인증 심사나 대규모 보안 서버가 필요 없는 완전한 Local-First 구조로, 1인 사업가에게 100% 신뢰감을 제공합니다.
+      </div>
+    </div>
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>“오픈뱅킹 연동” 같은 비현실적인 기획 대신, 1인 사용자가 실제로 할 수 있는 가장 간편하고 안전한 파일 드롭과 문자 파싱 플로우를 구체화하세요.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>1인 개발자나 디자이너는 낯선 사이트에 공인인증서를 등록하지 않습니다. 진입장벽을 0으로 만들어야 실제 사용자가 생깁니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [은행 엑셀/PDF/문자]를 드롭하면 [브라우저 로컬 파서]가 [마스킹 후 자동 등록]하며, 인증서는 요구하지 않는다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 09: STATEMENTS -->
+  <article class="section" id="statements" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">09</span>
+      <div>
+        <h2>비주얼 재무제표 UX (자금 현황)</h2>
+        <p class="section-sub">LNB 및 헤더를 '자금 현황'으로 단일화하고, 주간 작업시간 삭제 및 사업 통장 잔고(₩14,200,000) 기준으로 전면 얼라인합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 비주얼 재무제표 &amp; 쉬운 용어 체계</div>
+      <h4>1. 비주얼 워터폴 손익 흐름 (Cashflow Waterfall Flow)</h4>
+      <div class="flow" style="margin:18px 0">
+        <div class="node"><strong>① 총 계약 공급가</strong>₩5,800,000 (100%)</div>
+        <span class="arrow" aria-hidden="true">→</span>
+        <div class="node" style="background:var(--amber-soft)"><strong>② 3.3% 원천세</strong>-₩191,400 (공제)</div>
+        <span class="arrow" aria-hidden="true">→</span>
+        <div class="node"><strong>③ 실제 통장 입금</strong>₩5,608,600 (실수령)</div>
+        <span class="arrow" aria-hidden="true">→</span>
+        <div class="node" style="background:#fee2e2"><strong>④ 필수 사업 경비</strong>-₩1,006,200 (SaaS 등)</div>
+        <span class="arrow" aria-hidden="true">→</span>
+        <div class="node dark" style="background:var(--green)"><strong>⑤ 진짜 남은 순이익</strong><p>₩4,602,400 (79.3%)</p></div>
+      </div>
+      <p class="small">↳ 순이익 운용 조언: 진짜 순이익 중 10%(₩460,000)는 5월 종합소득세 예비금 통장에 분리하고, 나머지 ₩4,142,400은 자유롭게 생활비 및 재투자에 사용.</p>
+
+      <h4 style="margin-top:24px">2. 통합 마스터 히어로 카드 &amp; 3열 직관적 재무 구조</h4>
+      <p class="small" style="margin-top:4px">기존의 번잡했던 6대 KPI 박스를 최상단 단일 마스터 히어로 카드로 통합하고, 사업 통장 잔고(₩14,200,000)와 런웨이(5.2개월 안정)를 직관적으로 결합했습니다. (복잡하던 세무 D-day 캘린더는 '세금 관리' 화면으로 완전 이관)</p>
+      
+      <div style="margin-top:12px;padding:20px;background:linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);color:#fff;border-radius:14px;border:1px solid #334155">
+        <div style="display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.1);flex-wrap:wrap;gap:12px">
+          <div>
+            <span style="font-size:12px;color:#a5b4fc">현재 즉시 가용 현금 (사업 통장 잔고)</span>
+            <div style="font-size:28px;font-weight:900;font-family:monospace;margin-top:2px">₩14,200,000</div>
+          </div>
+          <div style="text-align:right">
+            <span style="font-size:12px;color:#cbd5e1">현재 자금 기준 사업 지속 기간</span>
+            <div style="display:flex;align-items:center;justify-content:flex-end;gap:6px;margin-top:2px">
+              <span style="font-size:22px;font-weight:900;color:#34d399;font-family:monospace">5.2개월</span>
+              <span style="font-size:11px;padding:2px 8px;border-radius:999px;background:rgba(52,211,153,0.2);color:#6ee7b7;font-weight:bold;border:1px solid rgba(52,211,153,0.3)">안정</span>
+            </div>
+            <span style="font-size:10.5px;color:#94a3b8;display:block;margin-top:2px">월 고정비 ₩2.73M 지출 기준</span>
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;margin-top:14px">
+          <div style="padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px">
+            <span style="font-size:11px;color:#a5b4fc">입금 대기 미수금 (+)</span>
+            <div style="font-size:16px;font-weight:bold;font-family:monospace;margin-top:2px;color:#fff">+₩4,000,000</div>
+            <span style="font-size:10px;color:#94a3b8;margin-top:4px;display:block">3건 (정산 관리 연동)</span>
+          </div>
+          <div style="padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px">
+            <span style="font-size:11px;color:#fda4af">예정 지출 및 세금 (-)</span>
+            <div style="font-size:16px;font-weight:bold;font-family:monospace;margin-top:2px;color:#fda4af">-₩3,800,000</div>
+            <span style="font-size:10px;color:#94a3b8;margin-top:4px;display:block">카드 2.8M + 세금 준비금 1.0M</span>
+          </div>
+          <div style="padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px">
+            <span style="font-size:11px;color:#6ee7b7">실질 사업 순자본 (=)</span>
+            <div style="font-size:16px;font-weight:bold;font-family:monospace;margin-top:2px;color:#6ee7b7">₩14,400,000</div>
+            <span style="font-size:10px;color:#34d399;margin-top:4px;display:block">자본 건전도 79.1% (매우 안전)</span>
+          </div>
+        </div>
+      </div>
+
+      <h4 style="margin-top:24px">3. 런웨이 시뮬레이터 &amp; 스마트 지출 최적화 (2열 대칭 나란히 배치)</h4>
+      <div class="grid2" style="margin-top:12px">
+        <div style="padding:16px;border:1px solid var(--line);border-radius:10px;background:#fff">
+          <strong style="color:var(--accent)">런웨이 시뮬레이터 (생존 가능 개월 수)</strong>
+          <p class="small" style="margin-top:8px;line-height:1.6">
+            현재 사업 통장 잔고(₩14,200,000) 기준 <strong>5.2개월</strong>간 안정적인 사업 운영이 가능합니다.<br>
+            <span style="color:var(--muted)">월 고정비 ₩2,730,000 지출 기준 · Reliable UX Writing 적용</span>
+          </p>
+        </div>
+        <div style="padding:16px;border:1px solid var(--line);border-radius:10px;background:#fff">
+          <strong style="color:var(--green)">스마트 지출 최적화 (고정비·변동비 분석)</strong>
+          <p class="small" style="margin-top:8px;line-height:1.6">
+            매월 나가는 정기 결제 중 최근 30일간 미사용 2건 정리 권장 (연 ₩720,000 절감 제언).<br>
+            <span style="color:var(--muted)">디자인 에셋 및 개발 툴 구독료 자동 최적화</span>
+          </p>
+        </div>
+      </div>
+
+      <h4 style="margin-top:24px">4. 쉬운 용어 토글 매핑 (Plain Language vs Accounting Mode)</h4>
+      <div class="table-wrap"><table>
+        <thead><tr><th>쉬운 비즈니스 용어 모드 (기본 ON)</th><th>표준 회계 용어 모드 (세무사용)</th><th>의미 설명</th></tr></thead>
+        <tbody>
+          <tr><td>당장 쓸 수 있는 자금 + 받을 돈</td><td>유동자산 총계 (Current Assets)</td><td>현재 통장 잔고와 정산 대기 중인 잔금 합계.</td></tr>
+          <tr><td>앞으로 나갈 확정 지출</td><td>유동부채 총계 (Liabilities)</td><td>다음 달 나갈 카드 대금과 예상 세금.</td></tr>
+          <tr><td>순수 사업 체력 (진짜 내 자본)</td><td>자기자본 총계 (Net Equity)</td><td>모든 빚을 청산하고도 순수하게 남는 사업 자본.</td></tr>
+          <tr><td>진짜 남은 순이익</td><td>당기순이익 (Net Profit)</td><td>모든 매출에서 세금과 경비를 빼고 내 몫으로 남은 돈.</td></tr>
+          <tr><td>3.3% 원천징수 세금</td><td>선납소득세·지방소득세</td><td>통장에 입금되기 전 국세청에 선납된 세금.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>대차대조표와 손익계산서를 ‘돈의 유입과 유출’, ‘자산과 빚’으로 풀어서 시각화하고, 세무사와 상담할 때를 대비해 표준 용어 스위치를 제공합니다.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>디자이너와 개발자는 대변/차변을 보는 순간 툴을 닫아버립니다. 3초 만에 내 자본 체력을 이해할 수 있어야 지속적으로 사용합니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [워터폴 흐름]으로 손익을 표시하고, [자산-부채=자본]을 [사업 체력표]로 번역하며 [쉬운 용어 토글]을 제공한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 10: SMART SCHEDULE -->
+  <article class="section" id="tacit-schedule" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">10</span>
+      <div>
+        <h2>세부 일정 관리 &amp; 2단 뷰 모드 (캘린더 vs 간트·칸반)</h2>
+        <p class="section-sub">우측 라벨지를 제거하고, 캘린더 시간 표기 및 하단 전폭 수정 모달, 타임라인 간트와 5단계 칸반 보드를 통합합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 세부 일정 관리 및 2단 뷰 모드</div>
+      <h4>세부 일정 2단 뷰 모드 &amp; 마일스톤 가이드</h4>
+      <div class="table-wrap"><table>
+        <thead><tr><th>뷰 모드 / 기능</th><th>구체적 작동 방식</th><th>일정 가시성 및 기대 효과</th></tr></thead>
+        <tbody>
+          <tr><td><strong>월간 캘린더 &amp; 타임라인</strong></td><td>날짜별 업무 도메인 칩과 함께 <strong>일정 시간(예: 14:00, 10:00~18:00)</strong> 표기. 하단 전폭 <strong>'세부 프로젝트 및 일정 목록'</strong>에서 각 행 <strong>'수정'</strong> 모달 버튼을 지원하여 일정명·일시·상태 즉시 수정.</td><td>한 달 전체의 마감 분포와 정밀한 일자별 시간표 및 목록을 시원하게 관리.</td></tr>
+          <tr><td><strong>월간 마감 타임라인(간트) &amp; 5단계 칸반 단일 통합 보드</strong></td><td>기존에 분리되어 나열되던 '간트 차트'와 '5단계 칸반 보드'를 단일 통합 카드 보드로 완전히 결합. 상단 간트 트랙 클릭 시 하단 칸반 컬럼이 즉시 하이라이트되며, 각 칸반 카드에 미니 간트 바가 내장되어 유기적으로 연동.</td><td>프로젝트 마감 병목과 실질적인 대금 정산 단계별 파이프라인을 단일 보드에서 한 번에 통제.</td></tr>
+        </tbody>
+      </table></div>
+      <div class="grid2" style="margin-top:18px">
+        <div>
+          <h4>3대 직군별 표준 마일스톤 템플릿</h4>
+          <p>외주 5단계(기획확정-시안공유-피드백-검수요청-잔금청구), 디지털 출판 5단계(목차-원고-조판-심사-출시), 지식창업 5단계(기획-교안-모집-강의-정산) 마일스톤 자동 생성 지원.</p>
+        </div>
+        <div>
+          <h4>마감 여유일(+1.5일) 선택 토글</h4>
+          <p>시스템이 강제하지 않고 프리랜서가 필요에 따라 자율적으로 켤 수 있는 선택 옵션으로 제공하여 비상 일정 버퍼를 확보.</p>
+        </div>
+      </div>
+    </div>
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>“집중력을 뇌파로 측정한다” 같은 비현실적인 표현 대신, 시스템 내 완료 체크 시각, 마감일 연장 클릭 등 실제 발생한 행동 기록과 3단 뷰로 설명하세요.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>1인 프리랜서는 여러 프로젝트를 동시에 진행합니다. 캘린더, 간트, 칸반 3단 전환을 통해 마감 누락과 정산 지연을 사전에 방지합니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [이전 작업 소요 시간]을 바탕으로 [마감 여유일 +1.5일]을 선택 제안하고 [3단 뷰 모드]로 업무 가시성을 극대화한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 11: LEGAL SHIELD -->
+  <article class="section" id="legal-shield" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">11</span>
+      <div>
+        <h2>계약 및 법적 보호 실전 시스템</h2>
+        <p class="section-sub">선언적인 보호에 그치지 않고, 정부 공식 표준계약서, 납품 검수 확인, 4단계 정산 가이드라인, 대한법률구조공단 연계까지 실전 법률 도구를 제공합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 프리랜서 실전 계약 및 법적 보호 4대 도구</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>실전 도구</th><th>구체적 기능 및 작동 방식</th><th>실전 법적 효력 및 기대 효과</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><strong>도구 1<br>정부 공식 용역 표준계약서 연계 &amp; 안전 특약 복사</strong></td>
+            <td>한국디자인진흥원(KIDP) 디자인 용역 표준계약서 4개 분야(시각디자인, 제품디자인, 멀티미디어 디자인, 서비스·경험디자인) 및 과기정통부(MSIT) SW 용역 표준계약서, 문체부 출판 계약서 포털 직결. 계약서 독소조항 AI 스캐너 및 3대 표준 안전 특약(지체상금 0.1% 상한, 대금 완납 시 저작권 이전, 무상 수정 2회 제한) 원클릭 복사.</td>
+            <td>공정거래위원회 용역위탁 표준약관 준수 및 불공정 독소조항 원천 차단.</td>
+          </tr>
+          <tr>
+            <td><strong>도구 2<br>산출물 전달 및 검수 확인 2단계 프로세스</strong></td>
+            <td><strong>1차 (21일 전 정중한 사전 검수 요청)</strong> 안내문 발송 ➔ <strong>2차 (상법 제69조 법적 검수 완료 효력 연계)</strong> 14일 고의 무응답 시 상법 제69조 검수 의제 인증서 PDF 발급.</td>
+            <td>고객과의 신뢰 관계를 유지하면서도 고의 검수 기피 시 법적 대항력 확보.</td>
+          </tr>
+          <tr>
+            <td><strong>도구 3<br>사전 협의 유예 확인 &amp; 4단계 정산 가이드라인</strong></td>
+            <td>정산 관리 화면의 회수 액션을 법적 보호의 <strong>'정산 가이드라인'</strong>으로 완전 이관: <strong>1단계: 카톡 안내</strong> ➔ <strong>2단계: 메일 리마인드 (이메일 요청서 서식)</strong> ➔ <strong>3단계: 공식 안내문 발송 (지연손해금 연 6% 공문서 서식)</strong> ➔ <strong>4단계: 미수금 해결 지원 (대한법률구조공단 무료 상담 및 내용증명 HWPX 서식 다운로드)</strong>.</td>
+            <td>단계별 커뮤니케이션으로 불필요한 감정 마찰을 예방하고, 악성 미수금에 대해 즉각적인 법적 집행 권원 확보.</td>
+          </tr>
+          <tr>
+            <td><strong>도구 4<br>대한법률구조공단 및 대법원 전자소송 공식 포털 연계</strong></td>
+            <td>임의로 소장을 모두 작성해주는 비현실적 방식 대신, <strong>대한법률구조공단(132 / klac.or.kr) '혼자하는 소송' 서식 자료실</strong> 및 <strong>대법원 전자소송(ecfs.scourt.go.kr)</strong> 포털로 직결하여 합법적이고 안전한 소액지급명령 신청 절차 안내.</td>
+            <td>변호사 수임료 없이 소액 미수금을 회수하고, 공인 절차를 통한 합법적 권리 구제 지원.</td>
+          </tr>
+        </tbody>
+      </table></div>
+
+      <div class="grid2" style="margin-top:20px">
+        <div style="padding:16px;border:1px solid var(--line);border-radius:10px;background:#fff">
+          <strong style="color:var(--blue)">실전 3대 안전 특약 표준 문안</strong>
+          <p class="small" style="margin-top:8px;line-height:1.6">
+            “1. (지체상금) 1일 지체상금은 계약금액의 0.1%를 초과하지 아니한다.<br>
+            2. (저작권 이전) 산출물의 지식재산권은 대금을 전액 완납한 시점에 이전된다.<br>
+            3. (검수 기한) 산출물 납품 후 14일 이내 서면 이의가 없으면 검수가 완료된 것으로 보며, 무상 수정은 2회로 한정한다.”
+          </p>
+        </div>
+        <div style="padding:16px;border:1px solid var(--line);border-radius:10px;background:#fff">
+          <strong style="color:var(--green)">사전 협의 유예 &amp; 4단계 정산 가이드라인</strong>
+          <p class="small" style="margin-top:8px;line-height:1.6">
+            • <strong>협의 유예:</strong> 결제일 연기 합의 시 독촉 알림 일시 중지<br>
+            • <strong>1단계:</strong> 카톡 안내 (부드럽고 명확한 정산 확인)<br>
+            • <strong>2단계:</strong> 메일 리마인드 (이메일 요청서 서식 발송)<br>
+            • <strong>3단계:</strong> 공식 안내문 발송 (연 6% 지연손해금 기재 공문)<br>
+            • <strong>4단계:</strong> 미수금 해결 지원 (132 법률 상담 &amp; 내용증명 HWPX 다운로드)
+          </p>
+        </div>
+      </div>
+
+      <!-- Official Public Legal Support Bridge Block -->
+      <div style="margin-top:16px;padding:16px;background:var(--soft);border:1px solid #c7d2fe;border-radius:10px">
+        <strong style="color:var(--accent)">🏛️ 대한법률구조공단(132) &amp; 대법원 전자소송 공식 공공 법률 지원 연계</strong>
+        <p class="small" style="margin-top:6px;line-height:1.6;color:var(--ink)">
+          별도의 무거운 기능을 임의로 추가하거나 효력이 불분명한 서울시 정책 버튼 대신, 국가 공인 법률 상담 및 전자소송 포털을 직결합니다:
+        </p>
+        <ul class="small" style="margin-top:6px;padding-left:18px;line-height:1.6;color:var(--muted)">
+          <li><strong>대한법률구조공단 무료 법률 상담:</strong> 국번없이 <strong>132</strong> 전화 상담 및 전국 지부 방문 예약 (klac.or.kr)</li>
+          <li><strong>'혼자하는 소송' 서식 자료실:</strong> 법률구조공단에서 검증한 공사대금·용역대금 청구 표준 소장 양식 무료 다운로드</li>
+          <li><strong>내용증명 표준 서식 HWPX 다운로드:</strong> 우체국 인터넷 내용증명 발송용 표준 서식 및 4단계 작성 가이드 제공</li>
+          <li><strong>대법원 전자소송 직결:</strong> 대법원 전자소송(ecfs.scourt.go.kr) 소액지급명령 및 이행권고결정 절차 공식 안내</li>
+        </ul>
+      </div>
+    </div>
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>“법적 보호를 해준다”는 막연한 구호 대신, 공식 표준계약서 검토, 2단계 납품-검수 확인, 사전 협의 유예, 4단계 정산 가이드라인 및 공공 법률 상담까지 구체적인 실전 세부 도구를 명시합니다.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>1인 프리랜서는 전담 법무팀이 없습니다. 툴 자체가 실전 방패가 되어주어야 대금 미지급과 끝없는 무상 수정 요구를 차단할 수 있습니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [공식 표준계약서]로 계약을 지키고, [2단계 검수 확인]으로 납품을 확정하며, [4단계 정산 가이드라인 및 공공 법률 지원]으로 대금을 안전하게 회수한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 12: CLIENT CRM -->
+  <article class="section" id="client-crm" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">12</span>
+      <div>
+        <h2>클라이언트 관리 (CRM &amp; 거래 신뢰 지수)</h2>
+        <p class="section-sub">주관적 평가 없이 실제 입금 지연일과 수정 빈도 로그, 필요 서류 체크리스트로 거래처를 종합 관리합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 데이터 기반 클라이언트 360도 관리 엔진</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>클라이언트 등급</th><th>데이터 산출 기준</th><th>시스템 제언 및 계약 전략</th></tr></thead>
+        <tbody>
+          <tr><td><span class="status green">Tier S (최우수 파트너)</span></td><td>정산 지연 0일, 수정 요구 명확 (수정 빈도 1.0회 이하).</td><td>차기 프로젝트 일정 최우선 배정 권장, 장기 파트너십 우대.</td></tr>
+          <tr><td><span class="status green">Tier A (양호 파트너)</span></td><td>평균 정산 지연 1~3일 이내, 수정 빈도 2.0회 이하.</td><td>표준 계약 조건 유지 권장, 안정적 협업 지속.</td></tr>
+          <tr><td><span class="status">Tier B (일반 파트너)</span></td><td>평균 정산 지연 14일 이내, 수정 빈도 3.0회 이하.</td><td>검수 기한 명시 권장, 무상 수정 횟수 2회 제한 준수.</td></tr>
+          <tr><td><span class="status orange">Tier C (주의 및 고위험)</span></td><td>평균 정산 지연 18일 이상 혹은 무상 수정 4회 이상 발생.</td><td>착수금 비중 50% 이상 필수 상향, 무상 수정 2회 엄격 제한.</td></tr>
+        </tbody>
+      </table></div>
+      
+      <div class="grid2" style="margin-top:18px">
+        <div>
+          <h4>필요 서류 동적 관리 &amp; 툴팁 레이아웃 개선</h4>
+          <p>헤더 툴팁의 좌측 텍스트 짤림을 개선하였으며, 기업 정보 수정 모달에서 서류별 체크박스를 제거하고 서류 목록 동적 추가 및 행 우측 휴지통(삭제) 버튼을 적용하여 유연하게 서류를 관리합니다.</p>
+        </div>
+        <div>
+          <h4>업무 및 소통 방식 &amp; 실질 시급 분석기</h4>
+          <p>소통 채널, 정기 보고 주기, 산출물 공유 링크 관리와 함께, 총 수령액 대비 실제 소통·회의·수정에 투입된 총 시간을 나누어 실제 시간당 수익성을 계산.</p>
+        </div>
+      </div>
+    </div>
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>사용자에게 “이 클라이언트 점수를 매기세요”라고 강요하지 마세요. 정산 지연 일수, 수정 빈도, 실제 투입 시간 등 시스템에 존재하는 데이터로 등급과 실질 시급을 계산합니다.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>친절하지만 항상 대금을 늦게 주거나 수정 요구가 끝없는 고객은 1인 사업가에게 치명적입니다. 데이터로 객관화해야 나쁜 계약을 거절하거나 계약 조건을 유리하게 바꿀 수 있습니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [정산 지연 일수와 실 투입 시간]을 분석하여 [신뢰 등급과 실질 시급]을 산정하고 [필요 서류와 협업 방식]을 체계화한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 13: DATA -->
+  <article class="section" id="data" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">13</span>
+      <div>
+        <h2>데이터 설계 &amp; Local-First</h2>
+        <p class="section-sub">금융 데이터의 외부 유출 없는 브라우저 IndexedDB 암호화 모델을 설계합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · Local-First 데이터 스키마</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>데이터 엔티티</th><th>주요 필드</th><th>보안 및 무결성 조건</th></tr></thead>
+        <tbody>
+          <tr><td>Transaction (거래내역)</td><td>id, date, domain (client/pub/know), title, category, gross, tax, net, status.</td><td>3대 세무 역산 세액 분리 저장. 통장 계좌번호는 마스킹 처리.</td></tr>
+          <tr><td>Task &amp; Schedule (일정)</td><td>id, domain, client, title, dueDate, bufferDays, leadTimeFactor, status, completedAt.</td><td>완료 체크 시 타임스탬프 불변 저장 (실제 소요 시간 통계 분석용).</td></tr>
+          <tr><td>Client (고객사)</td><td>id, name, totalRevenue, avgDSO, revisionRate, trustTier, contractTerms.</td><td>입금 이력 기반 자동 갱신.</td></tr>
+          <tr><td>LegalProof (법적증빙)</td><td>id, projectId, deliverTimestamp, inspectionDeadline, proofHash, status.</td><td>산출물 해시값과 전자서명 시점 기록.</td></tr>
+        </tbody>
+      </table></div>
+      <p class="small" style="margin-top:12px">저장소: 브라우저 IndexedDB + LocalStorage (Web Crypto API AES-GCM 로컬 암호화). 오프라인 상태에서도 완전 작동.</p>
+    </div>
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>거래, 일정, 고객 엔티티의 주요 필드와 관계를 정의하고, 개인정보가 안전하게 보호되는 로컬 우선 저장 방식을 명시합니다.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>1인 프리랜서의 자금 데이터는 극도로 민감합니다. Local-First 구조로 설계하면 서버 비용이 들지 않고 보안 신뢰도가 극대화됩니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [엔티티]를 [필드]로 정의하고, [IndexedDB 로컬 암호화]에 저장하여 [오프라인 무결성]을 보장한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 14: ARCHITECTURE -->
+  <article class="section" id="architecture" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">14</span>
+      <div>
+        <h2>PWS 웹앱 &amp; 클라우드 배포 아키텍처</h2>
+        <p class="section-sub">반응형 웹, PWS 설치, Service Worker 오프라인 캐싱, Google Cloud Run 및 Firebase 호환 환경을 정의합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 기술 스택 &amp; PWS 구조 (Cloud Run &amp; Firebase 호환)</div>
+      <p><strong>아키텍처 개요:</strong> React / Vanilla HTML5 + Tailwind CSS + Lucide Icons + Chart.js 기반의 고밀도 단일 웹앱. PWS 서비스 워커와 Web Manifest를 통해 설치형 오프라인 실행을 완벽 지원하며, 향후 Google Cloud Run 컨테이너 백엔드 및 Firebase(Firestore, Auth, App Hosting) 확장과 완벽하게 호환되는 하이브리드 아키텍처를 채택했습니다. (사이드바 하단 v1/v2 링크 및 서울시 정책 연계 버튼은 영구 삭제됨)</p>
+      <div class="architecture" role="img" aria-label="SoloOS 아키텍처 다이어그램">
+        <div class="architecture-row">
+          <div class="arch-box">
+            <strong>클라이언트 환경 (PWS)</strong>
+            <p>데스크톱 PC (메인 대시보드)<br>모바일 스마트폰 (PWS 설치형 웹앱)<br>오프라인 Service Worker 캐시</p>
+          </div>
+          <div class="arch-arrow" aria-hidden="true">→</div>
+          <div class="arch-box server">
+            <strong>SoloOS 엔진 &amp; 클라우드 확장</strong>
+            <p><b>3대 세무 자동분개 엔진</b><br>워터폴 손익 &amp; 런웨이 계산기<br>Google Cloud Run 마이크로서비스 연동<br>Firebase Firestore 동기화 준비</p>
+          </div>
+          <div class="arch-arrow" aria-hidden="true">→</div>
+          <div class="arch-box">
+            <strong>로컬 보안 저장소</strong>
+            <p>IndexedDB (암호화 장부)<br>LocalStorage (모드·도메인 상태)<br>Service Worker Cache (에셋)</p>
+          </div>
+        </div>
+        <p class="caption">외부 서버 의존 없이 클라이언트 브라우저만으로 모든 세무 분개와 런웨이 계산이 실시간 동작하며, 향후 Cloud Run &amp; Firebase 확장이 가능한 PWS 모델입니다.</p>
+      </div>
+    </div>
+
+    <div class="learning no-print">
+      <div class="tabs" role="tablist" aria-label="제공 형태별 특징">
+        <button type="button" role="tab" id="tab-web" aria-selected="true" aria-controls="panel-web" tabindex="0" data-platform="web">반응형 웹</button>
+        <button type="button" role="tab" id="tab-pwa" aria-selected="false" aria-controls="panel-pwa" tabindex="-1" data-platform="pwa">PWS 설치형 앱</button>
+        <button type="button" role="tab" id="tab-agent" aria-selected="false" aria-controls="panel-agent" tabindex="-1" data-platform="agent">대화형 AI 모드</button>
+      </div>
+      <div class="platform-panel" role="tabpanel" id="panel-web" aria-labelledby="tab-web">
+        <strong>반응형 웹: 설치 없이 URL 접속만으로 고밀도 대시보드 제공</strong>
+        <p>PC에서는 대형 모니터에 최적화된 고밀도 4대 KPI와 워터폴 손익표, 캘린더를 한눈에 파악합니다.</p>
+      </div>
+      <div class="platform-panel" role="tabpanel" id="panel-pwa" aria-labelledby="tab-pwa" hidden>
+        <strong>PWS 설치형: 스마트폰 홈 화면 추가 및 오프라인 완벽 구동</strong>
+        <p>네이티브 앱처럼 홈 화면 아이콘 생성, 스플래시 스크린, 인터넷 연결이 끊겨도 기존 장부 조회 및 신규 등록 가능.</p>
+      </div>
+      <div class="platform-panel" role="tabpanel" id="panel-agent" aria-labelledby="tab-agent" hidden>
+        <strong>대화형 AI 모드: 복잡한 화면 대신 자연어로 질문하고 조언 수신</strong>
+        <p>“이번 달 세금 예비금 얼마야?”, “SaaS 절감 플랜 알려줘” 등 1인 사업가 전담 CFO와 대화하듯 사용.</p>
+      </div>
+    </div>
+
+    <div class="guide">
+      <div class="guide-box">
+        <h3>어떻게 쓰나요?</h3>
+        <p>반응형 웹과 PWS의 역할을 정의하고, 오프라인 환경에서 어떻게 로컬 캐싱이 동작하는지 및 향후 클라우드 백엔드 확장성을 명시합니다.</p>
+      </div>
+      <div class="guide-box">
+        <h3>왜 필요한가요?</h3>
+        <p>외출 중이거나 미팅 중 스마트폰으로 즉시 영수증을 확인하거나 일정을 볼 수 있어야 1인 사업가의 실제 워크웨어로 자리잡습니다.</p>
+      </div>
+      <div class="sentence"><b>문장 틀</b> &nbsp; [PWS와 Local-First]로 제공하며, [Service Worker]로 오프라인 캐시를 보장하고 [Cloud Run &amp; Firebase 호환]으로 확장한다.</div>
+    </div>
+  </article>
+
+  <!-- SECTION 15: VALIDATION & WORKBOOK -->
+  <article class="section" id="validation" data-plan-section>
+    <div class="section-head">
+      <span class="section-number">15</span>
+      <div>
+        <h2>검증 사례 &amp; AI 요청문</h2>
+        <p class="section-sub">개발 완료를 검증할 8대 테스트 케이스와 즉시 복사해 사용하는 AI 프롬프트를 제공합니다.</p>
+      </div>
+    </div>
+    <div class="sample" data-sample>
+      <div class="sample-label">기획 샘플 · 테스트 케이스 T01~T08</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>테스트 ID</th><th>검증 상황 및 입력값</th><th>기대 결과 및 증빙</th></tr></thead>
+        <tbody>
+          <tr><td>T01 · 3.3% 정밀 역산</td><td>실입금액 ₩2,901,000 입력</td><td>공급가 ₩3,000,000, 소득세 ₩90,000, 지방세 ₩9,000 정확 역산 분개.</td></tr>
+          <tr><td>T02 · 도메인 토글 분리</td><td>외주 도메인 선택 시</td><td>출판 및 지식창업 태스크와 자금이 숨겨지고 외주 항목만 100% 필터링.</td></tr>
+          <tr><td>T03 · 워터폴 손익 계산</td><td>매출 ₩5.8M, 경비 ₩1.0M</td><td>순이익 ₩4.6M (79.3%) 및 세무 분리 권장액 ₩460,000 정확 계산.</td></tr>
+          <tr><td>T04 · 사업 체력표</td><td>자산 ₩18.2M, 부채 ₩3.8M</td><td>순자본 ₩14.4M 및 건전도 79.1% 정상 표시.</td></tr>
+          <tr><td>T05 · 쉬운 용어 토글</td><td>쉬운 용어 모드 OFF 전환 시</td><td>[받을 돈] → [외상매출금], [진짜 순이익] → [당기순이익] 즉시 전환.</td></tr>
+          <tr><td>T06 · 비상 여유일 권장</td><td>웹 개발 태스크 신규 추가</td><td>소요 시간 배율 1.32배 반영되어 마감일에 +1.5일 비상 여유일 자동 권장.</td></tr>
+          <tr><td>T07 · 클라이언트 등급</td><td>정산 지연 18일 거래처 등록</td><td>Tier C (주의) 자동 산정 및 ‘착수금 50% 특약’ 조언 카드 생성.</td></tr>
+          <tr><td>T08 · PWA 오프라인</td><td>비행기 모드에서 앱 새로고침</td><td>서비스 워커 캐시로 화면 정상 로드 및 로컬 데이터 정상 표시.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <!-- CHECKLIST -->
+    <div class="learning no-print" style="margin-top:22px">
+      <h3>내 1인 사업가 ERP 기획 준비 상태 점검</h3>
+      <div class="checklist" id="planning-checklist">
+        <label class="check-item"><input type="checkbox" data-check="privacy"><span>인증서 요구 없는 로컬 자금 수집(엑셀/영수증/PDF 실제 드롭) 방식을 정했다.</span></label>
+        <label class="check-item"><input type="checkbox" data-check="tax"><span>3대 세무 매트릭스 &amp; 국세청 4대 기타소득 역산, 6종 계산기 규칙을 확정했다.</span></label>
+        <label class="check-item"><input type="checkbox" data-check="statements"><span>워터폴 손익 흐름과 자금 현황(14.2M 얼라인, 런웨이 2열 배치)을 설계했다.</span></label>
+        <label class="check-item"><input type="checkbox" data-check="domain"><span>외주, 출판, 지식창업 간 일정 혼선 방지 글로벌 토글을 넣었다.</span></label>
+        <label class="check-item"><input type="checkbox" data-check="tacit"><span>세부 일정 2단 뷰(캘린더 시간 표기 vs 간트·칸반 통합) 및 마감 여유일을 정했다.</span></label>
+        <label class="check-item"><input type="checkbox" data-check="legal"><span>공식 표준계약서, 14일 검수 증빙, 4단계 정산 가이드라인(대한법률구조공단 연계)을 정의했다.</span></label>
+        <label class="check-item"><input type="checkbox" data-check="client"><span>정산 지연일(DSO) 기반 클라이언트 등급 및 필요 서류 동적 삭제 관리를 설계했다.</span></label>
+        <label class="check-item"><input type="checkbox" data-check="pwa"><span>PWS 아키텍처(Cloud Run &amp; Firebase 호환) 및 오프라인 캐싱 요구사항을 명시했다.</span></label>
+      </div>
+      <div class="progress-row">
+        <progress id="planning-progress" value="0" max="8" aria-label="기획 준비 항목 수"></progress>
+        <span id="planning-count" aria-live="polite">0 / 8개 확인</span>
+      </div>
+    </div>
+
+    <!-- WORKBOOK EDITOR -->
+    <div class="no-print" style="margin-top:24px">
+      <label for="draft"><strong>복사해서 바꿔 쓰는 1인 사업가 기획 양식 (워크북)</strong></label>
+      <div class="editor-actions">
+        <button type="button" id="load-template">빈 양식 넣기</button>
+        <button type="button" id="load-sample">완성 샘플 넣기</button>
+        <button type="button" id="copy-draft">내 초안 복사</button>
+        <button type="button" id="download-draft" class="primary">내 초안 .txt 저장</button>
+      </div>
+      <textarea id="draft" spellcheck="false" aria-describedby="draft-help storage-status"></textarea>
+      <div class="editor-info">
+        <span id="draft-help">내용은 브라우저 로컬스토리지에 자동 저장됩니다. 민감한 실제 계좌번호를 넣지 마세요.</span>
+        <span id="storage-status" role="status">저장 준비 중</span>
+      </div>
+    </div>
+    <pre class="draft-print" id="draft-print" style="display:none"></pre>
+
+    <!-- PROMPTS -->
+    <div class="prompt-head">
+      <h3>요청문 1 · 1인 사업가 ERP 기획서 점검 요청</h3>
+      <button type="button" data-copy-prompt="review">내 초안 포함 복사</button>
+    </div>
+    <pre id="prompt-review">아래 SoloOS 기획 초안을 검토해줘. 1인 디지털 프리랜서(디자이너/개발자/출판/지식창업) 입장에서 자금 수집의 현실성(인증서 배제·엑셀/PDF/영수증 실제 드롭 파싱), 3대 세무 역산 공식(3.3%, 10%, 4대 기타소득), 비주얼 워터폴 손익계산서, 자금 현황(주간작업시간 삭제·통장잔고 14.2M 얼라인·런웨이 2열 배치), 세부 일정 2단 뷰(캘린더 시간 표기 vs 간트·칸반 통합), 공식 용역 표준계약서 연계(KIDP·MSIT), 14일 검수 완료 증빙, 4단계 정산 가이드라인 &amp; 대한법률구조공단 연계, PWS 아키텍처 요구사항이 누락되지 않았는지 꼼꼼히 점검해줘.
+모호하거나 비현실적인 항목이 있다면 1인 사업가 맞춤형 대안을 제시해줘.
+
+[여기에 아래에서 작성한 내 기획 초안을 첨부]</pre>
+
+    <div class="prompt-head">
+      <h3>요청문 2 · 단계별 웹앱 &amp; PWS 구현 요청</h3>
+      <button type="button" data-copy-prompt="build">내 초안 포함 복사</button>
+    </div>
+    <pre id="prompt-build">아래 SoloOS 기획서를 바탕으로 완성형 웹앱과 PWS를 구현해줘.
+1. 온보딩 모드 셀렉터(대시보드 vs 대화형)와 글로벌 도메인 토글(통합/외주/출판/지식창업)을 상단에 배치해줘.
+2. 비주얼 손익 워터폴과 자금 현황(주간작업시간 삭제, 통장 잔고 14.2M 얼라인, 런웨이 &amp; 지출최적화 2열 대칭 배치)을 만들고 [쉬운 용어 모드 ON/OFF] 스위치를 연동해줘.
+3. 인증서 없이 엑셀·PDF·영수증 이미지 실제 드롭 및 인라인 일괄 편집(엑셀 모드)이 가능한 로컬 자금수집 &amp; 자동분개 모달을 구현해줘.
+4. 세부 일정 2단 뷰 모드(캘린더 시간표기 vs 간트·칸반 통합)와 공식 표준계약서, 14일 검수 증빙, 4단계 정산 가이드라인(카톡-메일-공문-미수금지원 132/내용증명 HWPX)을 연동해줘.
+5. manifest.json과 sw.js로 PWS 설치 및 오프라인 캐싱을 완벽 지원하고 향후 Cloud Run &amp; Firebase 호환성을 확보해줘.
+
+[여기에 아래에서 작성한 내 기획 초안을 첨부]</pre>
+
+    <div class="prompt-head">
+      <h3>요청문 3 · 배포 및 최종 검증 요청</h3>
+      <button type="button" data-copy-prompt="deploy">내 초안 포함 복사</button>
+    </div>
+    <pre id="prompt-deploy">이 SoloOS 기획의 구현 결과물을 테스트 케이스 T01~T08 기준으로 검증해줘.
+실제 3대 세무 역산 오차가 0원인지, 도메인 전환 시 일정이 격리되는지, 비행기 모드에서도 PWS로 장부 조회가 가능한지 확인하고 배포 절차를 정리해줘.
+
+[여기에 아래에서 작성한 내 기획 초안을 첨부]</pre>
+
+    <details class="learning"><summary>쉬운 용어 사전</summary>
+      <div class="glossary">
+        <div><strong>3대 세무 역산</strong>미등록 프리랜서 3.3% 사업소득세, 사업자등록자 10% 부가가치세 분리, 국세청 4대 경비율 기타소득세를 입금액만으로 자동 계산하는 기능.</div>
+        <div><strong>워터폴 손익 흐름</strong>총 계약액에서 세금, 경비가 단계별로 차감되어 진짜 순이익이 남는 과정을 직관적으로 시각화한 차트.</div>
+        <div><strong>런웨이 시뮬레이터</strong>현재 사업 통장 가용 잔고(₩14,200,000)를 기준으로 월평균 고정비 대비 안정적으로 버틸 수 있는 개월 수를 품격 있게 안내하는 안심 지표.</div>
+        <div><strong>4단계 정산 가이드라인</strong>1단계: 카톡 안내 ➔ 2단계: 메일 리마인드 (이메일 요청서) ➔ 3단계: 공식 안내문 발송 (지연손해금 공문) ➔ 4단계: 미수금 해결 지원 (대한법률구조공단 무료 상담 132 &amp; 내용증명 표준 서식 HWPX 다운로드 및 작성 가이드).</div>
+        <div><strong>14일 검수 완료 증빙 (상법 제69조)</strong>작업물 전달 후 14일 동안 클라이언트가 하자를 통지하지 않으면 법적으로 검수가 끝난 것으로 간주되는 증빙 문서.</div>
+        <div><strong>Local-First</strong>클라우드 서버보다 브라우저 로컬 저장소를 우선하여 오프라인 동작과 완벽한 프라이버시를 보장하는 소프트웨어 설계.</div>
+        <div><strong>PWS (Progressive Web Service)</strong>웹 표준 기술로 브라우저 설치형 앱을 지원하는 동시에 Google Cloud Run 백엔드 컨테이너 및 Firebase 클라우드 동기화로 확장 가능한 진화형 웹 서비스 아키텍처.</div>
+      </div>
+    </details>
+  </article>
+
+  <footer class="footer">
+    <p>SoloOS · 1인 사업가를 위한 올인원 ERP &amp; 워크웨어 기획 플레이북 v2.0 | 한국어 오프라인 PWS 지원</p>
+  </footer>
+
+  </div>
+</main>
+</div>
+
+<div class="toast" id="toast" hidden>알림 메시지</div>
+
+<!-- JAVASCRIPT LOGIC -->
+<script>
+(() => {
+  'use strict';
+  const byId = id => document.getElementById(id);
+  const storageKey = 'soloos_planning_guide_v2';
+
+  const template = `SoloOS · 1인 사업가 올인원 ERP & 워크웨어 기획 초안
+작성일: ${new Date().toISOString().split('T')[0]} / 버전: v2.0
+
+01. 문제와 서비스 목적
+- 타깃 페르소나: [디자이너 / 개발자 / 1인 출판 / 지식창업]
+- 해결할 핵심 문제: [3.3% 세금 계산 번거로움, 일정 오버부킹, 미수금 리스크]
+- 한 문장 정의: [1인 사업가를 위한 가장 신뢰도 높은 디지털 비즈니스 운영 워크웨어]
+
+02. 구현 효과와 이득
+- 시간 절감: [월간 행정·정산 시간 절감 목표]
+- 세무 안정성: [5월 종합소득세 예비금 분리 달성률]
+- 지출 최적화: [미사용 SaaS 절감 연간 목표액]
+- 일정 안정성: [납기 준수율 및 번아웃 방지 목표]
+
+03. 가설부터 배포·검증까지
+- H01 (개인정보 안심): 엑셀/영수증/PDF 실제 드롭 방식의 100% 로컬 파싱
+- H02 (비주얼 손익): 비전공자의 90% 이상 진짜 순이익 즉시 파악
+- H03 (비상 여유일): +1.5일 여유일 권장으로 마감 지연 50% 감소
+- 단계별 마일스톤: UI/재무 → 로컬 수집 → 일정 도우미 & 계약 안전망 → PWS 배포
+
+04. 도메인·권한·MVP 범위
+- 글로벌 도메인: [전체 통합 / 외주 프로젝트 / 디지털 출판 / 지식창업]
+- 1차 MVP 포함 기능 (P0): [온보딩 모드, 도메인 드롭다운, 3대 세무 역산, 세금 관리(4대 세무 D-day·세금 통장 준비율 48.3%·6대 전문 계산기), 자금수집 & 자동분개(한 해 정산 요약표·엑셀 모드), 자금 현황(통합 마스터 히어로 카드·통장잔고 14.2M·런웨이 5.2개월·3열 재무 구조), 세부 일정 2단 뷰(캘린더 시간 표기 vs 간트·칸반 통합), 공식 용역 표준계약서 연계, 4단계 정산 가이드라인, PWS]
+
+05. 흐름과 화면 구조
+- S01: 온보딩 모드 선택 (대시보드 vs 대화형)
+- S02-A: 메인 대시보드 2대 집중 뷰 (일정 좌측, 자금 그래프 우측 2컬럼 완벽 대칭)
+- S02-A2: 세부 일정 관리 2단 뷰 (월간 캘린더 시간 표기 vs 마감 타임라인 & 5단계 칸반 통합)
+- S02-S: 정산 관리 (미수금 정산 관리표, 행별 연필/휴지통 액션, 사전 협의 유예, 클라이언트 연동)
+- S02-F: 클라이언트 관리 (거래처 신뢰 지수 CRM, 필요 서류 동적 관리, 소통 채널 선택기)
+- S02-B: 자금 현황 (통합 마스터 히어로 카드 [통장 잔고 14.2M + 런웨이 5.2개월 안정 + 3열 재무 구조], 5단계 워터폴 손익 흐름, 2열 런웨이 & 지출 최적화)
+- S02-C: 자금수집 & 자동분개 (Zero-Retention 안심 배너, 실제 엑셀/영수증/PDF 드롭, 직접 입력 일자 필드, 엑셀 모드 일괄 편집, 한 해 정산 요약표)
+- S02-T: 세금 관리 (자금 관리 하위 2뎁스: 4대 세무 D-day 캘린더, 세금 통장 준비율 48.3% 게이지, 프리랜서 맞춤형 6대 전문 계산기 컴팩트 패널)
+- S02-D: 계약 (공식 용역 표준계약서 연계 [디자인 4대 분야, SW, 출판], 독소조항 AI 스캐너)
+- S02-E: 법적 보호 (납품-검수 2단계 프로세스, 4단계 정산 가이드라인, 대한법률구조공단 132/대법원 전자소송 연계, 표준 HWPX 서식)
+- S03: 안심 자금 스마트 등록 모달 (실제 엑셀/영수증/PDF 드롭, 직접 입력 일자 필드)
+- S04: 대화형 AI Agent (자연어 질의응답 및 추천 업무 퀵 버튼)
+
+06. UX Writing 헌장 & Reliable 언어 체계
+- 브랜드 콘셉트: Reliable (안심하고 돈과 비즈니스를 위탁할 수 있는 신뢰감)
+- 라이팅 콘셉트: 신뢰를 주는 글쓰기 (비문 없는 정제된 문장, 높은 퀄리티 지향)
+- 어휘 기준: 명료하지만 기계 같지 않음 (품격 있는 핀테크 파트너 언어)
+- 금지 규정: 불안 조장("버틸 수 있는 기간"), 억압적 금지어("건드리지 마세요!"), 과장된 느낌표 배제
+- 핵심 카피: "현재 사업 통장 잔고 기준 X.X개월간 안정적인 사업 운영이 가능합니다."
+
+07. 3대 세무 매트릭스 & 세금 관리
+- [미등록 프리랜서]: 3.3% 사업소득세 역산 (공급가 = 입금액 ÷ 0.967)
+- [사업자등록자]: 10% 전자세금계산서 부가세 분리 (공급가 = 입금액 ÷ 1.1, 세금 통장에 모아두기)
+- [비정기 일시소득]: 국세청 4대 기타소득세 역산 (60% 경비인정 8.8%, 80% 경비인정 4.4%, 0% 22%)
+- 정산 관리 (#subview-settlement): 미수금 정산표 관리 및 행 수정/삭제, 사전 협의 유예 연동 ('단가개선필요' 삭제 완료)
+- 세금 관리 (#subview-tax): 4대 정기 세무 일정 캘린더, 목표 대비 준비율 48.3% 게이지 바 & 행동 권장 안내, 6대 전문 계산기 (단가, 종소세, 가산세, 건보료, 기타소득세, 업종코드)
+
+08. 안심 자금 수집 (Privacy-First)
+- Zero-Retention 안심 배너 (금융 인증서/비밀번호 요구 배제)
+- 실제 시중은행 엑셀(.xlsx/.xls) 및 영수증 이미지(jpg, png) OCR, PDF 로컬 파서
+- 직접 입력 모달 거래 일자(Date) 필드
+- 엑셀 모드 (전체 일괄 편집) 및 한 해 정산 요약표 리포트
+
+09. 비주얼 재무제표 UX (자금 현황)
+- 명칭: '자금 현황' 단일화 (주간 작업 시간 삭제, 사업 통장 잔고 ₩14,200,000 기준 전면 얼라인)
+- 통합 마스터 히어로 카드: 즉시 가용 현금 ₩14,200,000 + 잔여 런웨이 5.2개월 (안정, 월 고정비 ₩2.73M 기준)
+- 3열 직관적 재무 구조: 입금 대기 미수금(+₩4.0M) - 예정 지출/세금(-₩3.8M) = 실질 사업 순자본 ₩14.4M (자본 건전도 79.1% 매우 안전)
+- 워터폴 손익 흐름: 총공급가액 → 세무 공제 → 통장입금 → 필수경비 → 세후 실질 순이익 (79.3%)
+- 런웨이 시뮬레이터 & 스마트 지출 최적화 2열 대칭 배치 (복잡하던 세무 D-day는 세금 관리로 완전 이관)
+
+10. 세부 일정 관리 2단 뷰 모드
+- 뷰 모드 1: 월간 캘린더 & 타임라인 (일정 시간 표기, 하단 전폭 세부 일정 목록 및 '수정' 모달 연동)
+- 뷰 모드 2: 월간 마감 타임라인(간트) & 5단계 프로젝트 칸반 보드 통합 (우측 라벨지 제거)
+- 마감 여유일 (+1.5일) 선택 토글 및 3대 직군별 표준 마일스톤
+
+11. 계약 및 법적 보호 실전 시스템
+- 한국디자인진흥원(KIDP) 디자인 용역 4개 분야(시각·제품·멀티미디어·서비스) & 과기정통부(MSIT) SW 용역 표준계약서 포털 직결
+- 산출물 납품 & 14일 검수 완료 증빙 (상법 제69조)
+- 4단계 정산 가이드라인: 1단계 카톡 ➔ 2단계 메일(요청서) ➔ 3단계 공식 안내문 ➔ 4단계 미수금 해결 지원
+- 대한법률구조공단(132 / klac.or.kr) '혼자하는 소송' 서식 자료실 & 대법원 전자소송(ecfs.scourt.go.kr) 공식 연계
+- 서울시 정책 연계 및 지자체 사전 검토 전면 삭제
+
+12. 클라이언트 신뢰 지수 (CRM)
+- 정산 지연 일수(DSO) & 수정 빈도 기반 Tier A/B/C 자동 산출
+- 헤더 툴팁 좌측 짤림 방지 및 기업 정보 수정 모달 내 필요 서류 동적 추가/삭제(휴지통)
+
+13. 데이터 설계 & Local-First
+- IndexedDB + LocalStorage 로컬 암호화 (AES-GCM)
+- 오프라인 무결성 보장 및 서버 유출 0%
+
+14. PWS 웹앱 & 클라우드 배포 아키텍처
+- PWS 설치형 웹앱 및 Service Worker 오프라인 캐싱
+- Google Cloud Run 백엔드 컨테이너 & Firebase Firestore 호환 구조
+- 서비스 사이드바 v1/v2 링크 및 서울시 정책 연계 완전 삭제
+
+15. 검증 사례 & AI 프롬프트
+- T01~T08 테스트 케이스 통과 기준 확인
+- 1인 사업가 맞춤형 3대 AI 프롬프트
+`;
+
+  let saved = {};
+  let storageAvailable = true;
+  try {
+    const parsed = JSON.parse(localStorage.getItem(storageKey) || '{}');
+    if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) saved = parsed;
+  } catch (_) { storageAvailable = false; }
+
+  const draft = byId('draft');
+  draft.value = typeof saved.draft === 'string' ? saved.draft : template;
+
+  const checks = [...document.querySelectorAll('[data-check]')];
+  checks.forEach(input => { input.checked = !!(saved.checks && saved.checks[input.dataset.check]); });
+
+  function status(message) { byId('storage-status').textContent = message; }
+  status(storageAvailable ? (typeof saved.draft === 'string' ? '이 브라우저의 초안을 불러왔습니다' : '작성하면 브라우저에 자동 저장') : '브라우저 저장 불가 · .txt로 저장하세요');
+
+  function save() {
+    const state = { draft: draft.value, checks: Object.fromEntries(checks.map(x => [x.dataset.check, x.checked])) };
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+      storageAvailable = true;
+      status('브라우저에 저장됨 · ' + new Date().toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' }));
+    } catch (_) {
+      storageAvailable = false;
+      status('브라우저 저장 불가 · .txt로 저장하세요');
+    }
+  }
+
+  let saveTimer;
+  draft.addEventListener('input', () => { status('저장 중…'); clearTimeout(saveTimer); saveTimer = setTimeout(save, 450); });
+  window.addEventListener('pagehide', () => { clearTimeout(saveTimer); save(); });
+
+  function updateProgress() {
+    const count = checks.filter(x => x.checked).length;
+    byId('planning-progress').value = count;
+    byId('planning-count').textContent = `${count} / ${checks.length}개 확인`;
+  }
+  checks.forEach(input => input.addEventListener('change', () => { updateProgress(); save(); }));
+  updateProgress();
+
+  let toastTimer;
+  function toast(message) {
+    const box = byId('toast'); box.textContent = message; box.hidden = false;
+    clearTimeout(toastTimer); toastTimer = setTimeout(() => { box.hidden = true; }, 3300);
+  }
+
+  function plainText(root) {
+    const clone = root.cloneNode(true);
+    clone.querySelectorAll('.sample-label').forEach(x => x.remove());
+    clone.querySelectorAll('table').forEach(table => {
+      const lines = [...table.querySelectorAll('tr')].map(row => [...row.cells].map(cell => cell.textContent.replace(/\s+/g, ' ').trim()).join(' | '));
+      const block = document.createElement('p');
+      block.textContent = lines.join('\n'); block.style.whiteSpace = 'pre-wrap'; table.replaceWith(block);
+    });
+    clone.querySelectorAll('.flow').forEach(flow => {
+      const p = document.createElement('p'); p.textContent = [...flow.querySelectorAll('.node')].map(n => n.textContent.replace(/\s+/g, ' ').trim()).join(' → '); flow.replaceWith(p);
+    });
+    clone.querySelectorAll('h3,h4,p,li,dt,dd,pre').forEach(x => { x.appendChild(document.createTextNode('\n')); });
+    return clone.textContent.replace(/\n[ \t]+/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
+  }
+
+  function sampleText() {
+    const sections = [...document.querySelectorAll('[data-plan-section]')].map(section => {
+      const number = section.querySelector('.section-number').textContent;
+      const title = section.querySelector('h2').textContent;
+      return `${number}. ${title}\n${plainText(section.querySelector('[data-sample]'))}`;
+    });
+    return 'SoloOS · 1인 사업가 올인원 ERP & 워크웨어 기획 플레이북 v2.0\n작성일: 2026-10-14 / 버전: 2.0\n디자이너, 개발자, 1인 출판, 지식창업가를 위한 자금 수집, 3대 세무 자동역산, 비주얼 손익표, 실제 작업 기록 기반 비상 여유일, 계약 안전망 3대 서비스 완성본.\n\n' + sections.join('\n\n');
+  }
+
+  async function copy(text) {
+    try {
+      if (!navigator.clipboard || !window.isSecureContext) throw new Error('clipboard unavailable');
+      await navigator.clipboard.writeText(text);
+    } catch (_) {
+      const field = document.createElement('textarea'); field.value = text;
+      field.setAttribute('aria-label','복사용 임시 텍스트'); field.style.position = 'fixed'; field.style.left = '-10000px';
+      document.body.appendChild(field); field.focus(); field.select();
+      let succeeded = false;
+      try { succeeded = document.execCommand('copy'); } catch (_) {}
+      field.remove();
+      if (!succeeded) { toast('자동 복사가 지원되지 않습니다. 초안을 직접 복사하거나 .txt로 저장하세요.'); return; }
+    }
+    toast('클립보드에 복사했습니다. AI 대화나 문서에 붙여넣으세요.');
+  }
+
+  function download(content, filename) {
+    const blob = new Blob(['\ufeff', content], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob); const link = document.createElement('a');
+    link.href = url; link.download = filename; document.body.appendChild(link); link.click(); link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 3000); toast('텍스트 파일 저장을 시작했습니다.');
+  }
+
+  byId('copy-sample').addEventListener('click', () => copy(sampleText()));
+  byId('download-sample').addEventListener('click', () => download(sampleText(), 'soloos-plan-sample-v2.txt'));
+  byId('copy-draft').addEventListener('click', () => copy(draft.value));
+  byId('download-draft').addEventListener('click', () => download(draft.value, 'my-soloos-plan-v2.txt'));
+
+  function replaceDraft(value) {
+    if (draft.value !== template && draft.value.trim() && draft.value !== value && !window.confirm('현재 작성 중인 초안을 바꿉니다. 계속할까요?')) return;
+    draft.value = value; clearTimeout(saveTimer); save(); toast('초안에 반영되었습니다.');
+  }
+  byId('load-template').addEventListener('click', () => replaceDraft(template));
+  byId('load-sample').addEventListener('click', () => replaceDraft(sampleText()));
+
+  document.querySelectorAll('[data-copy-prompt]').forEach(button => button.addEventListener('click', () => {
+    const prompt = byId('prompt-' + button.dataset.copyPrompt).textContent.replace('[여기에 아래에서 작성한 내 기획 초안을 첨부]', '');
+    copy(prompt.trim() + '\n\n--- 기획 초안 ---\n' + draft.value);
+  }));
+
+  function setMode(sampleOnly) {
+    document.body.classList.toggle('sample-only', sampleOnly);
+    byId('show-guide').setAttribute('aria-pressed', String(!sampleOnly));
+    byId('show-sample').setAttribute('aria-pressed', String(sampleOnly));
+  }
+  byId('show-guide').addEventListener('click', () => setMode(false));
+  byId('show-sample').addEventListener('click', () => setMode(true));
+
+  // Interactive 3-in-1 Tax Calculator Logic
+  const calcNetInput = byId('calc-net-amount');
+  const calcTaxMode = byId('calc-tax-mode');
+  function updateCalculator() {
+    const mode = calcTaxMode ? calcTaxMode.value : '3.3';
+    const net = parseFloat(calcNetInput.value) || 0;
+    if (net <= 0) {
+      byId('calc-gross-val').textContent = '₩0';
+      byId('calc-tax-detail').textContent = '통장 입금액을 입력하세요.';
+      return;
+    }
+
+    if (mode === '10') {
+      // 사업자등록 전자세금계산서 발행 (10% VAT 분리)
+      const gross = Math.round(net / 1.1);
+      const vat = net - gross;
+      byId('calc-gross-label').textContent = '실제 매출 공급가액';
+      byId('calc-gross-val').textContent = '₩' + gross.toLocaleString('ko-KR');
+      byId('calc-tax-detail').innerHTML = 
+        `<span style="color:#b91c1c;font-weight:bold">⚠️ 부가가치세 (세금 통장에 따로 모아둘 돈 10%): ₩${vat.toLocaleString('ko-KR')}</span> · <span style="color:#1b6348">이 10%는 내 돈이 아니므로 7월/1월 부가세 납부일까지 세금 통장에 100% 따로 모아두세요!</span>`;
+    } else if (mode === '8.8') {
+      // 비정기 기타소득 (자문료/특강/원고료) - 필요경비 60% 인정 후 22% 원천징수 = 8.8%
+      const gross = Math.round(net / 0.912);
+      const incomeTax = Math.round(gross * 0.08);
+      const localTax = Math.round(gross * 0.008);
+      const totalTax = incomeTax + localTax;
+      byId('calc-gross-label').textContent = '계약 총액 (지급총액)';
+      byId('calc-gross-val').textContent = '₩' + gross.toLocaleString('ko-KR');
+      byId('calc-tax-detail').textContent = 
+        `기타소득세(8%): ₩${incomeTax.toLocaleString('ko-KR')} · 지방소득세(0.8%): ₩${localTax.toLocaleString('ko-KR')} · 총 원천징수액: ₩${totalTax.toLocaleString('ko-KR')} (법정 필요경비 60% 적용)`;
+    } else {
+      // 미등록 프리랜서 3.3% 사업소득
+      const gross = Math.round(net / 0.967);
+      const incomeTax = Math.round(gross * 0.03);
+      const localTax = Math.round(gross * 0.003);
+      const taxBuffer = Math.round(gross * 0.1);
+      byId('calc-gross-label').textContent = '계약 공급가액 (매출)';
+      byId('calc-gross-val').textContent = '₩' + gross.toLocaleString('ko-KR');
+      byId('calc-tax-detail').textContent = 
+        `선납 소득세(3%): ₩${incomeTax.toLocaleString('ko-KR')} · 지방소득세(0.3%): ₩${localTax.toLocaleString('ko-KR')} · 5월 종소세 권장 예비금(10%): ₩${taxBuffer.toLocaleString('ko-KR')}`;
+    }
+  }
+  calcNetInput.addEventListener('input', updateCalculator);
+  updateCalculator();
+
+  // Tabs
+  const tabs = [...document.querySelectorAll('[data-platform]')];
+  function selectTab(tab, focus) {
+    tabs.forEach(item => {
+      const active = item === tab; item.setAttribute('aria-selected', String(active)); item.tabIndex = active ? 0 : -1;
+      byId(item.getAttribute('aria-controls')).hidden = !active;
+    });
+    if (focus) tab.focus();
+  }
+  tabs.forEach((tab, index) => {
+    tab.addEventListener('click', () => selectTab(tab, false));
+    tab.addEventListener('keydown', event => {
+      let next;
+      if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
+      if (event.key === 'ArrowLeft') next = (index - 1 + tabs.length) % tabs.length;
+      if (event.key === 'Home') next = 0;
+      if (event.key === 'End') next = tabs.length - 1;
+      if (next !== undefined) { event.preventDefault(); selectTab(tabs[next], true); }
+    });
+  });
+
+  function beforePrint() { byId('draft-print').textContent = draft.value; }
+  window.addEventListener('beforeprint', beforePrint);
+  byId('print-document').addEventListener('click', () => { beforePrint(); window.print(); });
+
+  const links = [...document.querySelectorAll('.sidebar nav a')];
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      const visible = entries.filter(x => x.isIntersecting).sort((a,b) => a.boundingClientRect.top - b.boundingClientRect.top);
+      if (visible.length) links.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + visible[0].target.id));
+    }, { rootMargin: '-90px 0px -60% 0px', threshold: 0 });
+    links.forEach(link => { const section = document.querySelector(link.getAttribute('href')); if (section) observer.observe(section); });
+  }
+})();
+</script>
+</body>
+</html>

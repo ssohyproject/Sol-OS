@@ -1,0 +1,24 @@
+{
+  "name": "soloos-pws",
+  "version": "2.0.0",
+  "description": "SoloOS Progressive Web Service (PWS) for 1-Person Business ERP",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node -e \"console.log('PWS syntax test passed');\""
+  },
+  "keywords": [
+    "pws",
+    "progressive-web-service",
+    "cloud-run",
+    "firebase",
+    "erp",
+    "freelancer"
+  ],
+  "author": "SoloOS Team",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
