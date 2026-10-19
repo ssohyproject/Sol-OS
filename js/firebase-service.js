@@ -52,7 +52,7 @@
         console.warn('[SoloOS Firebase] Running in standalone local mode (no server API config)');
       }
 
-      // Firebase CDN SDK가 index.html에 로드되어 있고 API Key가 유효한 경우 초기화
+      // Firebase CDN SDK가 index.html에 로드되어 있는 경우 초기화
       if (typeof window.firebase !== 'undefined' && this.config && this.config.apiKey) {
         try {
           if (!window.firebase.apps.length) {
@@ -60,13 +60,41 @@
           }
           this.db = window.firebase.firestore();
           this.auth = window.firebase.auth();
+
+          // 모바일 및 팝업 차단 환경을 위한 리디렉션 로그인 결과 자동 수신
+          this.auth.getRedirectResult().then((result) => {
+            if (result && result.user) {
+              const user = result.user;
+              const token = result.credential ? result.credential.accessToken : null;
+              if (token) {
+                window.googleAccessToken = token;
+                localStorage.setItem('soloos_google_access_token', token);
+              }
+              const authUser = {
+                id: user.uid,
+                name: user.displayName || 'Google 인증 사용자',
+                email: user.email,
+                photoURL: user.photoURL,
+                googleConnected: true,
+                googleCalendarConnected: true,
+                googleDriveConnected: true
+              };
+              localStorage.setItem('soloos_user', JSON.stringify(authUser));
+              if (typeof window.updateUserAuthUI === 'function') window.updateUserAuthUI();
+              if (typeof window.applyWorkspaceData === 'function') window.applyWorkspaceData(authUser, false);
+              console.log('[SoloOS Firebase] Google redirect sign-in completed:', user.email);
+            }
+          }).catch((rErr) => {
+            console.warn('[SoloOS Firebase] Redirect result check:', rErr.message);
+          });
+
           this.initialized = true;
-          console.log('[SoloOS Firebase] Firebase SDK initialized successfully!');
+          console.log('[SoloOS Firebase] Real Cloud Firebase SDK initialized for project:', this.config.projectId);
         } catch (err) {
-          console.warn('[SoloOS Firebase] Firebase SDK init skipped/failed:', err.message);
+          console.warn('[SoloOS Firebase] Firebase SDK init error:', err.message);
         }
       } else {
-        console.log('[SoloOS Firebase] Local-First mode active (IndexedDB & LocalStorage)');
+        console.log('[SoloOS Firebase] Running in standalone mode');
       }
 
       return this.initialized;
@@ -95,6 +123,61 @@
 
       // 오프라인이거나 Firebase 미연결 시 로컬 처리
       return { success: true, id: transaction.id || Date.now(), source: 'local' };
+    }
+
+    /**
+     * Firebase Auth 공식 Google 로그인 (GoogleAuthProvider)
+     * 모바일 및 PC 브라우저에서 공식 구글 로그인 팝업 및 리디렉션 자동 전환
+     */
+    async loginWithGoogle() {
+      if (!this.initialized) {
+        await this.init();
+      }
+      if (typeof window.firebase === 'undefined' || !window.firebase.auth) {
+        throw new Error('Firebase Auth SDK가 로드되지 않았습니다.');
+      }
+
+      const provider = new window.firebase.auth.GoogleAuthProvider();
+      provider.addScope('https://www.googleapis.com/auth/calendar.events');
+      provider.addScope('https://www.googleapis.com/auth/drive.file');
+      provider.setCustomParameters({ prompt: 'select_account' });
+
+      try {
+        // 모바일 및 데스크톱 팝업 로그인 우선 시도
+        const result = await window.firebase.auth().signInWithPopup(provider);
+        const credential = result.credential;
+        const token = credential ? credential.accessToken : null;
+        const user = result.user;
+
+        this.currentUser = user;
+        if (token) {
+          window.googleAccessToken = token;
+          localStorage.setItem('soloos_google_access_token', token);
+        }
+
+        return {
+          success: true,
+          token,
+          user: {
+            id: user.uid,
+            name: user.displayName || '구글 인증 사용자',
+            email: user.email,
+            photoURL: user.photoURL,
+            googleConnected: true,
+            googleCalendarConnected: true,
+            googleDriveConnected: true
+          }
+        };
+      } catch (err) {
+        // 모바일 브라우저 팝업 차단 발생 시 자동으로 안전한 리디렉션 로그인으로 전환
+        if (err.code === 'auth/popup-blocked' || err.code === 'auth/cancelled-popup-request') {
+          console.log('[SoloOS Firebase] Popup blocked or mobile browser detected, redirecting to Google sign-in...');
+          await window.firebase.auth().signInWithRedirect(provider);
+          return { success: false, redirecting: true };
+        }
+        console.warn('[SoloOS Firebase] Google login error:', err);
+        throw err;
+      }
     }
 
     /**

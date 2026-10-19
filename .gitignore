@@ -67,6 +67,8 @@ out/
 # Firebase & Cloud Services
 # ------------------------------------------------------------------------------
 .firebase/
+.firebaserc
+*.firebaserc
 firebase-debug.log*
 firestore-debug.log*
 ui-debug.log*
@@ -155,3 +157,4 @@ tempCodeRunnerFile.*
 *.bak
 *.swp
 *~
+.vercel
