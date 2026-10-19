@@ -4,16 +4,16 @@
       monthlyFixedExpense: 2730000,
       taxSaved: 580000,
       transactions: [
-        { id: 1, date: "2026-10-12", domain: "client", title: "(주)테크솔루션즈 전자세금계산서 발행", category: "세금계산서매출(VAT분리)", gross: 3000000, tax: 300000, net: 3300000, status: "세금통장분리보관" },
-        { id: 2, date: "2026-10-10", domain: "publishing", title: "교보eBook 9월 정산 인세 (3.3%)", category: "3.3%사업소득매출", gross: 1200000, tax: 39600, net: 1160400, status: "원천징수완료" },
-        { id: 3, date: "2026-10-08", domain: "knowledge", title: "인프런 스타트업 기술특강료 (8.8%)", category: "8.8%기타소득매출", gross: 1000000, tax: 88000, net: 912000, status: "필요경비60%" },
-        { id: 4, date: "2026-10-05", domain: "client", title: "AWS 클라우드 서버 이용료", category: "지급수수료/통신", gross: -142000, tax: -14200, net: -156200, status: "공제영수증" },
-        { id: 5, date: "2026-10-01", domain: "operation", title: "작업실 월 임대료 및 관리비", category: "지급임차료", gross: -850000, tax: 0, net: -850000, status: "계산서확인" },
-        { id: 6, date: "2026-09-25", domain: "operation", title: "패스트파이브 공유오피스 월 임차료 (고정비)", category: "지급임차료(매입공제)", gross: -1000000, tax: -100000, net: -1100000, status: "고정비/공제", isFixedExpense: true },
-        { id: 7, date: "2026-09-25", domain: "operation", title: "Adobe/Figma/GitHub/Notion 등 업무 SW 구독료 (고정비)", category: "지급수수료/SaaS", gross: -480000, tax: 0, net: -480000, status: "고정비/경비", isFixedExpense: true },
-        { id: 8, date: "2026-09-25", domain: "operation", title: "KT 기업인터넷 & 업무용 모바일 회선 (고정비)", category: "통신비(매입공제)", gross: -136364, tax: -13636, net: -150000, status: "고정비/공제", isFixedExpense: true },
-        { id: 9, date: "2026-10-10", domain: "operation", title: "국민연금 & 건강보험 1인사업자 납부 (고정비)", category: "제세공과금/4대보험", gross: -400000, tax: 0, net: -400000, status: "고정비/소득공제", isFixedExpense: true },
-        { id: 10, date: "2026-09-25", domain: "operation", title: "사업장 기본 운영비 및 세무 기장료 (고정비)", category: "사업소모품비/수수료", gross: -545455, tax: -54545, net: -600000, status: "고정비/경비", isFixedExpense: true }
+        { id: 1, date: "2026-10-12", domain: "client", title: "(주)테크솔루션즈 전자세금계산서 발행", category: "세금계산서매출(VAT분리)", gross: 3000000, tax: 300000, net: 3300000, status: "세금계산서" },
+        { id: 2, date: "2026-10-10", domain: "publishing", title: "교보eBook 9월 정산 인세 (3.3%)", category: "3.3%사업소득매출", gross: 1200000, tax: 39600, net: 1160400, status: "원천징수영수증" },
+        { id: 3, date: "2026-10-08", domain: "knowledge", title: "인프런 스타트업 기술특강료 (8.8%)", category: "8.8%기타소득매출", gross: 1000000, tax: 88000, net: 912000, status: "원천징수영수증" },
+        { id: 4, date: "2026-10-05", domain: "client", title: "AWS 클라우드 서버 이용료", category: "지급수수료/통신", gross: -142000, tax: -14200, net: -156200, status: "신용카드전표" },
+        { id: 5, date: "2026-10-01", domain: "operation", title: "작업실 월 임대료 및 관리비", category: "지급임차료", gross: -850000, tax: 0, net: -850000, status: "계산서(면세)" },
+        { id: 6, date: "2026-09-25", domain: "operation", title: "패스트파이브 공유오피스 월 임차료 (고정비)", category: "지급임차료(매입공제)", gross: -1000000, tax: -100000, net: -1100000, status: "세금계산서", isFixedExpense: true, paymentDay: 25 },
+        { id: 7, date: "2026-09-25", domain: "operation", title: "Adobe/Figma/GitHub/Notion 등 업무 SW 구독료 (고정비)", category: "지급수수료/SaaS", gross: -480000, tax: 0, net: -480000, status: "신용카드전표", isFixedExpense: true, paymentDay: 25 },
+        { id: 8, date: "2026-09-25", domain: "operation", title: "KT 기업인터넷 & 업무용 모바일 회선 (고정비)", category: "통신비(매입공제)", gross: -136364, tax: -13636, net: -150000, status: "세금계산서", isFixedExpense: true, paymentDay: 25 },
+        { id: 9, date: "2026-10-10", domain: "operation", title: "국민연금 & 건강보험 1인사업자 납부 (고정비)", category: "제세공과금/4대보험", gross: -400000, tax: 0, net: -400000, status: "신용카드전표", isFixedExpense: true, paymentDay: 10 },
+        { id: 10, date: "2026-09-25", domain: "operation", title: "사업장 기본 운영비 및 세무 기장료 (고정비)", category: "사업소모품비/수수료", gross: -545455, tax: -54545, net: -600000, status: "세금계산서", isFixedExpense: true, paymentDay: 25 }
       ],
       tasks: [
         { id: 1, domain: "client", client: "테크솔루션즈", title: "MVP 프론트엔드 반응형 마무리", dueDate: "2026-10-18", dueTime: "18:00", priority: "높음", status: "진행중", amount: 2500000, memo: "결제 모듈 최종 API 테스트 및 반응형 모바일 검수 완료 후 납품", completed: false },
@@ -90,9 +90,9 @@
         }
       ],
       receivables: [
-        { id: 1, client: "글로벌이커머스(주)", project: "프로모션 결제 모듈 연동 (잔금)", amount: 1200000, dueDate: "2026-10-14", delayDays: 5, status: "지연", type: "잔금", contact: "최재호 팀장 (010-5678-1234)" },
-        { id: 2, client: "(주)테크솔루션즈", project: "외주 개발 1차 잔금 입금 확인", amount: 2500000, dueDate: "2026-10-25", delayDays: -6, status: "예정", type: "잔금", contact: "김영민 이사 (010-9123-4567)" },
-        { id: 3, client: "디지털북스 출판사", project: "기술서적 4장 감수료 정산", amount: 700000, dueDate: "2026-10-28", delayDays: -9, status: "예정", type: "원고료", contact: "박서연 편집장 (010-3456-7890)" }
+        { id: 1, client: "글로벌이커머스(주)", clientName: "글로벌이커머스(주)", project: "프로모션 결제 모듈 연동 (잔금)", itemTitle: "프로모션 결제 모듈 연동 (잔금)", amount: 1200000, dueDate: "2026-10-14", delayDays: 5, status: "지연", statusType: "delayed", type: "잔금", contact: "최재호 팀장 (010-5678-1234)", deferred: false },
+        { id: 2, client: "(주)테크솔루션즈", clientName: "(주)테크솔루션즈", project: "외주 개발 1차 잔금 입금 확인", itemTitle: "외주 개발 1차 잔금 입금 확인", amount: 2500000, dueDate: "2026-10-25", delayDays: -6, status: "예정", statusType: "normal", type: "잔금", contact: "김영민 이사 (010-9123-4567)", deferred: false },
+        { id: 3, client: "디지털북스 출판사", clientName: "디지털북스 출판사", project: "기술서적 4장 감수료 정산", itemTitle: "기술서적 4장 감수료 정산", amount: 700000, dueDate: "2026-10-28", delayDays: -9, status: "예정", statusType: "normal", type: "원고료", contact: "박서연 편집장 (010-3456-7890)", deferred: false }
       ],
       contracts: [
         {
@@ -170,20 +170,159 @@
       contracts: []
     };
 
+    let cashflowChartInstance = null;
+    let calYear = 2026;
+    let calMonth = 9; // 0-indexed: 9 = 10월
+    let selectedCalDate = null; // null: 전체 일정 표시, 'YYYY-MM-DD': 해당 날짜 필터
+    let isLedgerBulkEditing = false;
+
     function isUserLoggedIn() {
       return Boolean(currentAuthUser && currentAuthUser.id && currentAuthUser.id !== "usr_guest" && currentAuthUser.email);
     }
 
+    function normalizeReceiptStatus(status) {
+      if (!status) return "";
+      const s = String(status).trim();
+      if (s === "세금계산서" || s === "전자세금계산서" || s === "세금통장분리보관" || s === "고정비/공제" || s === "VAT예치필수") return "세금계산서";
+      if (s === "계산서(면세)" || s === "계산서" || s === "계산서확인") return "계산서(면세)";
+      if (s === "신용카드전표" || s === "카드매출전표" || s === "공제영수증" || s === "적격증빙" || s === "고정비/경비" || s === "고정비/소득공제" || s.includes("카드")) return "신용카드전표";
+      if (s === "현금영수증") return "현금영수증";
+      if (s === "원천징수영수증" || s === "원천징수완료" || s.includes("원천") || s.includes("필요경비")) return "원천징수영수증";
+      if (s === "간이영수증") return "간이영수증";
+      if (s === "정산완료" || s === "수기분개완료" || s === "영수증인증") return "";
+      return s;
+    }
+
     function loadWorkspaceFromData(src) {
       if (!src) return;
-      appState.workingCapital = src.workingCapital || 0;
-      appState.monthlyFixedExpense = src.monthlyFixedExpense || 0;
-      appState.taxSaved = src.taxSaved || 0;
-      appState.transactions = JSON.parse(JSON.stringify(src.transactions || []));
+      appState.workingCapital = Number(src.workingCapital || 0);
+      appState.monthlyFixedExpense = Number(src.monthlyFixedExpense || 0);
+      appState.taxSaved = Number(src.taxSaved || 0);
+      const rawTx = JSON.parse(JSON.stringify(src.transactions || []));
+      appState.transactions = rawTx.map(t => ({
+        ...t,
+        status: normalizeReceiptStatus(t.status)
+      }));
       appState.tasks = JSON.parse(JSON.stringify(src.tasks || []));
       appState.clients = JSON.parse(JSON.stringify(src.clients || []));
-      appState.receivables = JSON.parse(JSON.stringify(src.receivables || []));
+      const rawRec = JSON.parse(JSON.stringify(src.receivables || []));
+      appState.receivables = rawRec.map(r => ({
+        ...r,
+        clientName: r.clientName || r.client || '',
+        client: r.client || r.clientName || '',
+        itemTitle: r.itemTitle || r.project || '',
+        project: r.project || r.itemTitle || '',
+        statusType: r.statusType || (r.status === '지연' || (r.delayDays && r.delayDays > 0) ? 'delayed' : 'normal'),
+        status: r.status || (r.statusType === 'delayed' ? '지연' : '예정'),
+        amount: Number(r.amount || 0),
+        deferred: Boolean(r.deferred)
+      }));
       appState.contracts = JSON.parse(JSON.stringify(src.contracts || []));
+    }
+
+    // Comprehensive UI Refresh function (모든 서브뷰 및 위젯 상태 동기화)
+    function refreshAllUI() {
+      try {
+        if (typeof updateKPICards === "function") updateKPICards();
+      } catch (e) {
+        console.warn("[refreshAllUI] updateKPICards error:", e);
+      }
+      try {
+        if (typeof updateVisualStatements === "function") updateVisualStatements();
+      } catch (e) {
+        console.warn("[refreshAllUI] updateVisualStatements error:", e);
+      }
+      try {
+        if (typeof renderMonthlyCalendar === "function") renderMonthlyCalendar();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderMonthlyCalendar error:", e);
+      }
+      try {
+        if (typeof renderScheduleTasks === "function") renderScheduleTasks();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderScheduleTasks error:", e);
+      }
+      try {
+        if (typeof renderFullMonthlyCalendar === "function") renderFullMonthlyCalendar();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderFullMonthlyCalendar error:", e);
+      }
+      try {
+        if (typeof renderFullScheduleTasks === "function") renderFullScheduleTasks();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderFullScheduleTasks error:", e);
+      }
+      try {
+        if (typeof renderLedgerTable === "function") renderLedgerTable();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderLedgerTable error:", e);
+      }
+      try {
+        if (typeof renderClientList === "function") renderClientList();
+        if (typeof renderClientDetail === "function") {
+          const cid = typeof selectedClientId !== "undefined" && selectedClientId ? selectedClientId : (appState.clients && appState.clients[0] ? appState.clients[0].id : null);
+          if (cid) {
+            selectedClientId = cid;
+            renderClientDetail(cid);
+          }
+        }
+      } catch (e) {
+        console.warn("[refreshAllUI] client views error:", e);
+      }
+      try {
+        if (typeof renderReceivablesTable === "function") renderReceivablesTable();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderReceivablesTable error:", e);
+      }
+      try {
+        if (typeof renderContractProjectsTable === "function") renderContractProjectsTable();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderContractProjectsTable error:", e);
+      }
+      try {
+        if (typeof renderLegalProtectionDashboard === "function") renderLegalProtectionDashboard();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderLegalProtectionDashboard error:", e);
+      }
+      try {
+        if (typeof renderKanbanBoard === "function") renderKanbanBoard();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderKanbanBoard error:", e);
+      }
+      try {
+        if (typeof renderGanttTimeline === "function") renderGanttTimeline();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderGanttTimeline error:", e);
+      }
+      try {
+        if (typeof renderFixedExpenseScheduleRows === "function") renderFixedExpenseScheduleRows();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderFixedExpenseScheduleRows error:", e);
+      }
+      try {
+        if (typeof renderSettlementView === "function") renderSettlementView();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderSettlementView error:", e);
+      }
+      try {
+        if (typeof renderTaxView === "function") renderTaxView();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderTaxView error:", e);
+      }
+      try {
+        if (typeof initChart === "function") initChart();
+        if (typeof updateChartData === "function") updateChartData();
+      } catch (e) {
+        console.warn("[refreshAllUI] chart error:", e);
+      }
+      try {
+        if (typeof applyPlainLanguageTerms === "function") applyPlainLanguageTerms();
+      } catch (e) {
+        console.warn("[refreshAllUI] applyPlainLanguageTerms error:", e);
+      }
+      if (window.lucide && typeof lucide.createIcons === "function") {
+        lucide.createIcons();
+      }
     }
 
     function loadSampleDemoWorkspace() {
@@ -196,8 +335,7 @@
 
       updateGuestBannerUI(true);
       refreshAllUI();
-      if (typeof updateChartData === "function") updateChartData();
-      showToast("가상 샘플 데이터(₩14,200,000 및 4대 과업·고정비)가 복구되었습니다.");
+      showToast("가상 샘플 데이터(₩14,200,000 및 4대 과업·고정비)가 완벽히 적용되었습니다.");
     }
 
     function clearToGuestProtectedState() {
@@ -210,8 +348,12 @@
 
       updateGuestBannerUI(false);
       refreshAllUI();
-      if (typeof updateChartData === "function") updateChartData();
       showToast("샘플 데이터를 비우고 초기 화면으로 전환했습니다.");
+    }
+
+    function startWithSampleDemo() {
+      loadSampleDemoWorkspace();
+      closeOnboardingModal();
     }
 
     function updateGuestBannerUI(isDemo) {
@@ -711,9 +853,9 @@ const navGroupState = {
       sessionStorage.setItem("soloos_mode_selected", "true");
     }
 
-    // Update Visual Statements
+    // Update Visual Statements (손익계산서 & 대차대조표 & 유동성 예측 종합)
     function updateVisualStatements() {
-      let filteredTx = appState.transactions;
+      let filteredTx = appState.transactions || [];
       if (appState.currentWorkstream !== 'all') {
         filteredTx = filteredTx.filter(t => t.domain === appState.currentWorkstream);
       }
@@ -723,24 +865,85 @@ const navGroupState = {
       const netIncome = filteredTx.filter(t => t.net > 0).reduce((acc, curr) => acc + curr.net, 0);
       const expenses = Math.abs(filteredTx.filter(t => t.net < 0).reduce((acc, curr) => acc + curr.net, 0));
       const realProfit = netIncome - expenses;
+      const margin = grossIncome > 0 ? ((realProfit / grossIncome) * 100).toFixed(1) : '0.0';
 
-      document.getElementById('wfGross').textContent = '₩' + grossIncome.toLocaleString();
-      document.getElementById('wfTax').textContent = '-₩' + taxAmount.toLocaleString();
-      document.getElementById('wfNet').textContent = '₩' + netIncome.toLocaleString();
-      document.getElementById('wfExpense').textContent = '-₩' + expenses.toLocaleString();
-      document.getElementById('wfProfit').textContent = '₩' + realProfit.toLocaleString();
+      const setElText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+      };
 
-      const receivables = 4000000;
-      const totalAssets = appState.workingCapital + receivables;
-      const totalLiabilities = 3800000;
-      const totalEquity = totalAssets - totalLiabilities;
+      // View A: 회계 손익 폭포수 (Waterfall)
+      setElText('wfGross', '₩' + grossIncome.toLocaleString());
+      setElText('wfTax', (taxAmount > 0 ? '-₩' : '₩') + taxAmount.toLocaleString());
+      setElText('wfNet', '₩' + netIncome.toLocaleString());
+      setElText('wfExpense', (expenses > 0 ? '-₩' : '₩') + expenses.toLocaleString());
+      setElText('wfProfit', (realProfit < 0 ? '-₩' : '₩') + Math.abs(realProfit).toLocaleString());
+      setElText('wfProfitMarginText', `순마진: ${margin}%`);
 
-      document.getElementById('bsAssets').textContent = '₩' + totalAssets.toLocaleString();
-      document.getElementById('bsLiabilities').textContent = '₩' + totalLiabilities.toLocaleString();
-      document.getElementById('bsEquity').textContent = '₩' + totalEquity.toLocaleString();
+      const baseVal = Math.max(grossIncome, 1);
+      const setBarWidth = (id, val) => {
+        const bar = document.getElementById(id);
+        if (bar) bar.style.width = Math.min(100, Math.max(0, Math.round((Math.abs(val) / baseVal) * 100))) + '%';
+      };
+      setBarWidth('wfGrossBar', grossIncome);
+      setBarWidth('wfTaxBar', taxAmount);
+      setBarWidth('wfNetBar', netIncome);
+      setBarWidth('wfExpenseBar', expenses);
+      setBarWidth('wfProfitBar', Math.max(0, realProfit));
 
-      const bsBankBalance = document.getElementById('bsBankBalance');
-      if (bsBankBalance) bsBankBalance.textContent = '₩' + appState.workingCapital.toLocaleString();
+      // Section 2: 예정 입출금 및 단기 유동성 예측
+      const recList = appState.receivables || [];
+      const pendingReceivables = recList.reduce((acc, r) => acc + (Number(r.amount) || 0), 0);
+      const delayedCount = recList.filter(r => (r.statusType === 'delayed' || r.status === '지연') && !r.deferred).length;
+      const normalCount = recList.length - delayedCount;
+
+      setElText('bsReceivablesAmount', (pendingReceivables > 0 ? '+₩' : '₩') + pendingReceivables.toLocaleString());
+      if (document.getElementById('bsReceivablesCount')) {
+        document.getElementById('bsReceivablesCount').textContent = recList.length > 0
+          ? `총 ${recList.length}건 (확정 ${normalCount}건, 지연 ${delayedCount}건)`
+          : '예정 대금 0건';
+      }
+
+      const fixedExp = Number(appState.monthlyFixedExpense || 0);
+      const taxLiability = Math.round(grossIncome * 0.1);
+      const scheduledOut = fixedExp + taxLiability;
+      setElText('bsLiabilities', (scheduledOut > 0 ? '-₩' : '₩') + scheduledOut.toLocaleString());
+      const bsLiabilitiesDesc = document.getElementById('bsLiabilitiesDesc');
+      if (bsLiabilitiesDesc) {
+        bsLiabilitiesDesc.textContent = `월 필수 고정비(₩${fixedExp.toLocaleString()}) + 세무 부채(₩${taxLiability.toLocaleString()}) 합산입니다.`;
+      }
+
+      const workingCapital = Number(appState.workingCapital || 0);
+      const projectedEndingBalance = workingCapital + pendingReceivables - scheduledOut;
+      setElText('bsEquity', '₩' + projectedEndingBalance.toLocaleString());
+      const bsEquityDesc = document.getElementById('bsEquityDesc');
+      if (bsEquityDesc) {
+        bsEquityDesc.textContent = projectedEndingBalance > 0
+          ? '예정 입출금을 모두 집행하고도 온전히 내 손에 남는 안전 여유 자금입니다.'
+          : '예정 지출 대비 현금이 부족할 수 있으니 사전 자금 확보가 권장됩니다.';
+      }
+
+      // View B: 실제 통장 현금 흐름
+      const totalCashIn = netIncome + pendingReceivables;
+      const totalCashOut = expenses + scheduledOut;
+      const netCashFlow = totalCashIn - totalCashOut;
+      setElText('cfTotalIn', '₩' + totalCashIn.toLocaleString());
+      setElText('cfTotalInDesc', `실수령액 ₩${netIncome.toLocaleString()} + 미수금 ₩${pendingReceivables.toLocaleString()}`);
+      setElText('cfTotalOut', (totalCashOut > 0 ? '-₩' : '₩') + totalCashOut.toLocaleString());
+      setElText('cfTotalOutDesc', `경비 ₩${expenses.toLocaleString()} + 예정고정비 ₩${scheduledOut.toLocaleString()}`);
+      setElText('cfNetFlow', (netCashFlow >= 0 ? '+₩' : '-₩') + Math.abs(netCashFlow).toLocaleString());
+      setElText('cfNetFlowDesc', netCashFlow >= 0 ? '당월 현금 증가 예상' : '당월 현금 감소 예상');
+      setElText('cfEndingBalance', '₩' + projectedEndingBalance.toLocaleString());
+      setElText('cfEndingBalanceDesc', `현재 잔고(₩${workingCapital.toLocaleString()}) 기준`);
+
+      // 30일 예측 최저 잔액 배너
+      const minProjected = Math.max(0, workingCapital - scheduledOut);
+      setElText('forecastMinBalance', '₩' + minProjected.toLocaleString());
+      setElText('forecastMinDate', workingCapital > 0 ? '고정비 결제일(25일) 기준' : '자금 미등록');
+
+      // Legacy compatibility tags
+      setElText('bsBankBalance', '₩' + workingCapital.toLocaleString());
+      setElText('bsAssets', '₩' + (workingCapital + pendingReceivables).toLocaleString());
     }
 
     // KPI Cards Calculation
@@ -752,57 +955,43 @@ const navGroupState = {
 
       const grossIncome = filteredTx.filter(t => t.gross > 0).reduce((acc, curr) => acc + curr.gross, 0);
       const netIncome = filteredTx.filter(t => t.net > 0).reduce((acc, curr) => acc + curr.net, 0);
-
-      const elGross = document.getElementById('kpiGrossRevenue');
-      if (elGross) elGross.textContent = '₩' + grossIncome.toLocaleString();
-      const elNet = document.getElementById('kpiNetReceived');
-      if (elNet) elNet.textContent = '₩' + netIncome.toLocaleString();
-
       const taxBuffer = Math.round(grossIncome * 0.1);
-      const elTaxBuf = document.getElementById('kpiTaxBuffer');
-      if (elTaxBuf) elTaxBuf.textContent = '₩' + taxBuffer.toLocaleString();
+      const workingCapital = Number(appState.workingCapital || 0);
+      const monthlyFixedExpense = Number(appState.monthlyFixedExpense || 0);
+      const availableCash = Math.max(0, workingCapital - taxBuffer);
 
-      const hasWorkingCapital = (appState.workingCapital || 0) > 0;
-      const hasFixedExpense = (appState.monthlyFixedExpense || 0) > 0;
       let runwayMonths = '0.0';
-      if (hasWorkingCapital && hasFixedExpense) {
-        runwayMonths = (appState.workingCapital / appState.monthlyFixedExpense).toFixed(1);
+      if (workingCapital > 0 && monthlyFixedExpense > 0) {
+        runwayMonths = (workingCapital / monthlyFixedExpense).toFixed(1);
       }
-      const runwayStatus = (hasWorkingCapital && hasFixedExpense) ? (parseFloat(runwayMonths) >= 3 ? '(안정)' : '(주의)') : '(비움)';
+      const isHealthy = parseFloat(runwayMonths) >= 3.0;
+      const runwayStatus = (workingCapital > 0 && monthlyFixedExpense > 0) 
+        ? (isHealthy ? '(안정)' : '(주의)') 
+        : '(비움)';
 
-      const kpiRunway = document.getElementById('kpiRunwayMonths');
-      if (kpiRunway) kpiRunway.textContent = runwayMonths + '개월';
-
+      // 1. Sidebar indicators
+      const sbBalance = document.getElementById('sidebarBalanceText');
+      if (sbBalance) sbBalance.textContent = '₩' + workingCapital.toLocaleString();
       const sbRunway = document.getElementById('sidebarRunwayText');
       if (sbRunway) sbRunway.textContent = runwayMonths + '개월 ' + runwayStatus;
 
-      const sbBalance = document.getElementById('sidebarBalanceText');
-      if (sbBalance) sbBalance.textContent = '₩' + (appState.workingCapital || 0).toLocaleString();
-
-      const kpiWC = document.getElementById('kpiWorkingCapital');
-      if (kpiWC) kpiWC.textContent = '₩' + (appState.workingCapital || 0).toLocaleString();
-
-      // Main Dashboard Overview KPI Cards
+      // 2. Main Dashboard (subview-overview) Top Indicators
       const ovWorkingCapital = document.getElementById('ovWorkingCapital');
-      if (ovWorkingCapital) ovWorkingCapital.textContent = '₩' + (appState.workingCapital || 0).toLocaleString();
-
+      if (ovWorkingCapital) ovWorkingCapital.textContent = '₩' + workingCapital.toLocaleString();
       const ovRunwayMonths = document.getElementById('ovRunwayMonths');
       if (ovRunwayMonths) ovRunwayMonths.textContent = runwayMonths + '개월';
-
       const ovFixedGuide = document.getElementById('ovFixedExpenseGuide');
       if (ovFixedGuide) {
-        ovFixedGuide.textContent = hasFixedExpense ? '(월 고정비 ₩' + appState.monthlyFixedExpense.toLocaleString() + ' 기준)' : '[월 고정비 미등록]';
+        ovFixedGuide.textContent = monthlyFixedExpense > 0 
+          ? `(월 고정비 ₩${monthlyFixedExpense.toLocaleString()} 기준)` 
+          : '[월 고정비 미등록]';
       }
-
       const ovGrossRevenue = document.getElementById('ovGrossRevenue');
       if (ovGrossRevenue) ovGrossRevenue.textContent = '₩' + grossIncome.toLocaleString();
-
       const ovNetReceived = document.getElementById('ovNetReceived');
       if (ovNetReceived) ovNetReceived.textContent = '₩' + netIncome.toLocaleString();
-
       const ovTaxBuffer = document.getElementById('ovTaxBuffer');
       if (ovTaxBuffer) ovTaxBuffer.textContent = '₩' + taxBuffer.toLocaleString();
-
       const ovRevenueDomain = document.getElementById('ovRevenueDomain');
       if (ovRevenueDomain) {
         const domainMap = {
@@ -813,6 +1002,74 @@ const navGroupState = {
         };
         ovRevenueDomain.textContent = domainMap[appState.currentWorkstream] || '전체 통합';
       }
+
+      // 3. 자금 현황 (subview-statements) Section 1: 4대 핵심 지표 카드
+      const kpiWC = document.getElementById('kpiWorkingCapital');
+      if (kpiWC) kpiWC.textContent = '₩' + workingCapital.toLocaleString();
+
+      const kpiAvail = document.getElementById('kpiAvailableCash');
+      if (kpiAvail) kpiAvail.textContent = '₩' + availableCash.toLocaleString();
+
+      const kpiAvailDesc = document.getElementById('kpiAvailableCashDesc');
+      if (kpiAvailDesc) {
+        kpiAvailDesc.textContent = `세금 적립금(₩${taxBuffer.toLocaleString()}) 제외 순수 가용 자금`;
+      }
+
+      const kpiRunway = document.getElementById('kpiRunwayMonths');
+      if (kpiRunway) kpiRunway.textContent = runwayMonths + '개월';
+
+      const kpiFixed = document.getElementById('kpiMonthlyFixedExpense');
+      if (kpiFixed) kpiFixed.textContent = '₩' + monthlyFixedExpense.toLocaleString() + ' / 월';
+
+      const kpiBadge = document.getElementById('kpiWorkingCapitalBadge');
+      const kpiDot = document.getElementById('kpiWorkingCapitalDot');
+      if (kpiBadge && kpiDot) {
+        if (workingCapital === 0) {
+          kpiBadge.textContent = '자금 등록 필요';
+          kpiBadge.className = 'px-2 py-0.5 text-[10px] font-bold rounded bg-slate-100 text-slate-600 border border-slate-200';
+          kpiDot.className = 'w-2.5 h-2.5 rounded-full bg-slate-400';
+        } else if (isHealthy) {
+          kpiBadge.textContent = '안정적 운용';
+          kpiBadge.className = 'px-2 py-0.5 text-[10px] font-bold rounded bg-emerald-50 text-emerald-700 border border-emerald-200';
+          kpiDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-500';
+        } else {
+          kpiBadge.textContent = '주의 권고';
+          kpiBadge.className = 'px-2 py-0.5 text-[10px] font-bold rounded bg-amber-50 text-amber-700 border border-amber-200';
+          kpiDot.className = 'w-2.5 h-2.5 rounded-full bg-amber-500';
+        }
+      }
+
+      const kpiHealth = document.getElementById('kpiCapitalHealth');
+      if (kpiHealth) {
+        const healthPercent = monthlyFixedExpense > 0 
+          ? Math.min(100, Math.round((workingCapital / (monthlyFixedExpense * 3)) * 100)) 
+          : 0;
+        kpiHealth.textContent = `건전성: ${healthPercent}%`;
+      }
+
+      const kpiNotice = document.getElementById('kpiRunwayNotice');
+      if (kpiNotice) {
+        kpiNotice.textContent = monthlyFixedExpense > 0 
+          ? `월 고정비 ₩${monthlyFixedExpense.toLocaleString()} 기준` 
+          : '신규 매출 0원 가정 시';
+      }
+
+      const kpiRunwayDesc = document.getElementById('kpiRunwayDesc');
+      if (kpiRunwayDesc) {
+        if (workingCapital > 0 && monthlyFixedExpense > 0) {
+          kpiRunwayDesc.innerHTML = `현재 등록된 사업 통장 보유 잔고 <strong>₩${workingCapital.toLocaleString()}</strong>를 기준으로, 추가 매출이 발생하지 않아도 <strong>약 ${runwayMonths}개월간 안정적으로 사업을 유지</strong>할 수 있습니다.`;
+        } else {
+          kpiRunwayDesc.innerHTML = `현재 등록된 사업 통장 보유 잔고가 <strong>₩0</strong>입니다. [자금 정리]에서 매출·입금 내역을 등록하거나 사업 통장 초기 잔고를 설정해 주세요.`;
+        }
+      }
+
+      // 4. Compatibility IDs
+      const elGross = document.getElementById('kpiGrossRevenue');
+      if (elGross) elGross.textContent = '₩' + grossIncome.toLocaleString();
+      const elNet = document.getElementById('kpiNetReceived');
+      if (elNet) elNet.textContent = '₩' + netIncome.toLocaleString();
+      const elTaxBuf = document.getElementById('kpiTaxBuffer');
+      if (elTaxBuf) elTaxBuf.textContent = '₩' + taxBuffer.toLocaleString();
     }
 
     // Helper: HTML escaping
@@ -846,17 +1103,26 @@ const navGroupState = {
           const domainEl = document.querySelector(`.bulk-tx-domain[data-id="${id}"]`);
           if (domainEl) tx.domain = domainEl.value;
           const titleEl = document.querySelector(`.bulk-tx-title[data-id="${id}"]`);
-          if (titleEl) tx.title = titleEl.value;
+          if (titleEl) tx.title = titleEl.value.trim();
           const catEl = document.querySelector(`.bulk-tx-category[data-id="${id}"]`);
-          if (catEl) tx.category = catEl.value;
+          if (catEl) tx.category = catEl.value.trim();
           const grossEl = document.querySelector(`.bulk-tx-gross[data-id="${id}"]`);
-          if (grossEl) tx.gross = parseFloat(grossEl.value) || 0;
+          if (grossEl) {
+            const val = grossEl.value.trim();
+            tx.gross = val === '' ? '' : (parseFloat(val) || 0);
+          }
           const taxEl = document.querySelector(`.bulk-tx-tax[data-id="${id}"]`);
-          if (taxEl) tx.tax = parseFloat(taxEl.value) || 0;
+          if (taxEl) {
+            const val = taxEl.value.trim();
+            tx.tax = val === '' ? '' : (parseFloat(val) || 0);
+          }
           const netEl = document.querySelector(`.bulk-tx-net[data-id="${id}"]`);
-          if (netEl) tx.net = parseFloat(netEl.value) || 0;
+          if (netEl) {
+            const val = netEl.value.trim();
+            tx.net = val === '' ? '' : (parseFloat(val) || 0);
+          }
           const statusEl = document.querySelector(`.bulk-tx-status[data-id="${id}"]`);
-          if (statusEl) tx.status = statusEl.value;
+          if (statusEl) tx.status = normalizeReceiptStatus(statusEl.value);
         }
       });
 
@@ -864,7 +1130,7 @@ const navGroupState = {
       renderLedgerTable();
       updateKPICards();
       updateVisualStatements();
-      showToast('거래 내역이 엑셀 모드에서 일괄 수정되어 저장되었습니다.');
+      showToast('거래 내역이 엑셀 모드에서 일괄 저장되었습니다.');
     }
 
     function cancelLedgerBulkEdit() {
@@ -876,19 +1142,25 @@ const navGroupState = {
     function addLedgerBlankRow() {
       const today = new Date().toISOString().split('T')[0];
       const newId = Date.now();
+      isLedgerBulkEditing = true;
       appState.transactions.unshift({
         id: newId,
         date: today,
-        domain: appState.currentWorkstream === 'all' ? 'client' : appState.currentWorkstream,
-        title: '신규 거래 항목',
-        category: '일반매출',
-        gross: 1000000,
-        tax: 100000,
-        net: 1100000,
-        status: '정산완료'
+        domain: '',
+        title: '',
+        category: '',
+        gross: '',
+        tax: '',
+        net: '',
+        status: ''
       });
+      if (typeof ledgerCurrentPage !== 'undefined') ledgerCurrentPage = 1;
       renderLedgerTable();
-      showToast('새로운 거래 행이 추가되었습니다. 내용을 입력한 후 [일괄 저장 완료]를 눌러주세요.');
+      setTimeout(() => {
+        const titleInput = document.querySelector(`.bulk-tx-title[data-id="${newId}"]`);
+        if (titleInput) titleInput.focus();
+      }, 50);
+      showToast('새로운 빈 거래 행이 추가되었습니다. 거래 정보를 입력해주세요.');
     }
 
     function deleteLedgerRow(txId) {
@@ -899,133 +1171,6 @@ const navGroupState = {
         updateVisualStatements();
         showToast('거래 내역이 삭제되었습니다.');
       }
-    }
-
-    // Render Ledger Table (Light Theme & Excel Bulk Edit Mode)
-    function renderLedgerTable() {
-      const tbody = document.getElementById('ledgerTableBody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-
-      let list = appState.transactions;
-      if (appState.currentWorkstream !== 'all') {
-        list = list.filter(t => t.domain === appState.currentWorkstream);
-      }
-
-      // Update bulk edit banner and toggle button
-      const bulkBar = document.getElementById('ledgerBulkActionsBar');
-      const toggleBtn = document.getElementById('btnToggleBulkEdit');
-      if (bulkBar) {
-        if (isLedgerBulkEditing) {
-          bulkBar.classList.remove('hidden');
-        } else {
-          bulkBar.classList.add('hidden');
-        }
-      }
-      if (toggleBtn) {
-        if (isLedgerBulkEditing) {
-          toggleBtn.className = 'px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all';
-          toggleBtn.innerHTML = '<i data-lucide="check" class="w-3.5 h-3.5"></i><span>일괄 저장 완료</span>';
-        } else {
-          toggleBtn.className = 'px-3 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all';
-          toggleBtn.innerHTML = '<i data-lucide="file-spreadsheet" class="w-3.5 h-3.5 text-indigo-600"></i><span>엑셀 모드 (전체 편집)</span>';
-        }
-      }
-
-      if (list.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" class="text-center py-6 text-slate-400">해당 업무 도메인에 등록된 거래 내역이 없습니다.</td></tr>`;
-        lucide.createIcons();
-        return;
-      }
-
-      const domainBadge = {
-        client: '<span class="px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-bold">외주</span>',
-        publishing: '<span class="px-2 py-0.5 rounded bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold">출판</span>',
-        knowledge: '<span class="px-2 py-0.5 rounded bg-purple-50 text-purple-700 border border-purple-200 text-[10px] font-bold">지식창업</span>',
-        operation: '<span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 border border-slate-200 text-[10px] font-bold">운영</span>',
-      };
-
-      list.forEach(tx => {
-        const isExpense = tx.net < 0;
-        const tr = document.createElement('tr');
-        tr.className = isLedgerBulkEditing ? 'bg-indigo-50/20 hover:bg-indigo-50/40 transition-colors' : 'hover:bg-slate-50 transition-colors';
-
-        if (isLedgerBulkEditing) {
-          // Excel Bulk Edit Mode: Editable inline inputs
-          tr.innerHTML = `
-            <td class="py-2 px-2">
-              <input type="date" class="bulk-tx-date w-28 p-1 text-xs font-mono bg-white border border-slate-300 rounded focus:border-indigo-500" value="${tx.date}" data-id="${tx.id}">
-            </td>
-            <td class="py-2 px-2">
-              <select class="bulk-tx-domain p-1 text-xs bg-white border border-slate-300 rounded focus:border-indigo-500" data-id="${tx.id}">
-                <option value="client" ${tx.domain === 'client' ? 'selected' : ''}>외주</option>
-                <option value="publishing" ${tx.domain === 'publishing' ? 'selected' : ''}>출판</option>
-                <option value="knowledge" ${tx.domain === 'knowledge' ? 'selected' : ''}>지식창업</option>
-                <option value="operation" ${tx.domain === 'operation' ? 'selected' : ''}>운영</option>
-              </select>
-            </td>
-            <td class="py-2 px-2">
-              <input type="text" class="bulk-tx-title w-full min-w-[130px] p-1 text-xs bg-white border border-slate-300 rounded font-bold text-slate-800 focus:border-indigo-500" value="${escapeHtml(tx.title)}" data-id="${tx.id}">
-            </td>
-            <td class="py-2 px-2">
-              <input type="text" class="bulk-tx-category w-full min-w-[100px] p-1 text-xs bg-white border border-slate-300 rounded text-slate-600 focus:border-indigo-500" value="${escapeHtml(tx.category)}" data-id="${tx.id}">
-            </td>
-            <td class="py-2 px-2 text-right">
-              <input type="number" class="bulk-tx-gross w-24 p-1 text-xs font-mono text-right bg-white border border-slate-300 rounded focus:border-indigo-500" value="${tx.gross}" data-id="${tx.id}">
-            </td>
-            <td class="py-2 px-2 text-right">
-              <input type="number" class="bulk-tx-tax w-20 p-1 text-xs font-mono text-right bg-white border border-slate-300 rounded text-amber-700 focus:border-indigo-500" value="${tx.tax}" data-id="${tx.id}">
-            </td>
-            <td class="py-2 px-2 text-right">
-              <input type="number" class="bulk-tx-net w-24 p-1 text-xs font-mono text-right font-black bg-white border border-slate-300 rounded focus:border-indigo-500 ${isExpense ? 'text-rose-600' : 'text-emerald-700'}" value="${tx.net}" data-id="${tx.id}">
-            </td>
-            <td class="py-2 px-2 text-center">
-              <select class="bulk-tx-status p-1 text-[11px] bg-white border border-slate-300 rounded focus:border-indigo-500" data-id="${tx.id}">
-                <option value="정산완료" ${tx.status === '정산완료' ? 'selected' : ''}>정산완료</option>
-                <option value="세금계산서" ${tx.status === '세금계산서' ? 'selected' : ''}>세금계산서</option>
-                <option value="세금통장분리보관" ${tx.status === '세금통장분리보관' ? 'selected' : ''}>세금통장분리보관</option>
-                <option value="카드매출전표" ${tx.status === '카드매출전표' ? 'selected' : ''}>카드매출전표</option>
-                <option value="원천징수영수증" ${tx.status === '원천징수영수증' ? 'selected' : ''}>원천징수영수증</option>
-                <option value="수기분개완료" ${tx.status === '수기분개완료' ? 'selected' : ''}>수기분개완료</option>
-                <option value="영수증인증" ${tx.status === '영수증인증' ? 'selected' : ''}>영수증인증</option>
-              </select>
-            </td>
-            <td class="py-2 px-2 text-center">
-              <button type="button" onclick="deleteLedgerRow(${tx.id})" title="행 삭제" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 transition-colors">
-                <i data-lucide="trash-2" class="w-4 h-4"></i>
-              </button>
-            </td>
-          `;
-        } else {
-          // Normal Display Mode (Image 4 style pencil & trash icon buttons in Action column)
-          tr.innerHTML = `
-            <td class="py-3 px-4 font-mono text-slate-500">${tx.date}</td>
-            <td class="py-3 px-3">${domainBadge[tx.domain] || tx.domain}</td>
-            <td class="py-3 px-4 font-bold text-slate-800">${escapeHtml(tx.title)}</td>
-            <td class="py-3 px-3 text-slate-600 font-medium">${escapeHtml(tx.category)}</td>
-            <td class="py-3 px-4 text-right font-mono font-semibold ${isExpense ? 'text-slate-500' : 'text-slate-800'}">₩${Math.abs(tx.gross).toLocaleString()}</td>
-            <td class="py-3 px-3 text-right font-mono font-bold text-amber-700">${tx.tax !== 0 ? '₩' + Math.abs(tx.tax).toLocaleString() : '-'}</td>
-            <td class="py-3 px-4 text-right font-mono font-black ${isExpense ? 'text-rose-600' : 'text-emerald-700'}">
-              ${isExpense ? '-' : '+'}₩${Math.abs(tx.net).toLocaleString()}
-            </td>
-            <td class="py-3 px-3 text-center">
-              <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-semibold border border-slate-200">${tx.status}</span>
-            </td>
-            <td class="py-3 px-3 text-center">
-              <div class="flex items-center justify-center gap-1">
-                <button type="button" onclick="toggleLedgerBulkEdit(true)" title="엑셀 전체 편집" class="p-1.5 rounded-lg text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition-colors">
-                  <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
-                </button>
-                <button type="button" onclick="deleteLedgerRow(${tx.id})" title="삭제" class="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-rose-50 transition-colors">
-                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                </button>
-              </div>
-            </td>
-          `;
-        }
-        tbody.appendChild(tr);
-      });
-      lucide.createIcons();
     }
 
     // ==================== MONTHLY CALENDAR LOGIC ====================
@@ -1785,7 +1930,7 @@ const navGroupState = {
           gross: -45000,
           tax: 0,
           net: -45000,
-          status: '영수증인증'
+          status: '신용카드전표'
         });
         appState.workingCapital -= 45000;
         summaryMsg = `영수증 이미지 '${fileName}' 인식 완료: 카드 전표 경비 -₩45,000원이 등록되었습니다.`;
@@ -1810,7 +1955,7 @@ const navGroupState = {
         gross: 3000000,
         tax: 300000,
         net: 3300000,
-        status: '세금통장분리보관'
+        status: '세금계산서'
       });
       appState.workingCapital += 3300000;
       renderLedgerTable();
@@ -1831,7 +1976,7 @@ const navGroupState = {
         gross: 2000000,
         tax: 200000,
         net: 2200000,
-        status: '세금통장분리보관'
+        status: '세금계산서'
       });
       appState.workingCapital += 2200000;
       renderLedgerTable();
@@ -1857,7 +2002,7 @@ const navGroupState = {
         gross: 3000000,
         tax: 300000,
         net: 3300000,
-        status: '세금통장분리보관'
+        status: '세금계산서'
       });
       appState.workingCapital += 3300000;
       renderLedgerTable();
@@ -1944,30 +2089,35 @@ const navGroupState = {
       let tax = 0;
       let net = amount;
       let category = '사업소득매출';
+      let receiptType = '세금계산서';
 
       if (type === 'income_freelance') {
         gross = Math.round(amount / 0.967);
         tax = gross - amount;
         net = amount;
         category = '3.3%사업소득매출';
+        receiptType = '원천징수영수증';
         appState.workingCapital += amount;
       } else if (type === 'income_tax_invoice') {
         gross = Math.round(amount / 1.1);
         tax = amount - gross; // VAT
         net = amount;
         category = '세금계산서매출(VAT분리)';
+        receiptType = '세금계산서';
         appState.workingCapital += amount;
       } else if (type === 'income_other') {
         gross = Math.round(amount / 0.912);
         tax = gross - amount;
         net = amount;
         category = '8.8%기타소득매출';
+        receiptType = '원천징수영수증';
         appState.workingCapital += amount;
       } else if (type === 'expense') {
         gross = -amount;
         tax = 0;
         net = -amount;
         category = '일반사업경비';
+        receiptType = '신용카드전표';
         appState.workingCapital -= amount;
       }
 
@@ -1980,7 +2130,7 @@ const navGroupState = {
         gross: gross,
         tax: tax,
         net: net,
-        status: '수기분개완료'
+        status: receiptType
       });
 
       renderLedgerTable();
@@ -2003,9 +2153,9 @@ const navGroupState = {
     }
 
     function exportLedgerCSV() {
-      let csv = "거래일자,업무도메인,적요,계정과목,공급가액,원천세,실입출금액,상태\n";
+      let csv = "거래일자,업무도메인,적요,계정과목,공급가액,원천세,실입출금액,공제영수증\n";
       appState.transactions.forEach(t => {
-        csv += `${t.date},${t.domain},"${t.title}",${t.category},${t.gross},${t.tax},${t.net},${t.status}\n`;
+        csv += `${t.date || ''},${t.domain || ''},"${(t.title || '').replace(/"/g, '""')}",${t.category || ''},${t.gross !== undefined ? t.gross : ''},${t.tax !== undefined ? t.tax : ''},${t.net !== undefined ? t.net : ''},${normalizeReceiptStatus(t.status)}\n`;
       });
       const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
@@ -3182,8 +3332,12 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
 
       let html = '';
       list.forEach(rec => {
+        const clientName = rec.clientName || rec.client || '거래처 미상';
+        const itemTitle = rec.itemTitle || rec.project || '프로젝트 미지정';
+        const isDelayed = (rec.statusType === 'delayed' || rec.status === '지연' || (rec.delayDays && rec.delayDays > 0));
+
         let statusBadge = '<span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-semibold text-[10px]">정상</span>';
-        if (rec.statusType === 'delayed' && !rec.deferred) {
+        if (isDelayed && !rec.deferred) {
           statusBadge = '<span class="px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200 font-bold text-[10px]">지연 발생</span>';
         } else if (rec.deferred) {
           statusBadge = '<span class="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 font-bold text-[10px]">사전 협의 유예 중</span>';
@@ -3191,10 +3345,10 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
 
         html += `
           <tr class="hover:bg-slate-50 transition-colors">
-            <td class="py-3 px-3 font-bold text-slate-900">${rec.clientName}</td>
-            <td class="py-3 px-3 text-slate-600">${rec.itemTitle}</td>
-            <td class="py-3 px-3 text-right font-mono font-bold ${rec.statusType === 'delayed' && !rec.deferred ? 'text-rose-700' : 'text-slate-900'}">₩${Number(rec.amount || 0).toLocaleString()}</td>
-            <td class="py-3 px-3 text-center text-slate-500 font-mono">${rec.dueDate}</td>
+            <td class="py-3 px-3 font-bold text-slate-900">${escapeHtml(clientName)}</td>
+            <td class="py-3 px-3 text-slate-600">${escapeHtml(itemTitle)}</td>
+            <td class="py-3 px-3 text-right font-mono font-bold ${isDelayed && !rec.deferred ? 'text-rose-700' : 'text-slate-900'}">₩${Number(rec.amount || 0).toLocaleString()}</td>
+            <td class="py-3 px-3 text-center text-slate-500 font-mono">${escapeHtml(rec.dueDate || '-')}</td>
             <td class="py-3 px-3 text-center">${statusBadge}</td>
             <td class="py-3 px-3 text-center">
               <label class="inline-flex items-center gap-1.5 cursor-pointer">
@@ -3217,7 +3371,9 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
       });
 
       tbody.innerHTML = html;
-      lucide.createIcons();
+      if (window.lucide && typeof lucide.createIcons === 'function') {
+        lucide.createIcons();
+      }
     }
 
     function deleteReceivable(recId) {
@@ -4962,6 +5118,8 @@ function renderLedgerTable() {
     const tr = document.createElement('tr');
     tr.className = isLedgerBulkEditing ? 'bg-indigo-50/20 hover:bg-indigo-50/40 transition-colors' : 'hover:bg-slate-50 transition-colors';
 
+    const normStatus = normalizeReceiptStatus(tx.status);
+
     if (isLedgerBulkEditing) {
       // Excel Bulk Edit Mode
       tr.innerHTML = `
@@ -4994,14 +5152,13 @@ function renderLedgerTable() {
             </td>
             <td class="py-2.5 px-2 text-center whitespace-nowrap">
               <select class="bulk-tx-status p-1 text-[11px] bg-white border border-slate-300 rounded focus:border-indigo-500" data-id="${tx.id}">
-                <option value="" ${!tx.status ? 'selected' : ''}>선택</option>
-                <option value="세금계산서" ${tx.status === '세금계산서' ? 'selected' : ''}>세금계산서</option>
-                <option value="계산서(면세)" ${tx.status === '계산서(면세)' ? 'selected' : ''}>계산서(면세)</option>
-                <option value="신용카드전표" ${tx.status === '신용카드전표' || tx.status === '카드매출전표' ? 'selected' : ''}>신용카드전표</option>
-                <option value="현금영수증" ${tx.status === '현금영수증' ? 'selected' : ''}>현금영수증</option>
-                <option value="원천징수영수증" ${tx.status === '원천징수영수증' || tx.status === '원천징수완료' ? 'selected' : ''}>원천징수영수증</option>
-                <option value="간이영수증" ${tx.status === '간이영수증' ? 'selected' : ''}>간이영수증</option>
-                <option value="정산완료" ${tx.status === '정산완료' ? 'selected' : ''}>정산완료</option>
+                <option value="" ${!normStatus ? 'selected' : ''}>선택</option>
+                <option value="세금계산서" ${normStatus === '세금계산서' ? 'selected' : ''}>세금계산서</option>
+                <option value="계산서(면세)" ${normStatus === '계산서(면세)' ? 'selected' : ''}>계산서(면세)</option>
+                <option value="신용카드전표" ${normStatus === '신용카드전표' ? 'selected' : ''}>신용카드전표</option>
+                <option value="현금영수증" ${normStatus === '현금영수증' ? 'selected' : ''}>현금영수증</option>
+                <option value="원천징수영수증" ${normStatus === '원천징수영수증' ? 'selected' : ''}>원천징수영수증</option>
+                <option value="간이영수증" ${normStatus === '간이영수증' ? 'selected' : ''}>간이영수증</option>
               </select>
             </td>
             <td class="py-2.5 px-2 text-center whitespace-nowrap">
@@ -5017,8 +5174,8 @@ function renderLedgerTable() {
       // Fixed expense badge
       const fixedTag = isFixed ? `<span class="inline-block ml-1.5 px-1.5 py-0.2 rounded bg-rose-50 text-rose-700 text-[9.5px] font-bold border border-rose-200">고정비${tx.paymentDay ? ` · 매월 ${tx.paymentDay}일` : ''}</span>` : '';
       
-      const statusHtml = tx.status
-        ? `<span class="inline-block px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-semibold border border-slate-200 whitespace-nowrap shrink-0">${escapeHtml(tx.status)}</span>`
+      const statusHtml = normStatus
+        ? `<span class="inline-block px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 text-[10px] font-semibold border border-slate-200 whitespace-nowrap shrink-0">${escapeHtml(normStatus)}</span>`
         : `<span class="inline-block px-2.5 py-0.5 rounded-full bg-slate-50 text-slate-400 text-[10px] font-medium border border-dashed border-slate-200 whitespace-nowrap shrink-0">선택</span>`;
       const grossDisplay = hasGross ? `₩${Math.abs(grossNum).toLocaleString()}` : '-';
       const taxDisplay = hasTax && taxNum !== 0 ? `₩${Math.abs(taxNum).toLocaleString()}` : '-';
@@ -7118,6 +7275,8 @@ window.closePrivacyTermsModal = closePrivacyTermsModal;
 window.switchPrivacyTermsTab = switchPrivacyTermsTab;
 window.loadSampleDemoWorkspace = loadSampleDemoWorkspace;
 window.clearToGuestProtectedState = clearToGuestProtectedState;
+window.startWithSampleDemo = startWithSampleDemo;
+window.refreshAllUI = refreshAllUI;
 window.openOnboardingModal = openOnboardingModal;
 window.closeOnboardingModal = closeOnboardingModal;
 window.selectOnboardingMode = selectOnboardingMode;

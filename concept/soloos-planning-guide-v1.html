@@ -254,8 +254,45 @@
 
           <div>
             <h3 class="text-slate-900 font-bold flex items-center space-x-2">
+              <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
+              <span>2) 신규 방문자 프라이버시 보호(Zero-Data Start) 및 게스트 샘플 데이터 원클릭 체험</span>
+            </h3>
+            <p class="mt-1 text-xs text-slate-600 leading-relaxed">
+              최초 접속 시 사용자의 실제 자금 데이터가 0원인 상태를 안전하게 보호하며, 서비스를 빠르게 둘러볼 수 있도록 온보딩 모달에서 <strong>가상 샘플 데이터 둘러보기</strong>와 <strong>빈 화면으로 바로 시작하기</strong>를 1클릭으로 선택할 수 있습니다.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
+              <div class="p-4 rounded-xl border border-emerald-200 bg-emerald-50/40">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-bold text-emerald-800">가상 샘플 데이터로 둘러보기 (추천)</span>
+                  <span class="text-[10px] px-1.5 py-0.5 bg-emerald-100 text-emerald-700 font-bold rounded">시뮬레이션</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  표준 샘플 데이터(통장 잔고 ₩14,200,000, 런웨이 5.2개월, 거래 10건, 과업 4건, 클라이언트 3개사)가 즉시 로드되어 모든 UI/차트를 즉시 체험 가능.
+                </p>
+              </div>
+              <div class="p-4 rounded-xl border border-slate-200 bg-slate-50">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-xs font-bold text-slate-700">빈 화면으로 바로 시작하기 (클린 스타트)</span>
+                  <span class="text-[10px] px-1.5 py-0.5 bg-slate-200 text-slate-600 font-bold rounded">₩0 시작</span>
+                </div>
+                <p class="text-xs text-slate-600 leading-relaxed">
+                  잔고 ₩0, 내역 0건인 안전한 백지 상태로 시작하며, 차트 영역에는 가상 샘플 데이터를 불러올 수 있는 안내 오버레이가 제공됩니다.
+                </p>
+              </div>
+            </div>
+            <div class="mt-3 p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between text-xs text-slate-600">
+              <span class="flex items-center gap-2">
+                <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-indigo-600"></i>
+                <span>사이드바 게스트 뱃지에서 언제든 <strong>[데이터 초기화 (Clean Wipe)]</strong> 및 <strong>[샘플 데이터 다시 로드]</strong> 가능</span>
+              </span>
+              <span class="text-[11px] font-mono font-bold text-indigo-700">₩14.2M ↔ ₩0 자유 전환</span>
+            </div>
+          </div>
+
+          <div>
+            <h3 class="text-slate-900 font-bold flex items-center space-x-2">
               <i data-lucide="layers" class="w-4 h-4 text-indigo-600"></i>
-              <span>2) 업무별 분리 UI: 컴팩트 글로벌 통합 드롭다운 &amp; 메인 2대 집중 뷰</span>
+              <span>3) 업무별 분리 UI: 컴팩트 글로벌 통합 드롭다운 &amp; 메인 2대 집중 뷰</span>
             </h3>
             <p class="mt-1 text-xs text-slate-600 leading-relaxed">
               외주 디자인 일정과 디지털 출판(전자책) 정산, 온라인 강의 준비가 뒤섞여 혼란이 생기지 않도록 상단 헤더에 단일 통합 드롭다운을 배치합니다. 또한 메인 화면은 오직 <strong>실시간 캐시플로우 타임라인 그래프</strong>와 <strong>분야별 업무 일정 캘린더</strong> 2개 핵심 컴포넌트에만 집중시키고, 세부 손익표, 분개장, 계약안전망, 고객CRM은 좌측 반응형 고정 사이드바를 통해 서브뷰로 격리 전환합니다.
@@ -296,6 +333,41 @@
             <div class="bg-white p-3 rounded-lg border border-indigo-100">
               <span class="font-bold text-indigo-700 block mb-0.5">3. 어휘 기준: 명료하지만 기계 같지 않음</span>
               <span class="text-slate-600">건조한 번역투나 시스템 에러 코드가 아닌, 품격 있는 전문 파트너다운 자연스러운 한국어.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5대 핵심 재무 용어 표준화 -->
+        <div class="mb-5 p-4 bg-emerald-50/70 border border-emerald-200 rounded-xl">
+          <div class="text-xs font-bold text-emerald-900 flex items-center gap-1.5 mb-2.5">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+            <span>SoloOS 5대 핵심 재무 용어 표준화 (신뢰 중심 용어 개편)</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-5 gap-2 text-[11px]">
+            <div class="p-2.5 bg-white rounded-lg border border-emerald-200">
+              <span class="text-slate-400 line-through block text-[10px]">가용 현금</span>
+              <strong class="text-emerald-800 text-xs block mt-0.5">실제 쓸 수 있는 잔액</strong>
+              <span class="text-[10px] text-slate-500 mt-1 block">세금 제외 실질 지출 가능액</span>
+            </div>
+            <div class="p-2.5 bg-white rounded-lg border border-emerald-200">
+              <span class="text-slate-400 line-through block text-[10px]">매출 채권</span>
+              <strong class="text-emerald-800 text-xs block mt-0.5">받을 돈 (입금 예정 대금)</strong>
+              <span class="text-[10px] text-slate-500 mt-1 block">직관적 입금 대기 대금</span>
+            </div>
+            <div class="p-2.5 bg-white rounded-lg border border-emerald-200">
+              <span class="text-slate-400 line-through block text-[10px]">부채 유보액</span>
+              <strong class="text-emerald-800 text-xs block mt-0.5">세금 납부 준비금</strong>
+              <span class="text-[10px] text-slate-500 mt-1 block">정기 세무 대비 안전 예비금</span>
+            </div>
+            <div class="p-2.5 bg-white rounded-lg border border-emerald-200">
+              <span class="text-slate-400 line-through block text-[10px]">예치 필수 / 분리 예치</span>
+              <strong class="text-emerald-800 text-xs block mt-0.5">세금 통장에 별도 분리 보관</strong>
+              <span class="text-[10px] text-slate-500 mt-1 block">친절한 통장 쪼개기 실천 제언</span>
+            </div>
+            <div class="p-2.5 bg-white rounded-lg border border-emerald-200">
+              <span class="text-slate-400 line-through block text-[10px]">적격 증빙</span>
+              <strong class="text-emerald-800 text-xs block mt-0.5">공제 영수증</strong>
+              <span class="text-[10px] text-slate-500 mt-1 block">비전공자 맞춤 세무 용어</span>
             </div>
           </div>
         </div>
@@ -607,9 +679,9 @@
           <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
             <div class="font-bold text-slate-900 flex items-center space-x-1.5">
               <i data-lucide="image" class="w-4 h-4 text-blue-600"></i>
-              <span>2. 영수증 이미지 드롭</span>
+              <span>2. 영수증 이미지 &amp; 승인일시</span>
             </div>
-            <p class="text-slate-600 leading-relaxed text-[11px]">JPG, PNG 영수증 및 카드 전표 이미지를 드롭하면 클라이언트 OCR 엔진으로 가맹점명, 거래일자, 금액을 자동 인식.</p>
+            <p class="text-slate-600 leading-relaxed text-[11px]">JPG, PNG 영수증 및 카드 전표 이미지를 드롭하면 클라이언트 OCR 엔진으로 가맹점명, 결제일시(승인시간), 금액을 정밀 추출 등록.</p>
           </div>
 
           <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-1.5">
@@ -629,24 +701,34 @@
           </div>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
           <div class="p-3.5 bg-indigo-50/60 border border-indigo-200 rounded-xl space-y-1">
             <div class="font-bold text-indigo-950 flex items-center gap-1.5">
               <i data-lucide="table" class="w-4 h-4 text-indigo-600"></i>
-              <span>엑셀 모드 (전체 일괄 편집)</span>
+              <span>엑셀 모드 (전체 인라인 일괄 편집)</span>
             </div>
             <p class="text-slate-600 text-[11px] leading-relaxed">
-              건별 개별 수정 외에도, 엑셀 시트처럼 전체 거래 내역을 테이블 인라인 셀에서 직접 수정하고 원클릭으로 일괄 저장하는 모드를 탑재하여 대량 데이터 정리 편의성을 극대화합니다.
+              건별 개별 수정 외에도, 엑셀 시트처럼 전체 거래 내역을 테이블 인라인 셀에서 직접 수정하고 행 추가 시 빈 행 생성 후 원클릭 일괄 저장/취소 지원.
+            </p>
+          </div>
+
+          <div class="p-3.5 bg-amber-50/60 border border-amber-200 rounded-xl space-y-1">
+            <div class="font-bold text-amber-950 flex items-center gap-1.5">
+              <i data-lucide="calendar" class="w-4 h-4 text-amber-600"></i>
+              <span>월간 고정비 납부 일정 모달</span>
+            </div>
+            <p class="text-slate-600 text-[11px] leading-relaxed">
+              1일부터 31일까지 매월 정기적으로 빠져나가는 작업실 월세, 통신비, 정기 SaaS 구독료 납부일을 한눈에 확인하는 일자별 타임라인 제공.
             </p>
           </div>
 
           <div class="p-3.5 bg-emerald-50/60 border border-emerald-200 rounded-xl space-y-1">
             <div class="font-bold text-emerald-950 flex items-center gap-1.5">
-              <i data-lucide="download" class="w-4 h-4 text-emerald-600"></i>
-              <span>한 해 정산 요약표 리포트</span>
+              <i data-lucide="sliders-horizontal" class="w-4 h-4 text-emerald-600"></i>
+              <span>20/30/50 페이징 &amp; 정산 요약표</span>
             </div>
             <p class="text-slate-600 text-[11px] leading-relaxed">
-              기존 '1년 수입.지출 정산 요약표'를 직관적인 UX Writing에 맞춰 '한 해 정산 요약표'로 전면 개선하였으며, 5월 종합소득세 및 정기 부가가치세 신고 시 세무사 제출용 단일 리포트로 즉시 다운로드됩니다.
+              페이지당 20/30/50건 보기 선택 및 기간별/키워드 필터링을 지원하며, 5월 종소세 신고용 '한 해 정산 요약표' 단일 리포트 즉시 다운로드 제공.
             </p>
           </div>
         </div>
@@ -661,44 +743,55 @@
         <h2>자금 현황 (3초 비주얼 손익표 &amp; 재무 대시보드)</h2>
 
         <p class="text-slate-600 text-sm leading-relaxed mb-5">
-          기존의 번잡했던 6대 KPI 및 대차대조표 박스를 <strong>통합 마스터 히어로 카드</strong>로 전면 개편했습니다. <strong>사업 통장 가용 잔고(₩14,200,000)</strong>와 <strong>잔여 런웨이(5.2개월, 월 고정비 ₩2.73M 기준)</strong>를 최상단에 직관적으로 제시하고, 복잡하던 세무 D-day 캘린더는 신설된 <strong>'세금 관리'</strong> 페이지로 완전 이관하여 본 화면에서는 순수한 자금 흐름과 사업 지속성에만 집중하도록 UX를 고도화했습니다.
+          기존의 번잡했던 재무제표를 <strong>4대 핵심 KPI 카드</strong>와 <strong>5단계 비주얼 워터폴 손익표</strong>로 전면 개편했습니다. <strong>사업 통장 잔고(₩14,200,000)</strong>, <strong>실제 쓸 수 있는 잔액(₩13,680,000)</strong>, <strong>현금 유지 가능 기간(5.2개월, 월 고정비 ₩2.73M 기준)</strong>을 최상단에 직관적으로 제시하고, 복잡하던 세무 일정은 <strong>'세금 관리'</strong> 페이지로 완전 이관하여 본 화면에서는 순수한 자금 흐름과 유동성 예측에만 집중하도록 UX를 고도화했습니다.
         </p>
 
         <div class="space-y-6">
-          <!-- 1) 통합 마스터 히어로 카드 & 3열 직관적 재무 구조 -->
+          <!-- 1) 4대 핵심 KPI 카드 & 3열 직관적 재무 구조 -->
           <div>
             <h3 class="text-slate-900 font-bold flex items-center space-x-2">
               <i data-lucide="shield-check" class="w-4 h-4 text-emerald-600"></i>
-              <span>1) 통합 마스터 히어로 카드 (가용 현금 &amp; 3열 비주얼 재무 구조)</span>
+              <span>1) 4대 핵심 KPI 카드 &amp; 3열 비주얼 재무 구조</span>
             </h3>
             <p class="mt-1 text-xs text-slate-600 leading-relaxed">
-              분산되어 혼란을 주던 잔고 지표를 최상단 단일 마스터 카드로 집약하고, 하단에 3열 재무 구조(자산·부채·순자본)를 유기적으로 결합했습니다:
+              자금 오인을 방지하기 위해 통장에 찍힌 전체 잔고와 세금 준비금을 뺀 '실제 쓸 수 있는 잔액'을 투명하게 분리 제시합니다:
             </p>
             <div class="p-5 bg-gradient-to-br from-slate-900 to-indigo-950 text-white rounded-2xl border border-slate-800 space-y-4 mt-3 shadow-md">
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-white/10">
-                <div>
-                  <span class="text-xs text-indigo-300 font-medium">현재 즉시 가용 현금 (사업 통장 잔고)</span>
-                  <div class="text-3xl font-black font-mono tracking-tight text-white mt-0.5">₩14,200,000</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pb-3 border-b border-white/10">
+                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                  <span class="text-xs text-indigo-300 font-medium">현재 사업 통장 잔고</span>
+                  <div class="text-2xl font-black font-mono tracking-tight text-white mt-0.5">₩14,200,000</div>
+                  <span class="text-[10px] text-slate-400 mt-1 block">주거래 사업 계좌 실보유고</span>
                 </div>
-                <div class="sm:text-right">
-                  <span class="text-xs text-slate-300">현재 자금 기준 사업 지속 기간</span>
-                  <div class="flex items-center sm:justify-end gap-1.5 mt-0.5">
+                <div class="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30">
+                  <span class="text-xs text-emerald-300 font-medium">실제 쓸 수 있는 잔액</span>
+                  <div class="text-2xl font-black font-mono tracking-tight text-emerald-300 mt-0.5">₩13,680,000</div>
+                  <span class="text-[10px] text-emerald-400 mt-1 block">세금 준비금(52만원) 분리 제외</span>
+                </div>
+                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                  <span class="text-xs text-slate-300 font-medium">현금 유지 가능 기간 (런웨이)</span>
+                  <div class="flex items-center gap-1.5 mt-0.5">
                     <span class="text-2xl font-black text-emerald-400 font-mono">5.2개월</span>
-                    <span class="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">안정</span>
+                    <span class="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">안정</span>
                   </div>
-                  <span class="text-[10px] text-slate-400 block mt-0.5">월 고정비 ₩2.73M 지출 기준</span>
+                  <span class="text-[10px] text-slate-400 mt-1 block">월 고정비 ₩2.73M 기준</span>
+                </div>
+                <div class="p-3 rounded-xl bg-white/5 border border-white/10">
+                  <span class="text-xs text-amber-300 font-medium">월 필수 고정비</span>
+                  <div class="text-2xl font-black font-mono tracking-tight text-amber-300 mt-0.5">₩2,730,000</div>
+                  <span class="text-[10px] text-slate-400 mt-1 block">임대료+통신+구독료 6건</span>
                 </div>
               </div>
 
               <!-- 하단 3열 재무 구조 -->
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
                 <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span class="text-indigo-300 block text-[11px]">입금 대기 미수금 (+)</span>
+                  <span class="text-indigo-300 block text-[11px]">받을 돈 (입금 예정 대금, +)</span>
                   <span class="text-lg font-bold text-white font-mono mt-0.5 block">+₩4,000,000</span>
-                  <span class="text-[10px] text-slate-400 mt-1 block">3건 (정산 관리 연동)</span>
+                  <span class="text-[10px] text-slate-400 mt-1 block">정산 대기 3건 (알파·베타·감마)</span>
                 </div>
                 <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-                  <span class="text-rose-300 block text-[11px]">예정 지출 및 세금 (-)</span>
+                  <span class="text-rose-300 block text-[11px]">세금 납부 준비금 및 예정 지출 (-)</span>
                   <span class="text-lg font-bold text-rose-300 font-mono mt-0.5 block">-₩3,800,000</span>
                   <span class="text-[10px] text-slate-400 mt-1 block">카드 2.8M + 세금 준비금 1.0M</span>
                 </div>
@@ -722,38 +815,38 @@
             </p>
             <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs font-medium space-y-2 mt-3">
               <div class="flex items-center justify-between text-slate-800">
-                <span>① 총 계약 공급가액</span>
-                <span class="font-bold">₩5,800,000 (100%)</span>
+                <span>① 총 계약 공급가액 (당월 수입)</span>
+                <span class="font-bold">₩5,200,000 (100%)</span>
               </div>
               <div class="flex items-center justify-between text-indigo-600 pl-4 border-l-2 border-indigo-300">
                 <span>② (-) 세무 공제 (3.3% 원천세 or 10% 부가세 예수금)</span>
-                <span>-₩197,600</span>
+                <span>-₩172,400</span>
               </div>
               <div class="flex items-center justify-between text-slate-700 pl-4 border-l-2 border-slate-300">
-                <span>③ (=) 통장 실입금 가용 매출</span>
-                <span>₩5,602,400</span>
+                <span>③ (=) 통장 실수령액 (실입금 합계)</span>
+                <span>₩5,372,400</span>
               </div>
               <div class="flex items-center justify-between text-rose-600 pl-4 border-l-2 border-rose-300">
-                <span>④ (-) 필수 사업 경비 (SaaS 구독료, 작업실, 장비 리스)</span>
+                <span>④ (-) 필수 사업 경비 (작업실 임대료, 통신, SaaS 구독료)</span>
                 <span>-₩1,000,000</span>
               </div>
               <div class="flex items-center justify-between text-emerald-700 bg-emerald-50 p-2 rounded-lg font-bold">
                 <span>⑤ (=) 세후 실질 순이익 (실질 사업 소득)</span>
-                <span>₩4,602,400 (79.3%)</span>
+                <span>₩4,372,400 (81.4%)</span>
               </div>
             </div>
           </div>
 
-          <!-- 3) 런웨이 시뮬레이터 & 스마트 지출 최적화 2열 대칭 나란히 배치 -->
+          <!-- 3) 30일/60일 유동성 예측 차트 & 런웨이 시뮬레이터 -->
           <div>
             <h3 class="text-slate-900 font-bold flex items-center space-x-2 mb-2">
-              <i data-lucide="layout-grid" class="w-4 h-4 text-indigo-600"></i>
-              <span>3) 런웨이 시뮬레이터 &amp; 지출 최적화 (2열 대칭 배치 &amp; UX Writing)</span>
+              <i data-lucide="trending-up" class="w-4 h-4 text-indigo-600"></i>
+              <span>3) 30일/60일 유동성 예측 차트 &amp; 런웨이 시뮬레이터</span>
             </h3>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
               <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
                 <div class="font-bold text-slate-900 flex items-center justify-between">
-                  <span>런웨이 시뮬레이터 (생존 가능 개월 수)</span>
+                  <span>현금 유지 가능 기간 (런웨이)</span>
                   <span class="px-2 py-0.5 bg-indigo-100 text-indigo-700 rounded font-semibold text-[11px]">안심 지표</span>
                 </div>
                 <div class="text-sm font-bold text-indigo-900">
@@ -766,14 +859,14 @@
 
               <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
                 <div class="font-bold text-slate-900 flex items-center justify-between">
-                  <span>스마트 지출 최적화 (고정비·변동비 분석)</span>
-                  <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded font-semibold text-[11px]">연 ₩720,000 절감</span>
+                  <span>30일 유동성 최저 잔액 예측</span>
+                  <span class="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded font-semibold text-[11px]">최저 ₩11.8M 예상</span>
                 </div>
                 <div class="text-sm font-bold text-slate-800">
-                  매월 나가는 구독료 6건 중 미사용 2건 정리 권장
+                  고정비 출금일(25일) 이후에도 안전 마진 유지
                 </div>
                 <p class="text-slate-600 leading-relaxed text-[11px]">
-                  최근 30일간 실행 이력이 없는 디자인 에셋·개발 플러그인 구독을 자동 감지하여 불필요한 고정 지출을 절감합니다.
+                  예정된 대금 입금 일정과 카드/임대료 지출 일정을 결합하여 30일 뒤에도 사업 통장 잔고가 안전선 이상으로 유지됨을 사전 시뮬레이션합니다.
                 </p>
               </div>
             </div>
@@ -839,18 +932,22 @@
         </p>
 
         <div class="space-y-4 text-xs text-slate-600">
-          <!-- 1. 표준계약서 라이브러리 -->
+          <!-- 1. 표준계약서 라이브러리 & AI 스캐너 -->
           <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
             <div class="font-bold text-slate-900 flex items-center justify-between">
               <span class="flex items-center space-x-2">
                 <i data-lucide="file-text" class="w-4 h-4 text-indigo-600"></i>
-                <span>1. 정부 공식 용역 표준계약서 직결 포털</span>
+                <span>1. 정부 공식 용역 표준계약서 직결 포털 &amp; 독소조항 AI 자동 스캐너</span>
               </span>
               <span class="text-xs text-indigo-600 font-semibold">KIDP · MSIT · 문체부 공식 서식</span>
             </div>
             <p class="leading-relaxed">
               임의 서식이 아닌 국가 표준계약서 연계: ① <strong>한국디자인진흥원(KIDP) 디자인 용역 표준계약서 4개 분야</strong> (시각디자인, 제품디자인, 멀티미디어 디자인, 서비스·경험디자인), ② <strong>과학기술정보통신부(MSIT) SW 용역 표준계약서</strong>, ③ <strong>문화체육관광부 디지털 출판 표준계약서</strong>. 3대 표준 안전 특약(지체상금 0.1% 상한, 대금 완납 시 저작권 이전, 무상 수정 2회 한정) 원클릭 복사 지원.
             </p>
+            <div class="p-2.5 bg-indigo-50/70 border border-indigo-200 rounded-lg text-[11px] text-indigo-900 flex items-center justify-between">
+              <span>🤖 <strong>계약서 독소조항 AI 스캐너</strong>: 계약서 텍스트 입력 후 스캔 버튼 클릭 시 과도한 지체상금, 무제한 수정, 불공정 권리 귀속 조항을 즉시 감지하고 방어 특약 문안을 제공합니다.</span>
+              <span class="text-[10px] font-bold px-2 py-0.5 bg-indigo-200 text-indigo-800 rounded">AI 진단 연계</span>
+            </div>
           </div>
 
           <!-- 2. 검수 확인 -->
@@ -967,10 +1064,13 @@
           단순한 단독 PWA를 넘어, 향후 <strong>Google Cloud Run 백엔드 컨테이너</strong> 및 <strong>Firebase(Firestore, Auth, App Hosting)</strong>와의 엔터프라이즈급 연동을 지원하는 <strong>PWS (Progressive Web Service)</strong> 아키텍처로 정립되었습니다. (서비스 사이드바 하단 불필요한 v1/v2 링크 및 서울시 정책 연계 버튼은 영구 삭제됨)
         </p>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-600">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-slate-600">
           <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-            <span class="font-bold text-slate-900 block">프론트엔드 및 시각화</span>
-            <ul class="list-disc list-inside space-y-1">
+            <span class="font-bold text-slate-900 block flex items-center gap-1.5">
+              <i data-lucide="layout" class="w-4 h-4 text-indigo-600"></i>
+              <span>프론트엔드 및 시각화</span>
+            </span>
+            <ul class="list-disc list-inside space-y-1 text-[11px]">
               <li>HTML5 / React 18 + Tailwind CSS</li>
               <li>Lucide Icons + Chart.js (Cashflow 라인 차트)</li>
               <li>Light / Night 반응형 테마 지원</li>
@@ -979,12 +1079,28 @@
           </div>
 
           <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
-            <span class="font-bold text-slate-900 block">저장소 및 PWS 클라우드 확장</span>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Local-First (IndexedDB / LocalStorage 암호화 무결성)</li>
-              <li>PWS Web App Manifest (manifest.json) &amp; sw.js 오프라인 캐싱</li>
-              <li>Google Cloud Run 마이크로서비스 백엔드 호환 구조</li>
-              <li>Firebase Firestore &amp; Auth 클라우드 동기화 브릿지 준비</li>
+            <span class="font-bold text-slate-900 block flex items-center gap-1.5">
+              <i data-lucide="hard-drive" class="w-4 h-4 text-emerald-600"></i>
+              <span>저장소 및 PWS 클라우드</span>
+            </span>
+            <ul class="list-disc list-inside space-y-1 text-[11px]">
+              <li>Local-First (IndexedDB / LocalStorage 암호화)</li>
+              <li>PWS Web App Manifest (manifest.json) &amp; sw.js</li>
+              <li>Google Cloud Run 마이크로서비스 백엔드 호환</li>
+              <li>Firebase Firestore &amp; Auth 클라우드 브릿지</li>
+            </ul>
+          </div>
+
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-2">
+            <span class="font-bold text-slate-900 block flex items-center gap-1.5">
+              <i data-lucide="bot" class="w-4 h-4 text-purple-600"></i>
+              <span>Google &amp; MCP AI 연동</span>
+            </span>
+            <ul class="list-disc list-inside space-y-1 text-[11px]">
+              <li>Google Calendar 마감·세무 일정 실시간 동기화</li>
+              <li>Google Drive ERP 장부 자동 백업·복원 폴더 연계</li>
+              <li>Model Context Protocol (MCP) 표준 stdio 서버</li>
+              <li>Claude Desktop/Cursor 연계 8대 전용 AI Tools</li>
             </ul>
           </div>
         </div>
