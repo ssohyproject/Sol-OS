@@ -30,17 +30,7 @@
     "googleConnected": true,
     "googleCalendarConnected": true,
     "googleDriveConnected": true,
-    "createdAt": "2026-10-16T20:09:37.153Z"
-  },
-  {
-    "id": "usr_g_1792484100600",
-    "email": "guest@soloos.io",
-    "name": "guest 대표",
-    "businessType": "1인 디지털 창업가",
-    "passwordHash": "google_oauth_1792484100600",
-    "googleConnected": true,
-    "googleCalendarConnected": true,
-    "googleDriveConnected": true,
-    "createdAt": "2026-10-20T08:15:00.600Z"
+    "createdAt": "2026-10-16T20:09:37.153Z",
+    "photoURL": "https://lh3.googleusercontent.com/a/ACg8ocKfrAK7o2OX1sGKci19W7P0VQLrfZieI4TQDoD_Yq73yRURtw=s96-c"
   }
 ]

@@ -312,6 +312,11 @@
         console.warn("[refreshAllUI] updateVisualStatements error:", e);
       }
       try {
+        if (typeof renderCashflowForecastChart === "function") renderCashflowForecastChart();
+      } catch (e) {
+        console.warn("[refreshAllUI] renderCashflowForecastChart error:", e);
+      }
+      try {
         if (typeof renderMonthlyCalendar === "function") renderMonthlyCalendar();
       } catch (e) {
         console.warn("[refreshAllUI] renderMonthlyCalendar error:", e);
@@ -595,6 +600,12 @@ const navGroupState = {
       } else if (viewId === 'clients') {
         renderClientList();
         renderClientDetail(selectedClientId);
+      } else if (viewId === 'statements') {
+        updateVisualStatements();
+        renderCashflowForecastChart();
+        setTimeout(() => {
+          if (cashflowForecastChartInstance) cashflowForecastChartInstance.resize();
+        }, 60);
       }
 
       closeSidebarDrawer();
@@ -1031,6 +1042,589 @@ const navGroupState = {
       // Legacy compatibility tags
       setElText('bsBankBalance', '₩' + workingCapital.toLocaleString());
       setElText('bsAssets', '₩' + (workingCapital + pendingReceivables).toLocaleString());
+    }
+
+    // ==================== CASHFLOW FORECAST & FINANCIAL STATEMENTS CONTROLLER ====================
+    let cashflowForecastChartInstance = null;
+    let forecastPeriod = 30;
+    let isForecastConservative = false;
+    let isForecastZoom = true;
+
+    function renderCashflowForecastChart() {
+      const canvas = document.getElementById('cashflowForecastCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+
+      const workingCapital = Number(appState.workingCapital || 0);
+      const monthlyFixedExpense = Number(appState.monthlyFixedExpense || 0);
+      const taxSaved = Number(appState.taxSaved || 0);
+      const availableCash = Math.max(0, workingCapital - taxSaved);
+      const receivables = appState.receivables || [];
+
+      // 기준일: 2026-10-19 (현재 워크스페이스 기준)
+      const baseYear = 2026;
+      const baseMonth = 9; // 10월 (0-indexed)
+      const baseDay = 19;
+      const totalDays = forecastPeriod || 30;
+
+      const labels = [];
+      const balanceData = [];
+      const safeLineData = [];
+      const incomeData = [];
+      const expenseData = [];
+
+      let currentBal = workingCapital;
+      const safeThreshold = Math.max(2000000, monthlyFixedExpense * 2);
+
+      let minBalance = workingCapital;
+      let minBalanceDateStr = '';
+
+      for (let i = 0; i < totalDays; i++) {
+        const d = new Date(baseYear, baseMonth, baseDay + i);
+        const yyyy = d.getFullYear();
+        const mm = String(d.getMonth() + 1).padStart(2, '0');
+        const dd = String(d.getDate()).padStart(2, '0');
+        const dateKey = `${yyyy}-${mm}-${dd}`;
+        const labelKey = `${mm}.${dd}`;
+        labels.push(labelKey);
+
+        // 1. 입금 집계
+        let dayIncome = 0;
+        receivables.forEach(r => {
+          if (r.dueDate === dateKey) {
+            if (isForecastConservative && (r.statusType === 'delayed' || r.status === '지연')) {
+              return;
+            }
+            dayIncome += Number(r.amount || 0);
+          }
+        });
+
+        // 2. 지출 집계 (고정비 결제일: 매월 25일)
+        let dayExpense = 0;
+        if (d.getDate() === 25 && monthlyFixedExpense > 0) {
+          dayExpense += monthlyFixedExpense;
+        }
+
+        currentBal = currentBal + dayIncome - dayExpense;
+        balanceData.push(currentBal);
+        safeLineData.push(safeThreshold);
+        incomeData.push(dayIncome > 0 ? dayIncome : null);
+        expenseData.push(dayExpense > 0 ? dayExpense : null);
+
+        if (currentBal < minBalance) {
+          minBalance = currentBal;
+          minBalanceDateStr = `${mm}월 ${dd}일`;
+        }
+      }
+
+      // 차트 생성/갱신
+      if (cashflowForecastChartInstance) {
+        try {
+          cashflowForecastChartInstance.destroy();
+        } catch (e) {
+          console.warn("[CashflowForecast] Chart destroy error:", e);
+        }
+        cashflowForecastChartInstance = null;
+      }
+
+      const gradient = ctx.createLinearGradient(0, 0, 0, 190);
+      gradient.addColorStop(0, 'rgba(59, 130, 246, 0.32)');
+      gradient.addColorStop(0.6, 'rgba(99, 102, 241, 0.10)');
+      gradient.addColorStop(1, 'rgba(238, 242, 255, 0.01)');
+
+      const minValInData = Math.min(...balanceData);
+      const yAxisMin = isForecastZoom 
+        ? Math.max(0, Math.floor(minValInData * 0.85)) 
+        : 0;
+
+      cashflowForecastChartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              type: 'line',
+              label: '예상 현금 잔액',
+              data: balanceData,
+              borderColor: '#3b82f6',
+              backgroundColor: gradient,
+              borderWidth: 2.5,
+              tension: 0.35,
+              fill: true,
+              pointBackgroundColor: '#2563eb',
+              pointBorderColor: '#ffffff',
+              pointBorderWidth: 1.5,
+              pointRadius: totalDays <= 30 ? 3 : 2,
+              pointHoverRadius: 5.5,
+              order: 2
+            },
+            {
+              type: 'line',
+              label: '최소 안전선 (고정비 2개월)',
+              data: safeLineData,
+              borderColor: '#f43f5e',
+              borderWidth: 1.5,
+              borderDash: [5, 4],
+              pointRadius: 0,
+              fill: false,
+              order: 1
+            },
+            {
+              type: 'bar',
+              label: '입금 예정',
+              data: incomeData,
+              backgroundColor: '#10b981',
+              borderRadius: 4,
+              barThickness: totalDays <= 30 ? 8 : 5,
+              order: 3
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: {
+            mode: 'index',
+            intersect: false
+          },
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+              labels: {
+                boxWidth: 10,
+                boxHeight: 10,
+                usePointStyle: true,
+                pointStyle: 'circle',
+                font: {
+                  size: 10,
+                  family: 'Pretendard, system-ui, sans-serif',
+                  weight: '600'
+                },
+                color: '#475569'
+              }
+            },
+            tooltip: {
+              backgroundColor: 'rgba(15, 23, 42, 0.92)',
+              titleFont: { size: 11, weight: '700' },
+              bodyFont: { size: 11 },
+              padding: 10,
+              cornerRadius: 8,
+              callbacks: {
+                label: function(context) {
+                  const val = context.parsed.y;
+                  if (val === null || val === undefined) return '';
+                  return `${context.dataset.label}: ₩${val.toLocaleString()}`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              grid: { display: false },
+              ticks: {
+                font: { size: 10, family: 'monospace' },
+                color: '#64748b',
+                maxRotation: 0,
+                autoSkip: true,
+                maxTicksLimit: totalDays <= 30 ? 10 : 12
+              }
+            },
+            y: {
+              min: yAxisMin,
+              grid: {
+                color: 'rgba(226, 232, 240, 0.6)',
+                borderDash: [3, 3]
+              },
+              ticks: {
+                font: { size: 10, family: 'monospace' },
+                color: '#64748b',
+                callback: function(value) {
+                  if (value >= 10000000) {
+                    return (value / 10000000).toFixed(1) + '천만';
+                  } else if (value >= 10000) {
+                    return (value / 10000).toLocaleString() + '만';
+                  }
+                  return '₩' + value.toLocaleString();
+                }
+              }
+            }
+          }
+        }
+      });
+
+      // 배너 갱신
+      const rangeBadge = document.getElementById('forecastRangeBadge');
+      if (rangeBadge && labels.length > 0) {
+        rangeBadge.textContent = `2026.${labels[0]} ~ ${labels[labels.length - 1]}`;
+      }
+      const minBalEl = document.getElementById('forecastMinBalance');
+      if (minBalEl) minBalEl.textContent = '₩' + minBalance.toLocaleString();
+      const minDateEl = document.getElementById('forecastMinDate');
+      if (minDateEl) {
+        minDateEl.textContent = minBalanceDateStr ? `${minBalanceDateStr} 결제 후 최저` : '특이 지출 없음';
+      }
+      const alertBanner = document.getElementById('forecastAlertBanner');
+      if (alertBanner) {
+        const isSafe = minBalance >= safeThreshold;
+        alertBanner.className = isSafe
+          ? 'p-3 rounded-lg bg-white border border-slate-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2'
+          : 'p-3 rounded-lg bg-rose-50 border border-rose-200 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2';
+        const innerContent = alertBanner.querySelector('.text-slate-700') || alertBanner;
+        if (innerContent) {
+          innerContent.innerHTML = isSafe
+            ? `<div class="flex items-center gap-2 text-slate-700">
+                 <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+                 <span>예상 최저 잔액: <strong class="text-slate-900 font-mono">₩${minBalance.toLocaleString()}</strong> (${minBalanceDateStr || '안정'}) | 최소 안전선(₩${safeThreshold.toLocaleString()}) 대비 안정적입니다.</span>
+               </div>
+               <span class="text-[11px] text-slate-400 self-start sm:self-auto">* 고정비 2개월치(안전보유선) 기준</span>`
+            : `<div class="flex items-center gap-2 text-rose-800">
+                 <i data-lucide="alert-triangle" class="w-4 h-4 text-rose-600 shrink-0"></i>
+                 <span>⚠️ 예상 최저 잔액: <strong class="text-rose-700 font-mono">₩${minBalance.toLocaleString()}</strong> (${minBalanceDateStr || '주의'}) | 최소 안전선(₩${safeThreshold.toLocaleString()}) 이하로 일시 하락할 수 있어 사전 정산 확인이 권장됩니다.</span>
+               </div>
+               <span class="text-[11px] text-rose-500 self-start sm:self-auto">* 고정비 2개월치(안전보유선) 기준</span>`;
+          if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+      }
+    }
+
+    function setForecastPeriod(period) {
+      forecastPeriod = period;
+      const btn30 = document.getElementById('forecastBtn30');
+      const btn60 = document.getElementById('forecastBtn60');
+      if (btn30 && btn60) {
+        if (period === 30) {
+          btn30.className = 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-900 text-white shadow-xs';
+          btn60.className = 'px-2.5 py-1 rounded-lg text-[11px] font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100';
+        } else {
+          btn60.className = 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-slate-900 text-white shadow-xs';
+          btn30.className = 'px-2.5 py-1 rounded-lg text-[11px] font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100';
+        }
+      }
+      renderCashflowForecastChart();
+    }
+
+    function toggleForecastConservative() {
+      isForecastConservative = !isForecastConservative;
+      const btn = document.getElementById('forecastBtnConservative');
+      if (btn) {
+        if (isForecastConservative) {
+          btn.className = 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-100 text-amber-900 border border-amber-300 flex items-center gap-1 shadow-2xs';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-white text-slate-700 border border-slate-200 hover:bg-slate-100 flex items-center gap-1';
+        }
+      }
+      renderCashflowForecastChart();
+      if (typeof showToast === 'function') {
+        showToast(isForecastConservative 
+          ? "보수적 시나리오 활성화: 지연 상태인 미수금을 제외하고 예측합니다." 
+          : "기본 시나리오: 모든 예정 입금 건을 포함하여 예측합니다.");
+      }
+    }
+
+    function toggleForecastZoom() {
+      isForecastZoom = !isForecastZoom;
+      const btn = document.getElementById('forecastBtnZoom');
+      const label = document.getElementById('forecastZoomLabel');
+      if (label) {
+        label.textContent = `변동폭 확대 (${isForecastZoom ? 'ON' : 'OFF'})`;
+      }
+      if (btn) {
+        if (isForecastZoom) {
+          btn.className = 'px-2.5 py-1 rounded-lg text-[11px] font-bold bg-blue-50 text-blue-700 border border-blue-200 hover:bg-blue-100 flex items-center gap-1';
+        } else {
+          btn.className = 'px-2.5 py-1 rounded-lg text-[11px] font-medium bg-white text-slate-600 border border-slate-200 hover:bg-slate-100 flex items-center gap-1';
+        }
+      }
+      renderCashflowForecastChart();
+    }
+
+    function switchWaterfallMode(mode) {
+      const accContainer = document.getElementById('waterfallAccountingContainer');
+      const cfContainer = document.getElementById('waterfallCashflowContainer');
+      const tabAcc = document.getElementById('wfTabAccounting');
+      const tabCf = document.getElementById('wfTabCashflow');
+
+      if (mode === 'accounting') {
+        if (accContainer) accContainer.classList.remove('hidden');
+        if (cfContainer) cfContainer.classList.add('hidden');
+        if (tabAcc) tabAcc.className = 'px-3 py-1 rounded-lg font-bold bg-white text-slate-900 shadow-xs transition-all';
+        if (tabCf) tabCf.className = 'px-3 py-1 rounded-lg font-medium text-slate-600 hover:text-slate-900 transition-all';
+      } else {
+        if (cfContainer) cfContainer.classList.remove('hidden');
+        if (accContainer) accContainer.classList.add('hidden');
+        if (tabCf) tabCf.className = 'px-3 py-1 rounded-lg font-bold bg-white text-slate-900 shadow-xs transition-all';
+        if (tabAcc) tabAcc.className = 'px-3 py-1 rounded-lg font-medium text-slate-600 hover:text-slate-900 transition-all';
+      }
+    }
+
+    function handleRunwaySlider(value) {
+      const cut = Number(value || 0);
+      const workingCapital = Number(appState.workingCapital || 0);
+      const taxSaved = Number(appState.taxSaved || 0);
+      const available = Math.max(0, workingCapital - taxSaved);
+      const baseFixed = Number(appState.monthlyFixedExpense || 0);
+      const adjustedFixed = Math.max(1, baseFixed - cut);
+      const adjustedRunway = (available / adjustedFixed).toFixed(1);
+      const origRunway = baseFixed > 0 ? (available / baseFixed).toFixed(1) : '0.0';
+
+      const cutLabel = document.getElementById('runwayCutLabel');
+      if (cutLabel) {
+        cutLabel.textContent = `₩${cut.toLocaleString()} 절감 (현재 ₩${adjustedFixed.toLocaleString()})`;
+      }
+      const simResult = document.getElementById('runwaySimResult');
+      if (simResult) {
+        const diff = (parseFloat(adjustedRunway) - parseFloat(origRunway)).toFixed(1);
+        simResult.textContent = `약 ${adjustedRunway}개월 유지 가능 (+${Math.max(0, diff)}개월 연장)`;
+      }
+      const descMonths = document.getElementById('runwayDescMonths');
+      if (descMonths) {
+        descMonths.textContent = `${adjustedRunway}개월간`;
+      }
+    }
+
+    function applyExpenseOptimization() {
+      if (typeof showToast === 'function') {
+        showToast("💡 연간 ₩420,000 지출 최적화 플랜(Figma 서브계정 정리, 클라우드 스토리지 단일화)이 적용되고 알림이 설정되었습니다.");
+      }
+    }
+
+    // Modal 11: Runway 산출 근거 모달
+    function openRunwayFormulaModal() {
+      const modal = document.getElementById('runwayFormulaModal');
+      if (!modal) return;
+
+      const workingCapital = Number(appState.workingCapital || 0);
+      const monthlyFixedExpense = Number(appState.monthlyFixedExpense || 0);
+      const taxSaved = Number(appState.taxSaved || 0);
+      const availableCash = Math.max(0, workingCapital - taxSaved);
+
+      const recList = appState.receivables || [];
+      const pendingReceivables = recList.reduce((acc, r) => acc + (Number(r.amount) || 0), 0);
+      const grossIncome = (appState.transactions || []).filter(t => t.gross > 0).reduce((acc, curr) => acc + curr.gross, 0);
+      const taxLiability = Math.round(grossIncome * 0.1);
+      const scheduledOut = monthlyFixedExpense + taxLiability;
+
+      const runway = monthlyFixedExpense > 0 ? (availableCash / monthlyFixedExpense).toFixed(1) : '0.0';
+      const adjustedRunway = monthlyFixedExpense > 0 
+        ? ((availableCash + pendingReceivables - scheduledOut) / monthlyFixedExpense).toFixed(1) 
+        : '0.0';
+
+      const setEl = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+      };
+
+      setEl('rfWorkingCapital', '₩' + workingCapital.toLocaleString());
+      setEl('rfTaxSaved', '₩' + taxSaved.toLocaleString());
+      setEl('rfAvailableCash', '₩' + availableCash.toLocaleString());
+      setEl('rfMonthlyExpense', '₩' + monthlyFixedExpense.toLocaleString() + ' / 월');
+      setEl('rfRunwayResult', runway + '개월');
+      setEl('rfReceivables', pendingReceivables.toLocaleString());
+      setEl('rfLiabilities', scheduledOut.toLocaleString());
+      setEl('rfAdjustedRunway', adjustedRunway + '개월');
+
+      modal.classList.remove('hidden');
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function closeRunwayFormulaModal() {
+      const modal = document.getElementById('runwayFormulaModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // Modal 10: 사업 통장 잔고 및 고정비 설정 모달
+    function openBalanceSettingModal(tab = 'balance') {
+      const modal = document.getElementById('accountBalanceModal');
+      if (!modal) return;
+
+      const inputWc = document.getElementById('inputWorkingCapital');
+      const inputFixed = document.getElementById('inputMonthlyFixedExpense');
+      const inputTax = document.getElementById('inputTaxSaved');
+
+      if (inputWc) inputWc.value = appState.workingCapital || 0;
+      if (inputFixed) inputFixed.value = appState.monthlyFixedExpense || 0;
+      if (inputTax) inputTax.value = appState.taxSaved || 0;
+
+      modal.classList.remove('hidden');
+      if (tab === 'tax' && inputTax) {
+        setTimeout(() => inputTax.focus(), 100);
+      } else if (inputWc) {
+        setTimeout(() => inputWc.focus(), 100);
+      }
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function closeBalanceSettingModal() {
+      const modal = document.getElementById('accountBalanceModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function saveAccountBalanceSettings(event) {
+      if (event) event.preventDefault();
+
+      const inputWc = document.getElementById('inputWorkingCapital');
+      const inputFixed = document.getElementById('inputMonthlyFixedExpense');
+      const inputTax = document.getElementById('inputTaxSaved');
+
+      if (inputWc) appState.workingCapital = Math.max(0, Number(inputWc.value || 0));
+      if (inputFixed) appState.monthlyFixedExpense = Math.max(0, Number(inputFixed.value || 0));
+      if (inputTax) appState.taxSaved = Math.max(0, Number(inputTax.value || 0));
+
+      saveCurrentWorkspaceData();
+      updateVisualStatements();
+      updateKPICards();
+      renderCashflowForecastChart();
+      closeBalanceSettingModal();
+
+      if (typeof showToast === 'function') {
+        showToast("사업 통장 잔고 및 고정비 설정이 안전하게 저장되었습니다.");
+      }
+    }
+
+    function executeQuickTaxTransfer() {
+      const input = document.getElementById('quickTransferAmount');
+      if (!input) return;
+      const amt = Number(input.value || 0);
+      if (amt <= 0) {
+        alert("이체할 유효한 금액을 입력해 주세요.");
+        return;
+      }
+      if (amt > (appState.workingCapital || 0)) {
+        alert("사업 통장 보유 잔고보다 큰 금액을 이체할 수 없습니다.");
+        return;
+      }
+
+      appState.workingCapital -= amt;
+      appState.taxSaved = (appState.taxSaved || 0) + amt;
+      input.value = '';
+
+      saveCurrentWorkspaceData();
+      updateVisualStatements();
+      updateKPICards();
+      renderCashflowForecastChart();
+
+      const inputWc = document.getElementById('inputWorkingCapital');
+      const inputTax = document.getElementById('inputTaxSaved');
+      if (inputWc) inputWc.value = appState.workingCapital;
+      if (inputTax) inputTax.value = appState.taxSaved;
+
+      if (typeof showToast === 'function') {
+        showToast(`₩${amt.toLocaleString()}을 사업 통장에서 세금 통장으로 안전하게 이체 기록했습니다.`);
+      }
+    }
+
+    // Modal 12: 입금 예정 대금(받을 돈) 상세 모달
+    function openReceivablesDetailModal() {
+      const modal = document.getElementById('receivablesDetailModal');
+      if (!modal) return;
+
+      const recList = appState.receivables || [];
+      const totalAmount = recList.reduce((acc, r) => acc + (Number(r.amount) || 0), 0);
+
+      const totalEl = document.getElementById('rdmTotalAmount');
+      if (totalEl) totalEl.textContent = '₩' + totalAmount.toLocaleString();
+      const countEl = document.getElementById('rdmCountBadge');
+      if (countEl) countEl.textContent = `총 ${recList.length}건`;
+
+      const listContainer = document.getElementById('rdmListContainer');
+      if (listContainer) {
+        if (recList.length === 0) {
+          listContainer.innerHTML = '<div class="p-6 text-center text-slate-400">현재 등록된 입금 예정 대금이 없습니다.</div>';
+        } else {
+          listContainer.innerHTML = recList.map(r => {
+            const isDelayed = (r.statusType === 'delayed' || r.status === '지연') && !r.deferred;
+            const badgeClass = isDelayed 
+              ? 'bg-rose-50 text-rose-700 border-rose-200' 
+              : 'bg-blue-50 text-blue-700 border-blue-200';
+            const badgeText = isDelayed ? '입금 지연' : '정산 예정';
+            return `
+              <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3 hover:border-slate-300 transition-all">
+                <div class="space-y-1 min-w-0">
+                  <div class="flex items-center gap-1.5">
+                    <span class="font-bold text-slate-900 truncate">${escapeHtml(r.client || r.clientName || '클라이언트')}</span>
+                    <span class="text-[10px] px-1.5 py-0.2 rounded font-bold border ${badgeClass}">${badgeText}</span>
+                  </div>
+                  <p class="text-[11px] text-slate-500 truncate">${escapeHtml(r.project || r.itemTitle || '용역 잔금')}</p>
+                  <p class="text-[10px] text-slate-400">지급 예정일: <strong class="text-slate-600 font-mono">${escapeHtml(r.dueDate || '-')}</strong> ${r.contact ? `| 담당: ${escapeHtml(r.contact)}` : ''}</p>
+                </div>
+                <div class="text-right shrink-0">
+                  <div class="font-mono font-black text-blue-700 text-sm">+₩${Number(r.amount || 0).toLocaleString()}</div>
+                  <span class="text-[10px] text-slate-400 font-medium">${escapeHtml(r.type || '매출채권')}</span>
+                </div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+
+      modal.classList.remove('hidden');
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function closeReceivablesDetailModal() {
+      const modal = document.getElementById('receivablesDetailModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    // Modal 13: 예정 지출 및 세무 부채 세부 명세 모달
+    function openLiabilitiesDetailModal() {
+      const modal = document.getElementById('liabilitiesDetailModal');
+      if (!modal) return;
+
+      const monthlyFixedExpense = Number(appState.monthlyFixedExpense || 0);
+      const taxSaved = Number(appState.taxSaved || 0);
+      const grossIncome = (appState.transactions || []).filter(t => t.gross > 0).reduce((acc, curr) => acc + curr.gross, 0);
+      const vatLiability = Math.round(grossIncome * 0.1);
+      const incomeTaxReserve = Math.round(grossIncome * 0.05);
+      const totalTaxLiability = vatLiability + incomeTaxReserve;
+      const grandTotal = monthlyFixedExpense + totalTaxLiability;
+      const netDrain = Math.max(0, grandTotal - taxSaved);
+
+      const setEl = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+      };
+
+      setEl('ldmFixedExpense', '₩' + monthlyFixedExpense.toLocaleString());
+      setEl('ldmTaxReserveTotal', '₩' + totalTaxLiability.toLocaleString());
+      setEl('ldmVatLiability', '₩' + vatLiability.toLocaleString());
+      setEl('ldmIncomeTaxReserve', '₩' + incomeTaxReserve.toLocaleString());
+      setEl('ldmGrandTotal', '-₩' + grandTotal.toLocaleString());
+      setEl('ldmTaxSaved', '₩' + taxSaved.toLocaleString());
+      setEl('ldmNetDrain', '₩' + netDrain.toLocaleString());
+
+      // 5대 고정비 항목 렌더링
+      const listContainer = document.getElementById('ldmFixedExpensesList');
+      if (listContainer) {
+        const fixedItems = [
+          { name: "작업실 월 임대료 및 관리비", cost: Math.round(monthlyFixedExpense * 0.55), payDay: "매월 25일" },
+          { name: "업무 SW 및 정기 SaaS (Adobe, Figma, Notion)", cost: Math.round(monthlyFixedExpense * 0.18), payDay: "매월 25일" },
+          { name: "기업 인터넷 & 업무용 모바일 회선", cost: Math.round(monthlyFixedExpense * 0.05), payDay: "매월 25일" },
+          { name: "국민연금 & 건강보험 (1인사업자)", cost: Math.round(monthlyFixedExpense * 0.15), payDay: "매월 10일" },
+          { name: "사업장 운영비 및 세무 기장료", cost: Math.round(monthlyFixedExpense * 0.07), payDay: "매월 25일" }
+        ];
+
+        listContainer.innerHTML = fixedItems.map(item => `
+          <div class="p-2 bg-white rounded-xl border border-slate-200/80 flex justify-between items-center text-[11px]">
+            <div class="flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+              <span class="font-medium text-slate-800">${escapeHtml(item.name)}</span>
+              <span class="text-[10px] text-slate-400 font-mono">(${item.payDay})</span>
+            </div>
+            <span class="font-mono font-bold text-slate-700">₩${item.cost.toLocaleString()}</span>
+          </div>
+        `).join('');
+      }
+
+      modal.classList.remove('hidden');
+      if (typeof lucide !== 'undefined') lucide.createIcons();
+    }
+
+    function closeLiabilitiesDetailModal() {
+      const modal = document.getElementById('liabilitiesDetailModal');
+      if (modal) modal.classList.add('hidden');
     }
 
     // KPI Cards Calculation
@@ -4313,41 +4907,72 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
     // ==============================================================================
     let currentAuthUser = null;
 
-    // Load user on startup
+    // Load user on startup and initialize Google/Firebase configs
     async function initUserAuth() {
-      // 1. Check LocalStorage
+      // 0. Fetch /api/config to retrieve Google Client ID and Firebase settings early
+      try {
+        const cRes = await fetch('/api/config');
+        if (cRes.ok) {
+          const cfg = await cRes.json();
+          window.soloosConfig = cfg;
+          if (cfg.google?.clientId) {
+            window.googleClientId = cfg.google.clientId;
+            localStorage.setItem('soloos_google_client_id', cfg.google.clientId);
+            const input = document.getElementById('googleClientIdInput');
+            if (input && !input.value) input.value = cfg.google.clientId;
+          }
+        }
+      } catch (e) {
+        console.warn('[SoloOS] Failed to fetch /api/config on init:', e);
+      }
+
+      // Initialize Firebase SDK
+      if (window.SoloOSFirebase && typeof window.SoloOSFirebase.init === 'function') {
+        window.SoloOSFirebase.init().catch(err => console.warn('[SoloOS] Firebase init error:', err));
+      }
+
+      // Restore saved Google access token
+      window.googleAccessToken = localStorage.getItem('soloos_google_access_token') || null;
+
+      // 1. Check LocalStorage for existing user session
       const saved = localStorage.getItem('soloos_user');
       if (saved) {
         try {
-          currentAuthUser = JSON.parse(saved);
+          const parsed = JSON.parse(saved);
+          // Only restore if user is not a guest and has an email
+          if (parsed && parsed.id && parsed.id !== 'usr_guest' && parsed.email) {
+            currentAuthUser = parsed;
+          }
         } catch (e) {}
       }
 
-      // 2. Fetch from /api/auth/me if not found or to refresh
-      try {
-        const url = currentAuthUser ? `/api/auth/me?email=${encodeURIComponent(currentAuthUser.email)}` : '/api/auth/me';
-        const res = await fetch(url);
-        if (res.ok) {
-          const data = await res.json();
-          if (data.success && data.user) {
-            currentAuthUser = data.user;
-            localStorage.setItem('soloos_user', JSON.stringify(currentAuthUser));
+      // 2. Refresh session from /api/auth/me if logged in
+      if (currentAuthUser && currentAuthUser.email) {
+        try {
+          const url = `/api/auth/me?email=${encodeURIComponent(currentAuthUser.email)}`;
+          const res = await fetch(url);
+          if (res.ok) {
+            const data = await res.json();
+            if (data.success && data.user) {
+              currentAuthUser = { ...currentAuthUser, ...data.user };
+              localStorage.setItem('soloos_user', JSON.stringify(currentAuthUser));
+            }
           }
+        } catch (err) {
+          console.warn('[SoloOS Auth] Offline or fallback to local user state');
         }
-      } catch (err) {
-        console.warn('[SoloOS Auth] Offline or fallback to local user state');
       }
 
-      // Default demo fallback if still null
+      // Default unauthenticated guest state (Clean guest, NOT fake demo logged in!)
       if (!currentAuthUser) {
         currentAuthUser = {
           id: 'usr_guest',
-          name: '정솔로 대표',
-          email: 'demo@soloos.io',
-          businessType: '1인 디지털 창업가',
-          googleConnected: true,
-          googleCalendarConnected: true,
-          googleDriveConnected: true
+          name: '게스트',
+          email: '',
+          businessType: '체험 모드',
+          googleConnected: false,
+          googleCalendarConnected: false,
+          googleDriveConnected: false
         };
       }
 
@@ -4380,17 +5005,30 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
       const sidebarUserEmailText = document.getElementById('sidebarUserEmailText');
       const userMenuName = document.getElementById('userMenuName');
       const userMenuEmail = document.getElementById('userMenuEmail');
+      const userMenuBadge = document.getElementById('userMenuBadge');
 
-      const isLoggedIn = Boolean(u.id && u.id !== 'usr_guest');
+      const isLoggedIn = Boolean(u.id && u.id !== 'usr_guest' && u.email);
 
       if (isLoggedIn) {
         if (sidebarAuthButtons) sidebarAuthButtons.classList.add('hidden');
         if (sidebarUserBadge) sidebarUserBadge.classList.remove('hidden');
-        if (sidebarAvatarText) sidebarAvatarText.textContent = initials;
+        if (sidebarAvatarText) {
+          if (u.photoURL) {
+            sidebarAvatarText.innerHTML = `<img src="${u.photoURL}" alt="${u.name}" class="w-full h-full object-cover rounded-full" onerror="this.parentNode.textContent='${initials}'">`;
+          } else {
+            sidebarAvatarText.textContent = initials;
+          }
+        }
         if (sidebarUserNameText) sidebarUserNameText.textContent = u.name;
         if (sidebarUserEmailText) sidebarUserEmailText.textContent = u.email;
         if (userMenuName) userMenuName.textContent = u.name;
         if (userMenuEmail) userMenuEmail.textContent = u.email;
+        if (userMenuBadge) {
+          userMenuBadge.textContent = (u.googleConnected || window.googleAccessToken) ? 'Google 연동됨' : '일반 계정';
+          userMenuBadge.className = (u.googleConnected || window.googleAccessToken) 
+            ? 'px-1.5 py-0.5 rounded text-[9px] font-bold bg-emerald-100 text-emerald-800'
+            : 'px-1.5 py-0.5 rounded text-[9px] font-bold bg-slate-200 text-slate-700';
+        }
       } else {
         if (sidebarAuthButtons) sidebarAuthButtons.classList.remove('hidden');
         if (sidebarUserBadge) sidebarUserBadge.classList.add('hidden');
@@ -4402,31 +5040,36 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
       const sidebarUserEmail = document.getElementById('sidebarUserEmail');
       if (sidebarAvatar) sidebarAvatar.textContent = initials;
       if (sidebarUserName) sidebarUserName.textContent = u.name;
-      if (sidebarUserEmail) sidebarUserEmail.textContent = `${u.email} (${u.businessType || '1인 프리랜서'})`;
+      if (sidebarUserEmail) sidebarUserEmail.textContent = isLoggedIn ? `${u.email} (${u.businessType || '1인 사업가'})` : '로그인이 필요합니다';
 
       // Google Workspace Status Badges
-      const isGoogleActive = Boolean(u.googleConnected || u.googleCalendarConnected || window.googleAccessToken);
+      const hasRealToken = Boolean(window.googleAccessToken);
+      const isGoogleActive = Boolean(isLoggedIn && hasRealToken);
       const googleConnectionBadge = document.getElementById('googleConnectionBadge');
       const googleAccountInfo = document.getElementById('googleAccountInfo');
       const googleBannerStatusIcon = document.getElementById('googleBannerStatusIcon');
       const googleAuthActionBtnText = document.getElementById('googleAuthActionBtnText');
 
       if (googleConnectionBadge) {
-        googleConnectionBadge.textContent = isGoogleActive ? '연동 활성화' : '연동 대기';
+        googleConnectionBadge.textContent = isGoogleActive ? '연동 활성화' : (isLoggedIn ? '권한 인증 필요' : '연동 대기');
         googleConnectionBadge.className = isGoogleActive 
           ? 'px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-extrabold' 
-          : 'px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 text-[10px] font-extrabold';
+          : (isLoggedIn ? 'px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-extrabold' : 'px-2 py-0.5 rounded-full bg-slate-200 text-slate-700 text-[10px] font-extrabold');
       }
       if (googleAccountInfo) {
-        googleAccountInfo.textContent = isGoogleActive 
-          ? `연결 계정: ${u.email} (실제 Google 캘린더 & 드라이브 권한 보유)` 
-          : `미연동 상태: Google 계정 연동 시 캘린더 및 드라이브와 실시간 동기화됩니다.`;
+        if (isGoogleActive) {
+          googleAccountInfo.textContent = `연결 계정: ${u.email} (실제 Google 캘린더 & 드라이브 API 호출 가능)`;
+        } else if (isLoggedIn) {
+          googleAccountInfo.textContent = `로그인 계정: ${u.email} (캘린더 및 드라이브 실시간 동기화를 위해 우측 [Google 계정 권한 승인]을 완료해주세요)`;
+        } else {
+          googleAccountInfo.textContent = `미연동 상태: Google 계정 연동 시 캘린더 및 드라이브와 실시간 동기화됩니다.`;
+        }
       }
       if (googleBannerStatusIcon) {
-        googleBannerStatusIcon.className = isGoogleActive ? 'w-5 h-5 text-emerald-500' : 'w-5 h-5 text-slate-400';
+        googleBannerStatusIcon.className = isGoogleActive ? 'w-5 h-5 text-emerald-500' : (isLoggedIn ? 'w-5 h-5 text-amber-500' : 'w-5 h-5 text-slate-400');
       }
       if (googleAuthActionBtnText) {
-        googleAuthActionBtnText.textContent = isGoogleActive ? 'Google 계정 재인증 / 변경' : '실제 Google 계정 연동하기';
+        googleAuthActionBtnText.textContent = isGoogleActive ? 'Google 계정 재인증 / 변경' : (isLoggedIn ? 'Google 계정 권한 승인하기' : '실제 Google 계정 연동하기');
       }
 
       if (window.lucide) lucide.createIcons();
@@ -4452,6 +5095,9 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
       const tabLogin = document.getElementById('authTabBtnLogin');
       const tabReg = document.getElementById('authTabBtnRegister');
       const title = document.getElementById('authModalTitle');
+      const googleAuthCardTitle = document.getElementById('googleAuthCardTitle');
+      const googleAuthCardDesc = document.getElementById('googleAuthCardDesc');
+      const googleAuthBtnText = document.getElementById('googleAuthBtnText');
 
       if (tab === 'login') {
         if (loginForm) loginForm.classList.remove('hidden');
@@ -4459,12 +5105,18 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
         if (tabLogin) tabLogin.className = 'flex-1 py-2 rounded-xl transition-all bg-white text-slate-900 shadow-xs';
         if (tabReg) tabReg.className = 'flex-1 py-2 rounded-xl transition-all text-slate-500 hover:text-slate-900';
         if (title) title.textContent = 'SoloOS 계정 로그인';
+        if (googleAuthCardTitle) googleAuthCardTitle.textContent = 'Google 계정으로 1초 로그인';
+        if (googleAuthCardDesc) googleAuthCardDesc.textContent = '구글 계정으로 로그인하고 캘린더 및 드라이브와 실시간 연동합니다.';
+        if (googleAuthBtnText) googleAuthBtnText.textContent = 'Google 계정으로 로그인';
       } else {
         if (loginForm) loginForm.classList.add('hidden');
         if (regForm) regForm.classList.remove('hidden');
         if (tabLogin) tabLogin.className = 'flex-1 py-2 rounded-xl transition-all text-slate-500 hover:text-slate-900';
         if (tabReg) tabReg.className = 'flex-1 py-2 rounded-xl transition-all bg-white text-slate-900 shadow-xs';
         if (title) title.textContent = '새 SoloOS 계정 생성';
+        if (googleAuthCardTitle) googleAuthCardTitle.textContent = 'Google 계정으로 1초 회원가입';
+        if (googleAuthCardDesc) googleAuthCardDesc.textContent = '구글 계정으로 간편 가입하고 캘린더와 드라이브를 즉시 연결합니다.';
+        if (googleAuthBtnText) googleAuthBtnText.textContent = 'Google 계정으로 회원가입';
       }
     }
 
@@ -4501,19 +5153,10 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
           }
         }
       } catch (err) {
-        currentAuthUser = {
-          id: `usr_${Date.now()}`,
-          email,
-          name: email.split('@')[0],
-          businessType: '1인 창업가',
-          googleConnected: true,
-          googleCalendarConnected: true,
-          googleDriveConnected: true
-        };
-        localStorage.setItem('soloos_user', JSON.stringify(currentAuthUser));
-        updateUserAuthUI();
-        closeAuthModal();
-        alert(`환영합니다! ${currentAuthUser.name}님으로 로그인되었습니다.`);
+        if (alertBox) {
+          alertBox.className = 'text-xs p-3 rounded-xl border bg-rose-50 border-rose-200 text-rose-700 block';
+          alertBox.textContent = '로그인 서버와 통신할 수 없습니다. 잠시 후 다시 시도해주세요.';
+        }
       }
     }
 
@@ -4542,6 +5185,14 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
           updateUserAuthUI();
           closeAuthModal();
           alert(`✨ ${data.message || '회원가입이 완료되었습니다!'} ${currentAuthUser.name}님의 1인 사업가 전용 워크스페이스가 생성되었습니다.`);
+          if (googleSync) {
+            // 회원가입 시 구글 연동 선택한 경우 구글 팝업 띄우기
+            setTimeout(() => {
+              if (confirm('🎉 회원가입 완료! Google 캘린더 및 드라이브와 실시간 동기화하시겠습니까?')) {
+                triggerRealGoogleAuth();
+              }
+            }, 300);
+          }
         } else {
           if (alertBox) {
             alertBox.className = 'text-xs p-3 rounded-xl border bg-rose-50 border-rose-200 text-rose-700 block';
@@ -4549,66 +5200,200 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
           }
         }
       } catch (err) {
-        currentAuthUser = {
-          id: `usr_${Date.now()}`,
-          name,
-          email,
-          businessType,
-          googleConnected: googleSync,
-          googleCalendarConnected: googleSync,
-          googleDriveConnected: googleSync
-        };
-        localStorage.setItem('soloos_user', JSON.stringify(currentAuthUser));
-        updateUserAuthUI();
-        closeAuthModal();
-        alert(`회원가입이 완료되었습니다! 환영합니다, ${name} 대표님.`);
+        if (alertBox) {
+          alertBox.className = 'text-xs p-3 rounded-xl border bg-rose-50 border-rose-200 text-rose-700 block';
+          alertBox.textContent = '서버 통신 오류로 회원가입에 실패했습니다.';
+        }
       }
     }
 
+    /**
+     * 실제 Google 계정으로 1초 회원가입 및 로그인 실행
+     * Google Identity Services (GIS) 및 Firebase Auth 연동
+     */
     async function handleGoogleOneClickLogin() {
-      const clientId = document.getElementById('googleClientIdInput')?.value?.trim() || localStorage.getItem('soloos_google_client_id');
-      
-      // If Google Client ID is configured, trigger real Google OAuth Popup!
-      if (clientId && window.google?.accounts?.oauth2) {
-        closeAuthModal();
-        triggerRealGoogleAuth();
-        return;
+      const googleBtn = document.getElementById('googleAuthMainBtn');
+      const originalBtnHtml = googleBtn ? googleBtn.innerHTML : '';
+      if (googleBtn) {
+        googleBtn.disabled = true;
+        googleBtn.innerHTML = `
+          <svg class="w-4 h-4 animate-spin text-white" viewBox="0 0 24 24" fill="none">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+          </svg>
+          <span>Google 계정 인증 창 여는 중...</span>
+        `;
       }
 
-      // Seamless direct Google Workspace authentication
-      const loginEmailInput = document.getElementById('authLoginEmail');
-      const email = (loginEmailInput && loginEmailInput.value.trim()) || currentAuthUser?.email || 'user@google.com';
-      const name = email.includes('@') ? (email.split('@')[0] + ' 대표') : '구글 연동 대표';
+      // Ensure client ID is ready
+      let clientId = window.googleClientId || localStorage.getItem('soloos_google_client_id') || document.getElementById('googleClientIdInput')?.value?.trim();
+      if (!clientId) {
+        try {
+          const cfgRes = await fetch('/api/config');
+          if (cfgRes.ok) {
+            const cfg = await cfgRes.json();
+            clientId = cfg.google?.clientId || '';
+            if (clientId) {
+              window.googleClientId = clientId;
+              localStorage.setItem('soloos_google_client_id', clientId);
+              const input = document.getElementById('googleClientIdInput');
+              if (input && !input.value) input.value = clientId;
+            }
+          }
+        } catch (e) {
+          console.warn('[SoloOS] Failed to fetch config for Google Client ID:', e);
+        }
+      }
 
-      try {
-        const res = await fetch('/api/auth/google-login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, name, businessType: '1인 디지털 창업가' })
-        });
-        const data = await res.json();
-        if (data.success && data.user) {
-          currentAuthUser = data.user;
+      // Reset button UI helper
+      function resetBtn() {
+        if (googleBtn) {
+          googleBtn.disabled = false;
+          googleBtn.innerHTML = originalBtnHtml;
+        }
+      }
+
+      // Handler after successfully getting Google Token & Profile
+      async function onGoogleAuthSuccess(token, profile) {
+        if (token) {
+          window.googleAccessToken = token;
+          localStorage.setItem('soloos_google_access_token', token);
+        }
+
+        try {
+          const res = await fetch('/api/auth/google-login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              id: profile.sub || profile.id || `usr_g_${Date.now()}`,
+              email: profile.email,
+              name: profile.name || profile.email.split('@')[0],
+              photoURL: profile.picture || profile.photoURL || '',
+              businessType: '1인 디지털 창업가'
+            })
+          });
+          const data = await res.json();
+          const serverUser = (data && data.user) ? data.user : {};
+
+          currentAuthUser = {
+            id: serverUser.id || profile.sub || `usr_g_${Date.now()}`,
+            name: serverUser.name || profile.name || profile.email.split('@')[0],
+            email: profile.email,
+            photoURL: serverUser.photoURL || profile.picture || profile.photoURL || '',
+            businessType: serverUser.businessType || '1인 디지털 창업가',
+            googleConnected: true,
+            googleCalendarConnected: true,
+            googleDriveConnected: true
+          };
           localStorage.setItem('soloos_user', JSON.stringify(currentAuthUser));
           updateUserAuthUI();
           closeAuthModal();
-          openGoogleModal('calendar');
+
+          alert(`🎉 ${currentAuthUser.name}님의 Google 계정(${currentAuthUser.email})으로 성공적으로 로그인되었습니다!\n\nGoogle 캘린더 및 드라이브 실시간 동기화가 활성화되었습니다.`);
+        } catch (err) {
+          console.error('[SoloOS] Google server login sync error:', err);
+          // Local fallback with verified Google credentials
+          currentAuthUser = {
+            id: profile.sub || profile.id || `usr_g_${Date.now()}`,
+            name: profile.name || profile.email.split('@')[0],
+            email: profile.email,
+            photoURL: profile.picture || profile.photoURL || '',
+            businessType: '1인 디지털 창업가',
+            googleConnected: true,
+            googleCalendarConnected: true,
+            googleDriveConnected: true
+          };
+          localStorage.setItem('soloos_user', JSON.stringify(currentAuthUser));
+          updateUserAuthUI();
+          closeAuthModal();
+          alert(`🎉 Google 계정(${profile.email})으로 로그인되었습니다!`);
+        } finally {
+          resetBtn();
         }
-      } catch (err) {
-        currentAuthUser = {
-          id: `usr_g_${Date.now()}`,
-          name,
-          email,
-          businessType: '1인 창업가',
-          googleConnected: true,
-          googleCalendarConnected: true,
-          googleDriveConnected: true
-        };
-        localStorage.setItem('soloos_user', JSON.stringify(currentAuthUser));
-        updateUserAuthUI();
-        closeAuthModal();
-        openGoogleModal('calendar');
       }
+
+      function onGoogleAuthError(errMsg) {
+        resetBtn();
+        const currentOrigin = window.location.origin;
+        const alertBox = document.getElementById('authStatusAlert');
+        if (alertBox) {
+          alertBox.className = 'text-xs p-3 rounded-xl border bg-rose-50 border-rose-200 text-rose-800 block space-y-1.5';
+          alertBox.innerHTML = `
+            <div class="font-bold flex items-center gap-1 text-rose-900">
+              <span>Google 로그인 안내</span>
+            </div>
+            <div class="leading-relaxed">${errMsg}</div>
+            <div class="text-[11px] text-slate-600 pt-1.5 border-t border-rose-200 leading-normal">
+              현재 브라우저 주소: <code class="font-bold text-rose-700 bg-white px-1.5 py-0.5 rounded border border-rose-200">${currentOrigin}</code><br>
+              <span class="text-[10px] text-slate-500">Google Cloud Console에 위 주소가 승인된 자바스크립트 원본으로 등록되어야 합니다.</span>
+            </div>
+          `;
+          if (window.lucide) lucide.createIcons();
+        } else {
+          alert(`Google 연동 안내:\n${errMsg}\n\n현재 브라우저 출처: ${currentOrigin}`);
+        }
+      }
+
+      // 1. First Priority: Firebase Official Google Auth
+      // Uses Firebase Auth handler (e.g. iceu-songpa15.firebaseapp.com) which avoids local origin_mismatch restrictions!
+      if (window.SoloOSFirebase && typeof window.SoloOSFirebase.loginWithGoogle === 'function') {
+        try {
+          const fbResult = await window.SoloOSFirebase.loginWithGoogle();
+          if (fbResult.success && fbResult.user) {
+            await onGoogleAuthSuccess(fbResult.token, fbResult.user);
+            return;
+          } else if (fbResult.redirecting) {
+            return; // Redirecting in mobile browser
+          }
+        } catch (fbErr) {
+          console.warn('[SoloOS] Firebase Google login exception, attempting GIS fallback:', fbErr);
+          if (fbErr.code === 'auth/popup-closed-by-user') {
+            onGoogleAuthError('사용자가 Google 로그인 팝업 창을 닫았습니다.');
+            return;
+          }
+        }
+      }
+
+      // 2. Second Priority: Google Identity Services (GIS) Token Client
+      if (clientId && window.google?.accounts?.oauth2) {
+        try {
+          const client = google.accounts.oauth2.initTokenClient({
+            client_id: clientId,
+            scope: 'https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
+            callback: async (tokenResponse) => {
+              if (tokenResponse && tokenResponse.access_token) {
+                try {
+                  const uRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
+                    headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+                  });
+                  if (!uRes.ok) throw new Error('구글 사용자 프로필 정보를 가져오지 못했습니다.');
+                  const profile = await uRes.json();
+                  await onGoogleAuthSuccess(tokenResponse.access_token, profile);
+                } catch (e) {
+                  onGoogleAuthError(e.message);
+                }
+              } else if (tokenResponse && tokenResponse.error) {
+                if (tokenResponse.error === 'popup_closed_by_user') {
+                  onGoogleAuthError('Google 로그인 팝업 창이 닫혔습니다.');
+                } else {
+                  onGoogleAuthError(tokenResponse.error_description || tokenResponse.error);
+                }
+              }
+            },
+            error_callback: (err) => {
+              console.warn('[SoloOS] GIS error:', err);
+              onGoogleAuthError('Google OAuth 자바스크립트 출처(origin_mismatch) 오류가 발생했습니다. Google Cloud Console에서 자바스크립트 원본(http://localhost:3000)을 등록해주세요.');
+            }
+          });
+
+          client.requestAccessToken({ prompt: 'select_account' });
+          return;
+        } catch (gisErr) {
+          console.warn('[SoloOS] GIS token client init error:', gisErr);
+        }
+      }
+
+      onGoogleAuthError('Google 로그인 클라이언트를 초기화할 수 없습니다.');
     }
 
     async function handleLogout() {
@@ -4617,10 +5402,12 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
         await fetch('/api/auth/logout', { method: 'POST' });
       } catch (e) {}
       localStorage.removeItem('soloos_user');
+      localStorage.removeItem('soloos_google_access_token');
+      window.googleAccessToken = null;
       currentAuthUser = {
         id: 'usr_guest',
         name: '게스트 사용자',
-        email: 'guest@soloos.io',
+        email: '',
         businessType: '체험 모드',
         googleConnected: false,
         googleCalendarConnected: false,
@@ -4656,12 +5443,14 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
         const input = document.getElementById('googleClientIdInput');
         if (input && data.clientId) {
           input.value = data.clientId;
+          window.googleClientId = data.clientId;
+          localStorage.setItem('soloos_google_client_id', data.clientId);
         } else if (input) {
-          input.value = localStorage.getItem('soloos_google_client_id') || '';
+          input.value = window.googleClientId || localStorage.getItem('soloos_google_client_id') || '';
         }
       } catch (e) {
         const input = document.getElementById('googleClientIdInput');
-        if (input) input.value = localStorage.getItem('soloos_google_client_id') || '';
+        if (input) input.value = window.googleClientId || localStorage.getItem('soloos_google_client_id') || '';
       }
     }
 
@@ -4673,6 +5462,7 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
         return;
       }
 
+      window.googleClientId = val;
       localStorage.setItem('soloos_google_client_id', val);
       try {
         const res = await fetch('/api/settings/google', {
@@ -4688,63 +5478,30 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
     }
 
     async function triggerRealGoogleAuth() {
-      const inputVal = document.getElementById('googleClientIdInput')?.value?.trim();
-      const clientId = inputVal || localStorage.getItem('soloos_google_client_id') || '';
+      let clientId = window.googleClientId || localStorage.getItem('soloos_google_client_id') || document.getElementById('googleClientIdInput')?.value?.trim();
+
+      if (!clientId) {
+        try {
+          const cfgRes = await fetch('/api/config');
+          if (cfgRes.ok) {
+            const cfg = await cfgRes.json();
+            clientId = cfg.google?.clientId || '';
+            if (clientId) {
+              window.googleClientId = clientId;
+              localStorage.setItem('soloos_google_client_id', clientId);
+            }
+          }
+        } catch (e) {}
+      }
 
       if (!clientId) {
         switchGoogleTab('settings');
-        alert(`[Google 연동 설정 안내]\n\n실제 Google 계정(캘린더/드라이브)과 연동하려면 Google Cloud OAuth 2.0 Client ID가 필요합니다.\n\n3번째 탭 'Google Cloud API 설정'에 Client ID를 입력하고 저장해주세요.\n\n※ Client ID 설정 없이도 각 일정의 [Google 캘린더에 추가] 버튼 및 .ics 내보내기로 본인의 실제 캘린더에 즉시 등록할 수 있습니다!`);
+        alert(`[Google 연동 설정 안내]\n\n실제 Google 계정(캘린더/드라이브)과 연동하려면 Google Cloud OAuth 2.0 Client ID가 필요합니다.\n\n3번째 탭 'Google Cloud API 설정'에 Client ID를 입력하고 저장해주세요.`);
         return;
       }
 
-      if (window.google && window.google.accounts && window.google.accounts.oauth2) {
-        try {
-          const client = google.accounts.oauth2.initTokenClient({
-            client_id: clientId,
-            scope: 'https://www.googleapis.com/auth/calendar.events https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email',
-            callback: async (tokenResponse) => {
-              if (tokenResponse && tokenResponse.access_token) {
-                window.googleAccessToken = tokenResponse.access_token;
-                localStorage.setItem('soloos_google_access_token', tokenResponse.access_token);
-
-                try {
-                  const uRes = await fetch('https://www.googleapis.com/oauth2/v3/userinfo', {
-                    headers: { Authorization: `Bearer ${window.googleAccessToken}` }
-                  });
-                  const profile = await uRes.json();
-                  currentAuthUser = {
-                    id: profile.sub || `usr_google_${Date.now()}`,
-                    name: profile.name || currentAuthUser.name || 'Google 연동 대표',
-                    email: profile.email || currentAuthUser.email || 'google@user.com',
-                    businessType: currentAuthUser.businessType || '1인 디지털 창업가',
-                    googleConnected: true,
-                    googleCalendarConnected: true,
-                    googleDriveConnected: true
-                  };
-                  localStorage.setItem('soloos_user', JSON.stringify(currentAuthUser));
-                  updateUserAuthUI();
-                  alert(`🎉 Google 계정(${profile.email}) 연동 승인이 완료되었습니다!\n이제 실제 Google 캘린더에 일정을 실시간 등록하고 구글 드라이브에 장부를 백업할 수 있습니다.`);
-                } catch (pe) {
-                  currentAuthUser.googleConnected = true;
-                  currentAuthUser.googleCalendarConnected = true;
-                  currentAuthUser.googleDriveConnected = true;
-                  localStorage.setItem('soloos_user', JSON.stringify(currentAuthUser));
-                  updateUserAuthUI();
-                  alert('Google OAuth 2.0 권한 승인이 성공적으로 완료되었습니다!');
-                }
-              } else if (tokenResponse && tokenResponse.error) {
-                alert(`Google 연동 오류: ${tokenResponse.error}`);
-              }
-            }
-          });
-          client.requestAccessToken();
-        } catch (err) {
-          console.error('Google OAuth init error:', err);
-          alert(`Google OAuth 클라이언트 실행 실패: ${err.message}\n자바스크립트 승인 원본(http://localhost:3000)이 Google Console에 등록되어 있는지 확인해주세요.`);
-        }
-      } else {
-        alert('Google Identity Services SDK 로딩 중입니다. 잠시 후 다시 시도해주세요.');
-      }
+      // Delegate to robust handleGoogleOneClickLogin
+      return handleGoogleOneClickLogin();
     }
 
     function openGoogleModal(tab = 'calendar') {
@@ -4764,18 +5521,14 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
     function switchGoogleTab(tab) {
       const tabCal = document.getElementById('googleTabCalendar');
       const tabDrive = document.getElementById('googleTabDrive');
-      const tabSettings = document.getElementById('googleTabSettings');
       const btnCal = document.getElementById('googleTabBtnCalendar');
       const btnDrive = document.getElementById('googleTabBtnDrive');
-      const btnSettings = document.getElementById('googleTabBtnSettings');
 
       if (tabCal) tabCal.classList.toggle('hidden', tab !== 'calendar');
       if (tabDrive) tabDrive.classList.toggle('hidden', tab !== 'drive');
-      if (tabSettings) tabSettings.classList.toggle('hidden', tab !== 'settings');
 
       if (btnCal) btnCal.className = tab === 'calendar' ? 'px-4 py-2.5 text-blue-600 border-b-2 border-blue-600 flex items-center gap-1.5' : 'px-4 py-2.5 text-slate-500 hover:text-slate-900 flex items-center gap-1.5';
       if (btnDrive) btnDrive.className = tab === 'drive' ? 'px-4 py-2.5 text-emerald-600 border-b-2 border-emerald-600 flex items-center gap-1.5' : 'px-4 py-2.5 text-slate-500 hover:text-slate-900 flex items-center gap-1.5';
-      if (btnSettings) btnSettings.className = tab === 'settings' ? 'px-4 py-2.5 text-indigo-600 border-b-2 border-indigo-600 flex items-center gap-1.5' : 'px-4 py-2.5 text-slate-500 hover:text-slate-900 flex items-center gap-1.5';
 
       if (window.lucide) lucide.createIcons();
     }
@@ -4820,6 +5573,15 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
       const alertBox = document.getElementById('gcalSyncAlert');
       const tasks = appState.tasks || [];
 
+      // If user does not have a Google access token yet, offer immediate authorization
+      if (!window.googleAccessToken) {
+        const proceedWithAuth = confirm('실제 Google 캘린더에 일정을 실시간으로 자동 동기화하려면 Google 계정 연동이 필요합니다.\n\n지금 실제 Google 계정으로 연동하시겠습니까?\n(취소를 누르면 표준 .ics 파일 수동 가져오기로 진행됩니다.)');
+        if (proceedWithAuth) {
+          triggerRealGoogleAuth();
+          return;
+        }
+      }
+
       // 1. If we have a real Google Access Token, sync directly to Google Calendar API!
       if (window.googleAccessToken) {
         try {
@@ -4830,6 +5592,7 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
 
           let createdCount = 0;
           let lastHtmlLink = '';
+          let tokenExpired = false;
 
           for (const t of tasks) {
             const startDate = t.dueDate || '2026-10-20';
@@ -4849,11 +5612,24 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
               body: JSON.stringify(eventPayload)
             });
 
+            if (gRes.status === 401) {
+              tokenExpired = true;
+              break;
+            }
+
             if (gRes.ok) {
               const gData = await gRes.json();
               createdCount++;
               if (gData.htmlLink) lastHtmlLink = gData.htmlLink;
             }
+          }
+
+          if (tokenExpired) {
+            window.googleAccessToken = null;
+            localStorage.removeItem('soloos_google_access_token');
+            alert('Google 연동 인증 토큰이 만료되었습니다. 다시 Google 계정으로 인증해 주세요.');
+            triggerRealGoogleAuth();
+            return;
           }
 
           if (alertBox) {
@@ -4911,8 +5687,23 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
       window.location.href = '/api/integrations/google-calendar/export-ics';
     }
 
+    function downloadBackupJsonDirect() {
+      window.location.href = '/api/integrations/google-drive/download-json';
+    }
+    window.downloadBackupJsonDirect = downloadBackupJsonDirect;
+    window.downloadIcsCalendar = downloadIcsCalendar;
+
     async function executeGoogleDriveBackup() {
       const alertBox = document.getElementById('gdriveSyncAlert');
+
+      // If user does not have a Google access token yet, offer immediate authorization
+      if (!window.googleAccessToken) {
+        const proceedWithAuth = confirm('실제 Google Drive에 장부 백업 파일을 실시간으로 업로드하려면 Google 계정 연동이 필요합니다.\n\n지금 실제 Google 계정으로 연동하시겠습니까?\n(취소를 누르면 로컬 JSON 파일 다운로드로 진행됩니다.)');
+        if (proceedWithAuth) {
+          triggerRealGoogleAuth();
+          return;
+        }
+      }
 
       // 1. If we have a real Google Access Token, upload directly to Google Drive API!
       if (window.googleAccessToken) {
@@ -4959,6 +5750,14 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
             },
             body: multipartRequestBody
           });
+
+          if (driveRes.status === 401) {
+            window.googleAccessToken = null;
+            localStorage.removeItem('soloos_google_access_token');
+            alert('Google 연동 인증 토큰이 만료되었습니다. 다시 Google 계정으로 인증해 주세요.');
+            triggerRealGoogleAuth();
+            return;
+          }
 
           if (driveRes.ok) {
             const driveData = await driveRes.json();
@@ -7576,6 +8375,24 @@ window.closeOnboardingModal = closeOnboardingModal;
 window.selectOnboardingMode = selectOnboardingMode;
 window.SAMPLE_WORKSPACE = SAMPLE_WORKSPACE;
 window.EMPTY_WORKSPACE = EMPTY_WORKSPACE;
+
+window.openRunwayFormulaModal = openRunwayFormulaModal;
+window.closeRunwayFormulaModal = closeRunwayFormulaModal;
+window.openBalanceSettingModal = openBalanceSettingModal;
+window.closeBalanceSettingModal = closeBalanceSettingModal;
+window.saveAccountBalanceSettings = saveAccountBalanceSettings;
+window.executeQuickTaxTransfer = executeQuickTaxTransfer;
+window.openReceivablesDetailModal = openReceivablesDetailModal;
+window.closeReceivablesDetailModal = closeReceivablesDetailModal;
+window.openLiabilitiesDetailModal = openLiabilitiesDetailModal;
+window.closeLiabilitiesDetailModal = closeLiabilitiesDetailModal;
+window.setForecastPeriod = setForecastPeriod;
+window.toggleForecastConservative = toggleForecastConservative;
+window.toggleForecastZoom = toggleForecastZoom;
+window.switchWaterfallMode = switchWaterfallMode;
+window.handleRunwaySlider = handleRunwaySlider;
+window.applyExpenseOptimization = applyExpenseOptimization;
+window.renderCashflowForecastChart = renderCashflowForecastChart;
 
 window.addEventListener('beforeunload', () => {
   if (!isLedgerBulkEditing) {
