@@ -1318,6 +1318,80 @@
             <span id="kpiTaxBuffer" class="hidden">₩0</span>
           </div>
 
+          <!-- ==================== Section 4. 런웨이 시뮬레이터 & 스마트 지출 최적화 (2칼럼 나란히 배치) ==================== -->
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 items-stretch">
+            <!-- Card A: 사업 지속 가능 기간 (Runway) 시뮬레이터 -->
+            <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4 border border-slate-200 bg-white shadow-sm flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between pb-2.5 border-b border-slate-100">
+                  <div>
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                      <i data-lucide="sliders" class="w-4 h-4 text-emerald-600"></i>
+                      <span>사업 지속 가능 기간 (Runway) 시뮬레이터</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5">월 고정 지출 절감 시 현재 자금으로 사업을 지속할 수 있는 기간을 시뮬레이션합니다.</p>
+                  </div>
+                  <span class="text-xs font-bold text-emerald-700 font-mono" id="runwaySimResult">약 5.2개월 유지 가능</span>
+                </div>
+
+                <div class="space-y-3 text-xs pt-3">
+                  <div>
+                    <div class="flex justify-between text-[11px] text-slate-600 mb-1.5">
+                      <span>월 고정 지출 절감 시뮬레이션: <strong class="text-indigo-600 font-mono" id="runwayCutLabel">₩0 절감 (현재 ₩2,730,000)</strong></span>
+                      <span class="text-slate-400">최대 ₩1,000,000 절감</span>
+                    </div>
+                    <input type="range" id="runwayCutSlider" min="0" max="1000000" step="50000" value="0" oninput="handleRunwaySlider(this.value)" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-[11px] text-slate-600 leading-relaxed mt-3">
+                현재 사업 통장 잔고 기준, 신규 수주가 일시 중단되더라도 <strong class="text-emerald-700" id="runwayDescMonths">5.2개월간</strong> 안정적으로 사업을 지속할 수 있습니다.
+              </div>
+            </div>
+
+            <!-- Card B: 스마트 지출 최적화 & 중복 구독 탐지기 -->
+            <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4 border border-amber-200 bg-white shadow-sm flex flex-col justify-between">
+              <div class="space-y-3">
+                <div class="flex items-center justify-between pb-2.5 border-b border-amber-100">
+                  <div>
+                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                      <i data-lucide="sparkles" class="w-4 h-4 text-amber-500"></i>
+                      <span>스마트 지출 최적화 &amp; 중복 구독 탐지기</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-0.5">최근 60일간의 카드 결제 및 SaaS 구독 사용 이력을 분석한 최적화 권고입니다.</p>
+                  </div>
+                  <span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200 font-bold whitespace-nowrap">연 ₩420,000 절감 가능</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
+                  <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                    <div class="flex items-center justify-between text-slate-800 font-bold">
+                      <span class="truncate">Figma 서브 계정 미사용</span>
+                      <span class="text-amber-600 font-black shrink-0 text-[11px]">-₩240,000/연</span>
+                    </div>
+                    <p class="text-[10px] text-slate-500 leading-tight">60일간 활성 로그 없는 라이선스 1건. 단일 계정 전환 시 연 24만원 절감.</p>
+                  </div>
+
+                  <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                    <div class="flex items-center justify-between text-slate-800 font-bold">
+                      <span class="truncate">중복 클라우드 스토리지</span>
+                      <span class="text-amber-600 font-black shrink-0 text-[11px]">-₩180,000/연</span>
+                    </div>
+                    <p class="text-[10px] text-slate-500 leading-tight">Dropbox 및 Google One 동시 결제 중. 단일 스토리지 일원화 권고.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pt-2">
+                <button type="button" onclick="applyExpenseOptimization()" class="w-full py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold flex items-center justify-center gap-1.5 transition-all">
+                  <i data-lucide="check-check" class="w-4 h-4 text-amber-600"></i>
+                  <span>지출 최적화 플랜 적용 및 알림 설정</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- ==================== SUBVIEW 3: 자금 정리 ==================== -->
@@ -6125,8 +6199,8 @@
   <!-- 1. Pure Tax & Financial Engine (Calculations, 3.3% Reverse, Waterfall, Runway) -->
   <script src="./js/tax-engine.js?v=20261017_11"></script>
   <!-- 2. Firebase & PWS Cloud Sync Layer (Auth, Firestore, Offline Sync) -->
-  <script src="./js/firebase-service.js?v=20261017_11"></script>
+  <script src="./js/firebase-service.js?v=20261020_v16_firebase_oauth"></script>
   <!-- 3. Main PWS App Controller (UI, Charts, Calendar, Modals, State) -->
-  <script src="./js/app.js?v=20261019_v10receipts"></script>
+  <script src="./js/app.js?v=20261020_v16_firebase_oauth"></script>
 </body>
 </html>
