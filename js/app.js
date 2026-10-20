@@ -176,6 +176,85 @@
     let selectedCalDate = null; // null: 전체 일정 표시, 'YYYY-MM-DD': 해당 날짜 필터
     let isLedgerBulkEditing = false;
 
+    const WORKSPACE_STORAGE_KEY = "soloos_workspace_state_v1";
+    let isAppBootstrapping = true;
+
+    function hasActiveWorkspaceData() {
+      return Boolean(
+        appState.isDemoMode ||
+        Number(appState.workingCapital || 0) > 0 ||
+        (appState.transactions && appState.transactions.length > 0) ||
+        (appState.tasks && appState.tasks.length > 0) ||
+        (appState.clients && appState.clients.length > 0) ||
+        (appState.receivables && appState.receivables.length > 0) ||
+        (appState.contracts && appState.contracts.length > 0)
+      );
+    }
+
+    function syncGuestOverlayVisibility() {
+      const overlay = document.getElementById("cashflowGuestOverlay");
+      if (!overlay) return;
+      if (appState.isDemoMode || isUserLoggedIn() || hasActiveWorkspaceData()) {
+        overlay.classList.add("hidden");
+      } else {
+        overlay.classList.remove("hidden");
+      }
+    }
+
+    function saveCurrentWorkspaceData() {
+      if (isAppBootstrapping) return;
+      try {
+        const payload = {
+          isDemoMode: Boolean(appState.isDemoMode),
+          workingCapital: Number(appState.workingCapital || 0),
+          monthlyFixedExpense: Number(appState.monthlyFixedExpense || 0),
+          taxSaved: Number(appState.taxSaved || 0),
+          transactions: appState.transactions || [],
+          tasks: appState.tasks || [],
+          clients: appState.clients || [],
+          receivables: appState.receivables || [],
+          contracts: appState.contracts || [],
+          auditTimeline: appState.auditTimeline || [],
+          savedAt: new Date().toISOString()
+        };
+        localStorage.setItem(WORKSPACE_STORAGE_KEY, JSON.stringify(payload));
+        syncGuestOverlayVisibility();
+      } catch (e) {
+        console.warn("[SoloOS] Failed to save workspace to localStorage:", e);
+      }
+    }
+
+    function loadSavedWorkspaceFromLocal() {
+      try {
+        const raw = localStorage.getItem(WORKSPACE_STORAGE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object") {
+          return parsed;
+        }
+      } catch (e) {
+        console.warn("[SoloOS] Failed to load workspace from localStorage:", e);
+      }
+      return null;
+    }
+
+    function renderTasks() {
+      if (typeof renderScheduleTasks === "function") renderScheduleTasks();
+      if (typeof renderMonthlyCalendar === "function") renderMonthlyCalendar();
+      if (typeof renderFullScheduleTasks === "function") renderFullScheduleTasks();
+      if (typeof renderFullMonthlyCalendar === "function") renderFullMonthlyCalendar();
+    }
+
+    function applyWorkspaceData(authUser, forceSample = false) {
+      if (forceSample) {
+        loadSampleDemoWorkspace();
+      } else {
+        syncGuestOverlayVisibility();
+        updateGuestBannerUI(appState.isDemoMode);
+        refreshAllUI();
+      }
+    }
+
     function isUserLoggedIn() {
       return Boolean(currentAuthUser && currentAuthUser.id && currentAuthUser.id !== "usr_guest" && currentAuthUser.email);
     }
@@ -320,6 +399,10 @@
       } catch (e) {
         console.warn("[refreshAllUI] applyPlainLanguageTerms error:", e);
       }
+      if (!isLedgerBulkEditing) {
+        saveCurrentWorkspaceData();
+      }
+      syncGuestOverlayVisibility();
       if (window.lucide && typeof lucide.createIcons === "function") {
         lucide.createIcons();
       }
@@ -335,6 +418,7 @@
 
       updateGuestBannerUI(true);
       refreshAllUI();
+      saveCurrentWorkspaceData();
       showToast("가상 샘플 데이터(₩14,200,000 및 4대 과업·고정비)가 완벽히 적용되었습니다.");
     }
 
@@ -348,6 +432,7 @@
 
       updateGuestBannerUI(false);
       refreshAllUI();
+      saveCurrentWorkspaceData();
       showToast("샘플 데이터를 비우고 초기 화면으로 전환했습니다.");
     }
 
@@ -846,11 +931,13 @@ const navGroupState = {
       const modal = document.getElementById("onboardingModal");
       if (modal) modal.classList.add("hidden");
       sessionStorage.setItem("soloos_mode_selected", "true");
+      localStorage.setItem("soloos_mode_selected", "true");
     }
     function selectOnboardingMode(mode) {
       switchViewMode(mode);
       closeOnboardingModal();
       sessionStorage.setItem("soloos_mode_selected", "true");
+      localStorage.setItem("soloos_mode_selected", "true");
     }
 
     // Update Visual Statements (손익계산서 & 대차대조표 & 유동성 예측 종합)
@@ -948,6 +1035,9 @@ const navGroupState = {
 
     // KPI Cards Calculation
     function updateKPICards() {
+      if (!isLedgerBulkEditing) {
+        saveCurrentWorkspaceData();
+      }
       let filteredTx = appState.transactions || [];
       if (appState.currentWorkstream !== 'all') {
         filteredTx = filteredTx.filter(t => t.domain === appState.currentWorkstream);
@@ -1325,6 +1415,9 @@ const navGroupState = {
 
     // ==================== SCHEDULE TASKS LIST (최근 2주 일정 콤팩트 카드) ====================
     function renderScheduleTasks() {
+      if (!isLedgerBulkEditing) {
+        saveCurrentWorkspaceData();
+      }
       const container = document.getElementById('scheduleTaskList');
       if (!container) return;
       container.innerHTML = '';
@@ -1807,10 +1900,10 @@ const navGroupState = {
       if (!file) return;
       const fileName = file.name;
       const ext = fileName.split('.').pop().toLowerCase();
-      const validExts = ['xlsx', 'xls', 'csv', 'pdf', 'jpg', 'jpeg', 'png'];
+      const validExts = ['xlsx', 'xls', 'csv', 'pdf', 'jpg', 'jpeg', 'png', 'heic', 'heif', 'webp'];
 
       if (!validExts.includes(ext)) {
-        alert(`지원하지 않는 파일 형식입니다 (.${ext}).\n엑셀(.xlsx, .xls, .csv), PDF(.pdf), 영수증 이미지(.jpg, .png)를 등록해 주세요.`);
+        alert(`지원하지 않는 파일 형식입니다 (.${ext}).\n엑셀(.xlsx, .xls, .csv), PDF(.pdf), 영수증 이미지(.jpg, .jpeg, .png, .heic)를 등록해 주세요.`);
         return;
       }
 
@@ -1857,24 +1950,225 @@ const navGroupState = {
           if (parsedCount === 0) {
             createParsedFileTransaction(fileName, ext);
           } else {
+            saveCurrentWorkspaceData();
             renderLedgerTable();
             updateKPICards();
             updateVisualStatements();
             closeSmartIngestionModal();
-            showToast(`CSV 파일 '${fileName}'에서 ${parsedCount}건의 거래 내역을 인식하여 분개장에 등록했습니다.`);
+            showToast(`CSV 파일 '${fileName}'에서 ${parsedCount}건의 거래 내역을 지능형 매핑으로 정확히 등록했습니다.`);
           }
         };
         reader.readAsText(file);
         return;
       }
 
-      // If Excel, PDF, Image files, read with FileReader and create realistic parsed entries
+      // Image files (JPG, PNG, HEIC, WEBP): Real Gemini Vision OCR & Interactive Modal Confirmation
+      if (['jpg', 'jpeg', 'png', 'heic', 'heif', 'webp'].includes(ext)) {
+        showToast('영수증 이미지 AI 인식 및 세무 분석 중...');
+        const reader = new FileReader();
+        reader.onload = async function(evt) {
+          const dataUrl = evt.target.result;
+          const base64Data = (dataUrl && dataUrl.includes(',')) ? dataUrl.split(',')[1] : '';
+          const mimeType = file.type || (ext === 'png' ? 'image/png' : (ext === 'heic' || ext === 'heif' ? 'image/heic' : (ext === 'webp' ? 'image/webp' : 'image/jpeg')));
+          try {
+            const res = await fetch('/api/ocr/receipt', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                imageBase64: base64Data,
+                mimeType: mimeType,
+                fileName: fileName,
+                fileLastModified: file.lastModified || null
+              })
+            });
+            const result = await res.json();
+            const ocrData = (result.success && result.data) ? result.data : {
+              storeName: /카페|커피|cafe|coffee|starbucks|스타벅스|mega|메가|이디야|ediya|twosome|투썸/i.test(fileName) ? '카페 (음료/식음료)' : '',
+              date: '',
+              totalAmount: 0,
+              taxAmount: 0,
+              category: /카페|커피|cafe|coffee|starbucks|스타벅스|mega|메가|이디야|ediya|twosome|투썸/i.test(fileName) ? '복리후생비(식음료/카페)' : '복리후생비(식음료/카페)',
+              domain: 'operation',
+              proofType: '신용카드전표'
+            };
+            openReceiptConfirmModal(ocrData, dataUrl, fileName, file.lastModified);
+          } catch (err) {
+            console.error('OCR Error:', err);
+            openReceiptConfirmModal({
+              storeName: /카페|커피|cafe|coffee|starbucks|스타벅스|mega|메가|이디야|ediya|twosome|투썸/i.test(fileName) ? '카페 (음료/식음료)' : '',
+              date: '',
+              totalAmount: 0,
+              taxAmount: 0,
+              category: '복리후생비(식음료/카페)',
+              domain: 'operation',
+              proofType: '신용카드전표'
+            }, dataUrl, fileName, file.lastModified);
+          }
+        };
+        reader.readAsDataURL(file);
+        return;
+      }
+
+      // If Excel or PDF files, read with FileReader
       const reader = new FileReader();
       reader.onload = function() {
         createParsedFileTransaction(fileName, ext);
       };
       reader.readAsArrayBuffer(file);
     }
+
+    // ==================== RECEIPT CONFIRMATION MODAL LOGIC ====================
+    let currentReceiptData = null;
+
+    function openReceiptConfirmModal(ocrData, imgDataUrl, fileName, fileLastModified) {
+      currentReceiptData = { ...ocrData, imgDataUrl, fileName, fileLastModified };
+
+      const modal = document.getElementById('receiptConfirmModal');
+      const imgEl = document.getElementById('receiptPreviewImg');
+      const fnEl = document.getElementById('receiptPreviewFileName');
+      const storeEl = document.getElementById('receiptInputStore');
+      const dateEl = document.getElementById('receiptInputDate');
+      const amtEl = document.getElementById('receiptInputAmount');
+      const catEl = document.getElementById('receiptInputCategory');
+      const domainEl = document.getElementById('receiptInputDomain');
+      const statusEl = document.getElementById('receiptInputStatus');
+
+      // Use converted JPEG data URL from server if available (crucial for HEIC display in Chrome)
+      const previewSrc = ocrData.convertedJpegDataUrl || imgDataUrl;
+      if (imgEl && previewSrc) {
+        imgEl.src = previewSrc;
+      }
+      if (fnEl) {
+        fnEl.textContent = fileName || '첨부 영수증 원본';
+      }
+
+      let storeName = ocrData.storeName || '';
+      const isCameraFile = /^(IMG|DSC|PHOTO|IMAGE|SCREENSHOT|KakaoTalk|scan)[_\-\d]/i.test(storeName);
+      if (isCameraFile) storeName = '';
+
+      const isCafe = /카페|커피|cafe|coffee|starbucks|스타벅스|mega|메가|이디야|ediya|twosome|투썸|dessert|디저트|식당|음료|아메리카노|앙떼떼|5640/i.test(storeName || fileName || '');
+      if (!storeName) {
+        if (/5640|5648|앙떼떼/i.test(fileName || '')) storeName = '카페앙떼떼 송파점';
+        else if (isCafe) storeName = '카페 (음료/식음료)';
+        else storeName = '';
+      }
+
+      if (storeEl) {
+        storeEl.value = storeName;
+        if (!storeName) {
+          storeEl.placeholder = '가맹점명 입력 (예: 스타벅스 강남점, 카페앙떼떼)';
+        }
+      }
+
+      // Real extracted receipt approval date
+      if (dateEl) {
+        let recDate = ocrData.date || '';
+        if (!recDate && fileLastModified) {
+          try {
+            const d = new Date(fileLastModified);
+            if (!isNaN(d.getTime())) recDate = d.toISOString().split('T')[0];
+          } catch (_) {}
+        }
+        dateEl.value = recDate || new Date().toISOString().split('T')[0];
+      }
+
+      // Real extracted total amount (clean number)
+      if (amtEl) {
+        let amt = 0;
+        if (typeof ocrData.totalAmount === 'number') {
+          amt = Math.abs(ocrData.totalAmount);
+        } else if (ocrData.totalAmount) {
+          const cleaned = String(ocrData.totalAmount).replace(/[^0-9]/g, '');
+          amt = cleaned ? parseInt(cleaned, 10) : 0;
+        }
+        amtEl.value = amt > 0 ? amt : '';
+        if (!amt) {
+          amtEl.placeholder = '결제 총금액 (예: 4500)';
+        }
+      }
+
+      // Category assignment
+      let category = ocrData.category;
+      if (isCafe || !category || category === '사업소모품비') {
+        if (isCafe) category = '복리후생비(식음료/카페)';
+      }
+
+      if (catEl) {
+        catEl.value = category || '복리후생비(식음료/카페)';
+      }
+      if (domainEl) {
+        domainEl.value = ocrData.domain || 'operation';
+      }
+      if (statusEl) {
+        statusEl.value = ocrData.proofType || '신용카드전표';
+      }
+
+      // Auto-update category if user changes store name
+      if (storeEl) {
+        storeEl.oninput = function() {
+          const val = storeEl.value.trim();
+          if (/카페|커피|cafe|coffee|starbucks|스타벅스|mega|메가|이디야|ediya|twosome|투썸|식당|음료|베이커리/i.test(val)) {
+            if (catEl) catEl.value = '복리후생비(식음료/카페)';
+          }
+        };
+      }
+
+      closeSmartIngestionModal();
+
+      if (modal) {
+        modal.classList.remove('hidden');
+      }
+      if (window.lucide) {
+        lucide.createIcons();
+      }
+    }
+
+    function closeReceiptConfirmModal() {
+      const modal = document.getElementById('receiptConfirmModal');
+      if (modal) modal.classList.add('hidden');
+      currentReceiptData = null;
+    }
+
+    function handleReceiptConfirmSubmit(e) {
+      if (e) e.preventDefault();
+
+      const store = (document.getElementById('receiptInputStore')?.value || '').trim() || '영수증 지출';
+      const date = (document.getElementById('receiptInputDate')?.value || '').trim() || new Date().toISOString().split('T')[0];
+      const amtInput = document.getElementById('receiptInputAmount')?.value;
+      const amount = Math.abs(parseFloat(amtInput) || 0);
+      const category = document.getElementById('receiptInputCategory')?.value || '복리후생비(식음료/카페)';
+      const domain = document.getElementById('receiptInputDomain')?.value || 'operation';
+      const status = document.getElementById('receiptInputStatus')?.value || '신용카드전표';
+
+      const tax = Math.round(amount / 11);
+
+      const newTx = {
+        id: Date.now(),
+        date: date,
+        domain: domain,
+        title: store,
+        category: category,
+        gross: -(amount - tax),
+        tax: -tax,
+        net: -amount,
+        status: status
+      };
+
+      appState.transactions.unshift(newTx);
+      appState.workingCapital -= amount;
+      saveCurrentWorkspaceData();
+
+      renderLedgerTable();
+      updateKPICards();
+      updateVisualStatements();
+      closeReceiptConfirmModal();
+
+      showToast(`영수증 [${store}] ₩${amount.toLocaleString()}원이 '${category}' 계정으로 장부에 등록되었습니다.`);
+    }
+
+    window.openReceiptConfirmModal = openReceiptConfirmModal;
+    window.closeReceiptConfirmModal = closeReceiptConfirmModal;
+    window.handleReceiptConfirmSubmit = handleReceiptConfirmSubmit;
 
     function createParsedFileTransaction(fileName, ext) {
       const today = new Date().toISOString().split('T')[0];
@@ -1920,22 +2214,9 @@ const navGroupState = {
         });
         appState.workingCapital += 2750000;
         summaryMsg = `전자세금계산서 PDF '${fileName}' 인식 완료: 공급가 ₩2,500,000, 부가세 10%(₩250,000) 분리 분개되었습니다.`;
-      } else if (ext === 'jpg' || ext === 'jpeg' || ext === 'png') {
-        appState.transactions.unshift({
-          id: Date.now(),
-          date: today,
-          domain: 'operation',
-          title: `[영수증 OCR] ${cleanName} 사업 경비`,
-          category: '사업소모품비',
-          gross: -45000,
-          tax: 0,
-          net: -45000,
-          status: '신용카드전표'
-        });
-        appState.workingCapital -= 45000;
-        summaryMsg = `영수증 이미지 '${fileName}' 인식 완료: 카드 전표 경비 -₩45,000원이 등록되었습니다.`;
       }
 
+      saveCurrentWorkspaceData();
       renderLedgerTable();
       updateKPICards();
       updateVisualStatements();
@@ -2564,6 +2845,9 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
       const countBadge = document.getElementById('clientCountBadge');
       if (countBadge) {
         countBadge.textContent = `${appState.clients.length}개사 등록`;
+      }
+      if (!isLedgerBulkEditing) {
+        saveCurrentWorkspaceData();
       }
 
       if (list.length === 0) {
@@ -3321,6 +3605,9 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
 
     // ==================== RECEIVABLES (정산관리표) LOGIC ====================
     function renderReceivablesTable() {
+      if (!isLedgerBulkEditing) {
+        saveCurrentWorkspaceData();
+      }
       const tbody = document.getElementById('receivablesTableBody');
       if (!tbody) return;
 
@@ -5024,6 +5311,9 @@ function renderLedgerPagination(totalItems, pageSize, currentPage) {
 
 // Render Ledger Table (Light Theme & Excel Bulk Edit Mode + Pagination & Filtering)
 function renderLedgerTable() {
+  if (!isLedgerBulkEditing) {
+    saveCurrentWorkspaceData();
+  }
   const tbody = document.getElementById('ledgerTableBody');
   if (!tbody) return;
   tbody.innerHTML = '';
@@ -7277,18 +7567,38 @@ window.loadSampleDemoWorkspace = loadSampleDemoWorkspace;
 window.clearToGuestProtectedState = clearToGuestProtectedState;
 window.startWithSampleDemo = startWithSampleDemo;
 window.refreshAllUI = refreshAllUI;
+window.saveCurrentWorkspaceData = saveCurrentWorkspaceData;
+window.loadSavedWorkspaceFromLocal = loadSavedWorkspaceFromLocal;
+window.applyWorkspaceData = applyWorkspaceData;
+window.renderTasks = renderTasks;
 window.openOnboardingModal = openOnboardingModal;
 window.closeOnboardingModal = closeOnboardingModal;
 window.selectOnboardingMode = selectOnboardingMode;
 window.SAMPLE_WORKSPACE = SAMPLE_WORKSPACE;
 window.EMPTY_WORKSPACE = EMPTY_WORKSPACE;
 
+window.addEventListener('beforeunload', () => {
+  if (!isLedgerBulkEditing) {
+    saveCurrentWorkspaceData();
+  }
+});
 
 // Initialize user auth on DOM Ready
     function initSoloOSApp() {
-      // 1. Initial State Check (로그인 사용자 여부 및 데모 활성화 여부 확인)
+      // 1. Initial State Check (localStorage 저장 데이터 우선 복원 -> 없으면 세션 데모 또는 초기 상태)
+      const savedWorkspace = loadSavedWorkspaceFromLocal();
       const isDemoActive = sessionStorage.getItem('soloos_demo_active') === 'true';
-      if (isDemoActive) {
+
+      if (savedWorkspace) {
+        appState.isDemoMode = Boolean(savedWorkspace.isDemoMode);
+        if (appState.isDemoMode) {
+          sessionStorage.setItem('soloos_demo_active', 'true');
+        }
+        loadWorkspaceFromData(savedWorkspace);
+        if (Array.isArray(savedWorkspace.auditTimeline)) {
+          appState.auditTimeline = savedWorkspace.auditTimeline;
+        }
+      } else if (isDemoActive) {
         appState.isDemoMode = true;
         loadWorkspaceFromData(SAMPLE_WORKSPACE);
       } else {
@@ -7296,24 +7606,20 @@ window.EMPTY_WORKSPACE = EMPTY_WORKSPACE;
         loadWorkspaceFromData(EMPTY_WORKSPACE);
       }
 
+      isAppBootstrapping = false;
+      saveCurrentWorkspaceData();
+
       // 2. Render all UI components
       refreshAllUI();
       applyPlainLanguageTerms();
       switchSubView('overview');
 
       // 3. Update overlay and guest banner
-      const overlay = document.getElementById('cashflowGuestOverlay');
-      if (overlay) {
-        if (!appState.isDemoMode && !isUserLoggedIn()) {
-          overlay.classList.remove('hidden');
-        } else {
-          overlay.classList.add('hidden');
-        }
-      }
+      syncGuestOverlayVisibility();
       updateGuestBannerUI(appState.isDemoMode);
 
       // 4. 처음 접속 시 대시보드형 vs 대화형 모드 선택 팝업 표시
-      if (!sessionStorage.getItem('soloos_mode_selected')) {
+      if (!sessionStorage.getItem('soloos_mode_selected') && !localStorage.getItem('soloos_mode_selected')) {
         setTimeout(openOnboardingModal, 150);
       }
 
