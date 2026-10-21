@@ -1,5 +1,5 @@
 /**
- * SoloOS Page: Client Management (클라이언트 관리)
+ * SolOS Page: Client Management (클라이언트 관리)
  * Client profile cards, tier evaluation (우수/양호/주의/위험), document verification checklist, communication guides
  */
 

@@ -1,5 +1,5 @@
 /**
- * SoloOS Page: Tax Management (세금 관리)
+ * SolOS Page: Tax Management (세금 관리)
  * 3 Major taxes calculators (Simple rate, 10% VAT, Hourly wage, Business code directory),
  * Reserve account breakdown, Hometax deduction guide, and year-end summary
  */
@@ -413,7 +413,7 @@
     // 1인 프리랜서 1년 수입·지출 정산 요약표 내보내기
     function exportYearEndTaxSummary() {
       const summaryReport = `=====================================================
-SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
+SolOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
 (국세청 종합소득세 및 부가가치세 신고 대비용)
 기준일자: ${new Date().toISOString().split('T')[0]}
 대표자명: 정솔로 (솔로오에스)
@@ -456,7 +456,7 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
 권고 세금 통장 분리 보관 총액: ₩580,000
 
 =====================================================
-위 데이터는 SoloOS 로컬 브라우저 인메모리에서 안전하게
+위 데이터는 SolOS 로컬 브라우저 인메모리에서 안전하게
 익명화(마스킹)되어 자동 분개 및 산출된 정산 보고서입니다.
 =====================================================`;
 
@@ -464,7 +464,7 @@ SoloOS 1인 프리랜서 1년 수입·지출 정산 요약 리포트
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.setAttribute('href', url);
-      link.setAttribute('download', `SoloOS_1년_수입지출_정산요약표_${new Date().toISOString().split('T')[0]}.txt`);
+      link.setAttribute('download', `SolOS_1년_수입지출_정산요약표_${new Date().toISOString().split('T')[0]}.txt`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

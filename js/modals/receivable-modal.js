@@ -1,5 +1,5 @@
 /**
- * SoloOS Modal: Receivable & Settlement Item Modal
+ * SolOS Modal: Receivable & Settlement Item Modal
  * Register/edit accounts receivable with due dates, client association, and delay calculation
  */
 

@@ -1,5 +1,5 @@
 /**
- * SoloOS Progressive Web Service (PWS) Service Worker
+ * SolOS Progressive Web Service (PWS) Service Worker
  * Version: 3.0.0 (Strict Network-First & Cache Purge)
  */
 

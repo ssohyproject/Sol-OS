@@ -1,5 +1,5 @@
 /**
- * SoloOS Modal: Google Workspace Sync Modal
+ * SolOS Modal: Google Workspace Sync Modal
  * Google Calendar 2-way event synchronization, Google Drive cloud backup, and OAuth 2.0 flow
  */
 
@@ -152,7 +152,7 @@
 
       container.innerHTML = tasks.map(t => {
         const dtStr = (t.dueDate || '2026-10-20').replace(/-/g, '');
-        const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`[SoloOS] ${t.title}`)}&dates=${dtStr}T090000Z/${dtStr}T180000Z&details=${encodeURIComponent(`발주처: ${t.client}\n계약금액: ₩${(t.amount || 0).toLocaleString()}\n상태: ${t.status}\n메모: ${t.memo || ''}`)}`;
+        const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`[SolOS] ${t.title}`)}&dates=${dtStr}T090000Z/${dtStr}T180000Z&details=${encodeURIComponent(`발주처: ${t.client}\n계약금액: ₩${(t.amount || 0).toLocaleString()}\n상태: ${t.status}\n메모: ${t.memo || ''}`)}`;
         return `
           <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between gap-2 shadow-2xs hover:border-blue-300 transition-colors">
             <div class="truncate">
@@ -191,8 +191,8 @@
           for (const t of tasks) {
             const startDate = t.dueDate || '2026-10-20';
             const eventPayload = {
-              summary: `[SoloOS] ${t.title} (${t.client})`,
-              description: `[SoloOS 1인 사업가 ERP]\n클라이언트: ${t.client}\n계약금액: ₩${(t.amount || 0).toLocaleString()}\n상태: ${t.status}\n메모: ${t.memo || ''}`,
+              summary: `[SolOS] ${t.title} (${t.client})`,
+              description: `[SolOS 1인 사업가 ERP]\n클라이언트: ${t.client}\n계약금액: ₩${(t.amount || 0).toLocaleString()}\n상태: ${t.status}\n메모: ${t.memo || ''}`,
               start: { date: startDate },
               end: { date: startDate }
             };
@@ -283,12 +283,12 @@
           const delimiter = "\r\n--" + boundary + "\r\n";
           const close_delim = "\r\n--" + boundary + "--";
           const nowStr = new Date().toISOString().substring(0, 10);
-          const fileName = `SoloOS_재무장부백업_${nowStr}.json`;
+          const fileName = `SolOS_재무장부백업_${nowStr}.json`;
 
           const backupData = {
             version: '2.0.0',
             exportedAt: new Date().toISOString(),
-            app: 'SoloOS 1인 사업가 올인원 ERP',
+            app: 'SolOS 1인 사업가 올인원 ERP',
             user: currentAuthUser,
             state: appState
           };
@@ -296,7 +296,7 @@
           const metadata = {
             name: fileName,
             mimeType: 'application/json',
-            description: 'SoloOS 1인 사업가 ERP 자동 분개 장부 및 계약 백업'
+            description: 'SolOS 1인 사업가 ERP 자동 분개 장부 및 계약 백업'
           };
 
           const multipartRequestBody =
@@ -356,7 +356,7 @@
             <span>Google Drive 백업 파일 다운로드 &amp; Google Drive 열림</span>
           </div>
           <div class="text-[11px] text-slate-700 leading-relaxed">
-            1. SoloOS 전체 장부 및 계약 백업 파일이 다운로드되었습니다.<br>
+            1. SolOS 전체 장부 및 계약 백업 파일이 다운로드되었습니다.<br>
             2. 새 탭으로 열린 <strong>Google Drive(내 드라이브)</strong>에 다운로드된 파일을 드래그하여 안전하게 영구 보관하세요.<br>
             <span class="text-slate-500">※ 로컬 컴퓨터에 불필요한 더미 파일은 생성되지 않습니다.</span>
           </div>

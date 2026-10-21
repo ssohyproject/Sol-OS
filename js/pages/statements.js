@@ -1,5 +1,5 @@
 /**
- * SoloOS Page: Financial Statements (자금 현황)
+ * SolOS Page: Financial Statements (자금 현황)
  * Accounting Waterfall (손익 폭포수), Liquidity forecast, Runway diagnosis slider, Expense optimization
  */
 

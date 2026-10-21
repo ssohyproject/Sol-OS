@@ -1,5 +1,5 @@
 /**
- * SoloOS Core: Authentication & User Session
+ * SolOS Core: Authentication & User Session
  * Firebase Auth, Local Storage user caching, Login/Register modal, Google One-click, Logout
  */
 
@@ -30,7 +30,7 @@
           }
         }
       } catch (err) {
-        console.warn('[SoloOS Auth] Offline or fallback to local user state');
+        console.warn('[SolOS Auth] Offline or fallback to local user state');
       }
 
       // Default demo fallback if still null
@@ -153,13 +153,13 @@
         if (regForm) regForm.classList.add('hidden');
         if (tabLogin) tabLogin.className = 'flex-1 py-2 rounded-xl transition-all bg-white text-slate-900 shadow-xs';
         if (tabReg) tabReg.className = 'flex-1 py-2 rounded-xl transition-all text-slate-500 hover:text-slate-900';
-        if (title) title.textContent = 'SoloOS 계정 로그인';
+        if (title) title.textContent = 'SolOS 계정 로그인';
       } else {
         if (loginForm) loginForm.classList.add('hidden');
         if (regForm) regForm.classList.remove('hidden');
         if (tabLogin) tabLogin.className = 'flex-1 py-2 rounded-xl transition-all text-slate-500 hover:text-slate-900';
         if (tabReg) tabReg.className = 'flex-1 py-2 rounded-xl transition-all bg-white text-slate-900 shadow-xs';
-        if (title) title.textContent = '새 SoloOS 계정 생성';
+        if (title) title.textContent = '새 SolOS 계정 생성';
       }
     }
 

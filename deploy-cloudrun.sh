@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# SoloOS Google Cloud Run 1-Click Deployment Script
+# SolOS Google Cloud Run 1-Click Deployment Script
 # Automatically builds, deploys, and outputs the live HTTPS production URL
 # ==============================================================================
 
@@ -11,7 +11,7 @@ DEFAULT_REGION="asia-northeast3" # Seoul Region
 SERVICE_NAME="soloos-erp"
 
 echo "================================================================="
-echo "🚀 SoloOS Google Cloud Run 배포 시작"
+echo "🚀 SolOS Google Cloud Run 배포 시작"
 echo "================================================================="
 
 # 1. Check gcloud CLI
@@ -63,7 +63,7 @@ gcloud run deploy "$SERVICE_NAME" \
   --min-instances 0 \
   --max-instances 5 \
   --concurrency 80 \
-  --set-env-vars "NODE_ENV=production,HOST=0.0.0.0,APP_NAME=SoloOS ERP,FIREBASE_PROJECT_ID=$PROJECT_ID"
+  --set-env-vars "NODE_ENV=production,HOST=0.0.0.0,APP_NAME=SolOS ERP,FIREBASE_PROJECT_ID=$PROJECT_ID"
 
 # 6. Retrieve Live URL
 LIVE_URL=$(gcloud run services describe "$SERVICE_NAME" --region "$DEFAULT_REGION" --format 'value(status.url)' 2>/dev/null || echo "")

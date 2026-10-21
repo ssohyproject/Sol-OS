@@ -1,5 +1,5 @@
 /**
- * SoloOS Page: Schedule & Task Management
+ * SolOS Page: Schedule & Task Management
  * Monthly calendar, 2-week task cards, Kanban board, Gantt timeline, Buffer days
  */
 

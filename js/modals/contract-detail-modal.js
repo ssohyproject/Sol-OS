@@ -1,5 +1,5 @@
 /**
- * SoloOS Modal: Contract Integrated Detail Modal
+ * SolOS Modal: Contract Integrated Detail Modal
  * Inspect project alignment, milestones, delivery timeline, and inspection dates
  */
 

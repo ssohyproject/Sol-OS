@@ -1,5 +1,5 @@
 /**
- * SoloOS Modal: Smart Ingestion & Receipt Confirmation
+ * SolOS Modal: Smart Ingestion & Receipt Confirmation
  * Drag & drop file parser (Excel, CSV, PDF, OCR for receipts), SMS text parser, manual entry modal
  */
 

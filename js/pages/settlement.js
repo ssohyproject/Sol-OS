@@ -1,5 +1,5 @@
 /**
- * SoloOS Page: Settlement Management (정산 관리)
+ * SolOS Page: Settlement Management (정산 관리)
  * Receivables tracking table, pre-agreed deferral toggle
  */
 

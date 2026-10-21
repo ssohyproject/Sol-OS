@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * SoloOS Model Context Protocol (MCP) Server
+ * SolOS Model Context Protocol (MCP) Server
  * Compatible with Claude Desktop, Cursor, Antigravity, and any MCP Client
  * Communicates via JSON-RPC 2.0 over standard I/O (stdio)
  * Zero external dependencies required
@@ -60,7 +60,7 @@ const TOOLS = [
   },
   {
     name: 'list_soloos_tasks',
-    description: 'SoloOS에 등록된 프로젝트 마감 일정, 납품 태스크, 미수금 현황을 조회합니다.',
+    description: 'SolOS에 등록된 프로젝트 마감 일정, 납품 태스크, 미수금 현황을 조회합니다.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -97,7 +97,7 @@ const TOOLS = [
   },
   {
     name: 'add_soloos_transaction',
-    description: 'SoloOS 장부에 새로운 세무 매출/매입 거래를 기록하고 세금을 자동 분개합니다.',
+    description: 'SolOS 장부에 새로운 세무 매출/매입 거래를 기록하고 세금을 자동 분개합니다.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -128,7 +128,7 @@ const TOOLS = [
   },
   {
     name: 'sync_google_calendar',
-    description: 'SoloOS의 납품 마감일 및 정산 일정을 구글 캘린더(Google Calendar)로 동기화합니다.',
+    description: 'SolOS의 납품 마감일 및 정산 일정을 구글 캘린더(Google Calendar)로 동기화합니다.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -138,17 +138,17 @@ const TOOLS = [
   },
   {
     name: 'backup_google_drive',
-    description: 'SoloOS의 장부 데이터, 세무 분개 내역, 계약서 사본을 구글 드라이브(Google Drive)에 백업합니다.',
+    description: 'SolOS의 장부 데이터, 세무 분개 내역, 계약서 사본을 구글 드라이브(Google Drive)에 백업합니다.',
     inputSchema: {
       type: 'object',
       properties: {
-        folderName: { type: 'string', description: '저장할 구글 드라이브 폴더명 (기본: SoloOS_Backup)' }
+        folderName: { type: 'string', description: '저장할 구글 드라이브 폴더명 (기본: SolOS_Backup)' }
       }
     }
   },
   {
     name: 'get_user_profile',
-    description: '현재 SoloOS 로그인 사용자의 프로필 정보 및 Google Workspace(캘린더, 드라이브) 연동 상태를 조회합니다.',
+    description: '현재 SolOS 로그인 사용자의 프로필 정보 및 Google Workspace(캘린더, 드라이브) 연동 상태를 조회합니다.',
     inputSchema: {
       type: 'object',
       properties: {},
@@ -170,7 +170,7 @@ async function executeTool(name, args) {
       const stamina = TaxEngine.calcFinancialStamina(state.workingCapital, state.receivables);
 
       return {
-        summary: `SoloOS 재무 요약 브리핑:`,
+        summary: `SolOS 재무 요약 브리핑:`,
         workingCapital: `₩${state.workingCapital.toLocaleString()} (사업 통장 가용 잔고)`,
         monthlyFixedExpense: `₩${state.monthlyFixedExpense.toLocaleString()}`,
         runwayMonths: `${runway.runwayMonths}개월 (${runway.isSafe ? '안정권 6개월 이상' : '경고'})`,
@@ -255,7 +255,7 @@ async function executeTool(name, args) {
 
       return {
         success: true,
-        message: `거래 '${args.title}'가 SoloOS 장부에 성공적으로 등록되었습니다.`,
+        message: `거래 '${args.title}'가 SolOS 장부에 성공적으로 등록되었습니다.`,
         transaction: newTx,
         updatedWorkingCapital: `₩${state.workingCapital.toLocaleString()}`
       };
@@ -289,10 +289,10 @@ async function executeTool(name, args) {
       const calendarName = args?.targetCalendar || 'primary';
       const events = (state.tasks || []).map(t => {
         const startDateTime = `${t.dueDate}T${t.dueTime ? t.dueTime + ':00' : '09:00:00'}`;
-        const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`[SoloOS] ${t.title}`)}&dates=${t.dueDate.replace(/-/g, '')}T090000Z/${t.dueDate.replace(/-/g, '')}T180000Z&details=${encodeURIComponent(`클라이언트: ${t.client}\n금액: ₩${(t.amount || 0).toLocaleString()}\n상태: ${t.status}\n메모: ${t.memo || ''}`)}`;
+        const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`[SolOS] ${t.title}`)}&dates=${t.dueDate.replace(/-/g, '')}T090000Z/${t.dueDate.replace(/-/g, '')}T180000Z&details=${encodeURIComponent(`클라이언트: ${t.client}\n금액: ₩${(t.amount || 0).toLocaleString()}\n상태: ${t.status}\n메모: ${t.memo || ''}`)}`;
         return {
           id: t.id,
-          summary: `[SoloOS] ${t.title} (${t.client})`,
+          summary: `[SolOS] ${t.title} (${t.client})`,
           dueDate: t.dueDate,
           dueTime: t.dueTime || '18:00',
           amount: `₩${(t.amount || 0).toLocaleString()}`,
@@ -306,13 +306,13 @@ async function executeTool(name, args) {
         calendar: calendarName,
         syncedCount: events.length,
         events: events,
-        message: `구글 캘린더(${calendarName})에 ${events.length}건의 SoloOS 마감 및 과업 일정이 동기화되었습니다.`,
+        message: `구글 캘린더(${calendarName})에 ${events.length}건의 SolOS 마감 및 과업 일정이 동기화되었습니다.`,
         syncTimestamp: new Date().toISOString()
       };
     }
 
     case 'backup_google_drive': {
-      const folderName = args?.folderName || 'SoloOS_ERP_Backups';
+      const folderName = args?.folderName || 'SolOS_ERP_Backups';
       const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
       const backupFileName = `soloos_backup_${timestamp}.json`;
 
@@ -344,7 +344,7 @@ async function executeTool(name, args) {
         tasksCount: (state.tasks || []).length,
         clientsCount: (state.clients || []).length,
         backupTimestamp: new Date().toISOString(),
-        message: `구글 드라이브(${folderName})에 SoloOS 장부 백업 파일(${backupFileName})이 정상 보관되었습니다.`
+        message: `구글 드라이브(${folderName})에 SolOS 장부 백업 파일(${backupFileName})이 정상 보관되었습니다.`
       };
     }
 
@@ -485,12 +485,12 @@ if (require.main === module) {
           resources: [
             {
               uri: 'soloos://state',
-              name: 'SoloOS Current State & Ledger',
+              name: 'SolOS Current State & Ledger',
               mimeType: 'application/json'
             },
             {
               uri: 'soloos://tax-rules',
-              name: 'SoloOS 3-in-1 Tax Rules',
+              name: 'SolOS 3-in-1 Tax Rules',
               mimeType: 'application/json'
             }
           ]

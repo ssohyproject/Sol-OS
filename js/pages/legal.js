@@ -1,5 +1,5 @@
 /**
- * SoloOS Page: Legal Protection (법적 보호)
+ * SolOS Page: Legal Protection (법적 보호)
  * Commercial Act Article 69 inspection deemed completed, official notice HWPX generator, lawsuit claim copy, dispute timeline
  */
 

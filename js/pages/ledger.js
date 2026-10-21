@@ -1,5 +1,5 @@
 /**
- * SoloOS Page: Financial Ledger (자금 정리)
+ * SolOS Page: Financial Ledger (자금 정리)
  * Transaction journal, bulk editing (Excel mode), pagination & search filters, fixed expense scheduling, CSV export
  */
 
@@ -103,7 +103,7 @@
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.setAttribute('href', url);
-      link.setAttribute('download', `SoloOS_3대세무_분개장_${new Date().toISOString().split('T')[0]}.csv`);
+      link.setAttribute('download', `SolOS_3대세무_분개장_${new Date().toISOString().split('T')[0]}.csv`);
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

@@ -1,6 +1,6 @@
 # ==============================================================================
 # Google Cloud Run Service Specification (Knative Serving v1)
-# Declarative Infrastructure as Code (IaC) for SoloOS ERP
+# Declarative Infrastructure as Code (IaC) for SolOS ERP
 # ==============================================================================
 
 apiVersion: serving.knative.dev/v1
@@ -40,7 +40,7 @@ spec:
             - name: HOST
               value: "0.0.0.0"
             - name: APP_NAME
-              value: "SoloOS ERP"
+              value: "SolOS ERP"
             - name: FIREBASE_PROJECT_ID
               value: "soloos-erp"
           startupProbe:

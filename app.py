@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SoloOS Progressive Web Service (PWS) & API Server (Python Edition)
+SolOS Progressive Web Service (PWS) & API Server (Python Edition)
 Compatible with Python 3.8+ (Zero external dependencies required)
 Supports REST API endpoints, static file serving, and .env configuration
 """
@@ -30,7 +30,7 @@ def load_env(env_path=".env"):
                 v = v.strip().strip('"').strip("'")
                 if k not in os.environ:
                     os.environ[k] = v
-        print(f"[SoloOS Python] Loaded environment from {env_path}")
+        print(f"[SolOS Python] Loaded environment from {env_path}")
 
 load_env()
 
@@ -127,8 +127,8 @@ class TaxEngine:
 # ------------------------------------------------------------------------------
 # 3. HTTP Request Handler
 # ------------------------------------------------------------------------------
-class SoloOSRequestHandler(http.server.BaseHTTPRequestHandler):
-    server_version = "SoloOS-PWS/2.0.0"
+class SolOSRequestHandler(http.server.BaseHTTPRequestHandler):
+    server_version = "SolOS-PWS/2.0.0"
 
     def _set_headers(self, status=200, content_type="application/json; charset=utf-8"):
         self.send_response(status)
@@ -169,14 +169,14 @@ class SoloOSRequestHandler(http.server.BaseHTTPRequestHandler):
         if pathname in ["/healthz", "/livez", "/_ah/health", "/api/healthz"]:
             return self._send_json(200, {
                 "status": "UP",
-                "service": "SoloOS Python PWS Engine",
+                "service": "SolOS Python PWS Engine",
                 "timestamp": datetime.now().isoformat()
             })
 
         # Public Configuration
         if pathname == "/api/config":
             return self._send_json(200, {
-                "appName": os.environ.get("APP_NAME", "SoloOS ERP"),
+                "appName": os.environ.get("APP_NAME", "SolOS ERP"),
                 "appUrl": os.environ.get("APP_URL", f"http://localhost:{PORT}"),
                 "env": os.environ.get("NODE_ENV", "development"),
                 "firebase": {
@@ -248,7 +248,7 @@ class SoloOSRequestHandler(http.server.BaseHTTPRequestHandler):
         # Conversational CFO AI
         if pathname == "/api/ai/cfo":
             query = body.get("query", "")
-            reply = f"대표님, '{query}' 문의에 대한 SoloOS 분석 브리핑입니다."
+            reply = f"대표님, '{query}' 문의에 대한 SolOS 분석 브리핑입니다."
             if "세금" in query:
                 reply = "10% 부가세 및 3.3% 사업소득세 원천징수분을 감안하여 최소 ₩300,000을 세무 분리 통장에 예치하시기를 권장합니다."
             elif "미수금" in query or "정산" in query:
@@ -319,16 +319,16 @@ class SoloOSRequestHandler(http.server.BaseHTTPRequestHandler):
 # ------------------------------------------------------------------------------
 def run():
     server_address = (HOST, PORT)
-    httpd = http.server.ThreadingHTTPServer(server_address, SoloOSRequestHandler)
+    httpd = http.server.ThreadingHTTPServer(server_address, SolOSRequestHandler)
     print("=" * 64)
-    print(f"[SoloOS Python PWS] Server is running at http://{'localhost' if HOST == '0.0.0.0' else HOST}:{PORT}")
-    print(f"[SoloOS Python PWS] Environment: {os.environ.get('NODE_ENV', 'development')}")
-    print(f"[SoloOS Python PWS] REST API & Firebase PWS Ready")
+    print(f"[SolOS Python PWS] Server is running at http://{'localhost' if HOST == '0.0.0.0' else HOST}:{PORT}")
+    print(f"[SolOS Python PWS] Environment: {os.environ.get('NODE_ENV', 'development')}")
+    print(f"[SolOS Python PWS] REST API & Firebase PWS Ready")
     print("=" * 64)
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\n[SoloOS Python PWS] Stopping server...")
+        print("\n[SolOS Python PWS] Stopping server...")
         httpd.server_close()
 
 if __name__ == "__main__":

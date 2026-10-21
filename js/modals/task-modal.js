@@ -1,5 +1,5 @@
 /**
- * SoloOS Modal: Task & Schedule Editor Modal
+ * SolOS Modal: Task & Schedule Editor Modal
  * Create/edit tasks, ICS calendar import simulation, Google Calendar & Notion MCP sync
  */
 

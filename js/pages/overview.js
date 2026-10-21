@@ -1,5 +1,5 @@
 /**
- * SoloOS Page: Main Dashboard (Overview)
+ * SolOS Page: Main Dashboard (Overview)
  * Top KPI indicators, visual runway indicators, and interactive Cashflow Wave Chart
  */
 

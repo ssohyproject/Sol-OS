@@ -1,5 +1,5 @@
 # ==============================================================================
-# SoloOS Progressive Web Service (PWS) Container for Google Cloud Run
+# SolOS Progressive Web Service (PWS) Container for Google Cloud Run
 # Optimized for Fast Cold-Start (<1s), Zero Dependencies & High Security
 # ==============================================================================
 
@@ -30,5 +30,5 @@ EXPOSE 8080
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget --no-verbose --tries=1 --spider http://localhost:8080/healthz || exit 1
 
-# Start SoloOS server
+# Start SolOS server
 CMD ["node", "server.js"]

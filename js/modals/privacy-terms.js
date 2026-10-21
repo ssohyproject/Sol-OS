@@ -1,5 +1,5 @@
 /**
- * SoloOS Modal: Terms of Service & Privacy Policy Modal
+ * SolOS Modal: Terms of Service & Privacy Policy Modal
  * Mandatory/optional checkboxes agreement, tab switching, statutory disclosures
  */
 

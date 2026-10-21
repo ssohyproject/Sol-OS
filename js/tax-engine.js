@@ -1,6 +1,6 @@
 /**
- * SoloOS Tax & Financial Engineering Module
- * Works in both Browser (window.SoloOSTaxEngine) and Node.js (CommonJS / ES Module)
+ * SolOS Tax & Financial Engineering Module
+ * Works in both Browser (window.SolOSTaxEngine) and Node.js (CommonJS / ES Module)
  * Supports 3대 세무 매트릭스, 4대 기타소득 역산, 워터폴 손익, 런웨이 지표
  */
 (function(root, factory) {
@@ -9,7 +9,7 @@
   } else if (typeof define === 'function' && define.amd) {
     define([], factory);
   } else {
-    root.SoloOSTaxEngine = factory();
+    root.SolOSTaxEngine = factory();
   }
 })(typeof globalThis !== 'undefined' ? globalThis : this, function() {
   'use strict';

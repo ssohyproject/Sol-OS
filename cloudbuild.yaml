@@ -1,5 +1,5 @@
 # ==============================================================================
-# Google Cloud Build Pipeline for SoloOS (Cloud Run Deployment)
+# Google Cloud Build Pipeline for SolOS (Cloud Run Deployment)
 # Automates Container Build, Artifact Push, and Cloud Run Rollout
 # ==============================================================================
 
@@ -40,7 +40,7 @@ steps:
       - '--min-instances=0'
       - '--max-instances=5'
       - '--concurrency=80'
-      - '--set-env-vars=NODE_ENV=production,HOST=0.0.0.0,APP_NAME=SoloOS ERP'
+      - '--set-env-vars=NODE_ENV=production,HOST=0.0.0.0,APP_NAME=SolOS ERP'
 
 images:
   - 'gcr.io/$PROJECT_ID/soloos-erp:$COMMIT_SHA'

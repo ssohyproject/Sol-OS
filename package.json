@@ -1,7 +1,7 @@
 {
   "name": "soloos-pws",
   "version": "2.0.0",
-  "description": "SoloOS Progressive Web Service (PWS) for 1-Person Business ERP",
+  "description": "SolOS Progressive Web Service (PWS) for 1-Person Business ERP",
   "main": "server.js",
   "scripts": {
     "build": "node bin/build-html.js",
@@ -20,7 +20,7 @@
     "erp",
     "freelancer"
   ],
-  "author": "SoloOS Team",
+  "author": "SolOS Team",
   "license": "UNLICENSED",
   "engines": {
     "node": ">=18.0.0"

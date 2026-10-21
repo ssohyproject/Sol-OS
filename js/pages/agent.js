@@ -1,5 +1,5 @@
 /**
- * SoloOS Page: Intelligent Conversational AI Agent
+ * SolOS Page: Intelligent Conversational AI Agent
  * Natural language CFO advisory for 3-in-1 taxes, contracts, runway, and delivery deadlines
  */
 
@@ -66,7 +66,7 @@
           • <strong>1. 지체상금율 점검 (하루 0.1% 이하 준수)</strong>: 납기 지연 시 1일 0.3%~1.0%를 요구하는 과도한 위약벌 조항이 있는지 확인하고, 국가계약법 표준(1일 0.1%)으로 낮춰야 합니다.<br>
           • <strong>2. 저작권 이전 시점 (대금 완납 시 이전 특약)</strong>: "산출물 납품 즉시 저작권이 발주자에게 이전된다"는 독소조항을 차단하고, <strong>"대금(잔금) 전액 완납 시점에 저작권이 이전된다"</strong>는 조항을 반드시 명시해야 정산 지연 시 저작권 침해로 방어할 수 있습니다.<br>
           • <strong>3. 무상 수정 횟수 한도 (최대 2회 명시)</strong>: "발주자가 만족할 때까지 수정한다"는 무제한 수정 요구(Scope Creep)를 차단하고, <strong>"기획 범위 내 무상 수정은 최대 2회로 한정한다"</strong>는 특약을 삽입합니다.<br><br>
-          🛠️ <strong>SoloOS 실전 도구:</strong><br>
+          🛠️ <strong>SolOS 실전 도구:</strong><br>
           <button onclick="switchSubView('legal')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 font-bold text-xs hover:bg-indigo-100 transition-all">
             <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
             <span>계약 안전망 화면으로 이동하여 특약 문구 복사하기 →</span>
@@ -82,7 +82,7 @@
           • <strong>2단계 (지연 10일 이후) · 이메일 요청서:</strong> 계약 조항, 정산 지연 일수, 최종 입금 마감 기한 및 법정이자 청구 가능성을 명시한 정중한 공문 발송.<br>
           • <strong>3단계 (지연 20일 이후) · 공식 안내문 발송:</strong> 상법 제54조 법정이율(연 6%) 지연손해금 기산 안내가 포함된 공식 공문서.<br>
           • <strong>4단계 (지연 30일 이상) · 미수금 해결 지원:</strong> 대한법률구조공단 무료 상담(132) 및 우체국 규격 내용증명 HWPX 서식 발송.<br><br>
-          🛠️ <strong>SoloOS 실전 도구:</strong><br>
+          🛠️ <strong>SolOS 실전 도구:</strong><br>
           <button onclick="switchSubView('legal')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 font-bold text-xs hover:bg-emerald-100 transition-all">
             <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
             <span>법적 보호 화면의 4단계 정산 가이드라인 열기 →</span>
@@ -95,7 +95,7 @@
           <strong>📦 산출물 납품 & 상법 제69조 검수 유예 증빙 안내입니다.</strong><br><br>
           클라이언트가 납품된 작업물을 받고도 확인을 차일피일 미루며 정산을 지연시키는 문제를 방지하는 법적 장치입니다:<br><br>
           • <strong>상법 제69조 (상인간 매매의 검수와 하자통지)</strong>: 목적물을 수령한 때에는 지체 없이 이를 검사하여야 하며, <strong>14일 이내</strong>에 하자를 발견하여 통지하지 아니하면 대금 지급 의무가 확정됩니다.<br>
-          • <strong>SoloOS 타임스탬프 기록</strong>: 납품 시각을 불변 로그에 기록하고 14일 카운트다운을 가동합니다. 잔여 기간 내 구체적 이의 제기가 없으면 자동 검수 완료로 인정됩니다.<br><br>
+          • <strong>SolOS 타임스탬프 기록</strong>: 납품 시각을 불변 로그에 기록하고 14일 카운트다운을 가동합니다. 잔여 기간 내 구체적 이의 제기가 없으면 자동 검수 완료로 인정됩니다.<br><br>
           🛠️ <strong>클라이언트 발송용 표준 납품 안내문:</strong><br>
           <em>"요청하신 웹 개발 최종 산출물이 정상 납품되었습니다. 상법 제69조 및 계약 조항에 따라 납품일로부터 14일 동안 별도 통지가 없으실 경우 검수가 최종 완료된 것으로 처리됩니다."</em><br>
           <button onclick="copyDeliveryNotice()" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 font-bold text-xs hover:bg-blue-100 transition-all mt-2">
@@ -157,7 +157,7 @@
           • <strong>(주)테크솔루션즈 (Tier A · 최우수)</strong>: 입금 지연 0일(즉시) / 수정 빈도 1.1회 / 누적 ₩8,500,000 → <em>우선 일정 배정 및 파트너십 강화</em><br>
           • <strong>디지털북스 출판사 (Tier B · 우수)</strong>: 입금 지연 +2.5일 / 수정 빈도 2.0회 / 누적 ₩3,200,000 → <em>표준 계약 조건 유지</em><br>
           • <strong>글로벌이커머스(주) (Tier C · 주의 권장)</strong>: <strong>입금 지연 +18.4일 / 수정 빈도 4.5회 / 미수금 ₩1,200,000</strong><br><br>
-          💡 <strong>SoloOS 권장 계약 전략:</strong><br>
+          💡 <strong>SolOS 권장 계약 전략:</strong><br>
           글로벌이커머스와 다음 계약을 진행하실 때는 <strong>착수금 비중을 50% 이상으로 상향</strong>하고, <strong>무상 수정 2회 제한 특약</strong>을 반드시 삽입하실 것을 권장합니다.<br>
           <button onclick="switchSubView('clients')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 border border-blue-200 text-blue-700 font-bold text-xs hover:bg-blue-100 transition-all mt-2">
             <i data-lucide="user-check" class="w-3.5 h-3.5"></i>
@@ -187,7 +187,7 @@
           정산 지연 및 법률 문제 발생 시 공인된 기관을 통해 무료 상담을 받으실 수 있습니다:<br><br>
           • <strong>대한법률구조공단</strong>: 국번없이 <strong>132</strong> (평일 09~18시) 무료 법률 상담<br>
           • <strong>대법원 전자소송</strong>: 소액지급명령 및 소송 절차 공식 접수 (ecfs.scourt.go.kr)<br>
-          • <strong>정산 가이드라인</strong>: SoloOS 법적 보호 페이지에서 4단계 대응 프로세스 및 내용증명 HWPX 서식을 확인하실 수 있습니다.<br><br>
+          • <strong>정산 가이드라인</strong>: SolOS 법적 보호 페이지에서 4단계 대응 프로세스 및 내용증명 HWPX 서식을 확인하실 수 있습니다.<br><br>
           <button onclick="switchSubView('legal')" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-700 font-bold text-xs hover:bg-indigo-100 transition-all mt-1">
             <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
             <span>법적 보호 & 정산 가이드라인 화면 바로가기 →</span>
@@ -198,7 +198,7 @@
       else {
         reply = `
           <strong>정솔로 대표님, 문의하신 내용에 대해 안내해 드립니다.</strong><br><br>
-          현재 SoloOS 데이터 엔진이 대표님의 사업 자금, 일정, 계약, 세무 데이터를 실시간으로 관리하고 있습니다.<br>
+          현재 SolOS 데이터 엔진이 대표님의 사업 자금, 일정, 계약, 세무 데이터를 실시간으로 관리하고 있습니다.<br>
           궁금하신 질문을 자유롭게 입력해 주시거나, 아래 추천 업무를 선택해 주시면 즉시 브리핑을 제공해 드립니다:<br><br>
           <div class="flex flex-wrap gap-2 pt-1">
             <button onclick="sendQuickPrompt('계약서 독소조항 검토와 안전한 특약 문구 알려줘')" class="px-2.5 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 text-indigo-700 text-[11px] font-bold transition-all">

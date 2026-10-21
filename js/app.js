@@ -1,11 +1,11 @@
 /**
- * SoloOS Main Application Controller (Bootstrap Entry Point)
+ * SolOS Main Application Controller (Bootstrap Entry Point)
  * Coordinates modular core, pages, modals, and initiates the application lifecycle
  */
 
 // Initialize user auth and UI on DOM Ready
 // Initialize user auth on DOM Ready
-    function initSoloOSApp() {
+    function initSolOSApp() {
       // 1. Initial State Check (localStorage 저장 데이터 우선 복원 -> 없으면 세션 데모 또는 초기 상태)
       const savedWorkspace = loadSavedWorkspaceFromLocal();
       const isDemoActive = sessionStorage.getItem('soloos_demo_active') === 'true';
@@ -49,7 +49,7 @@
     }
 
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initSoloOSApp);
+      document.addEventListener('DOMContentLoaded', initSolOSApp);
     } else {
-      initSoloOSApp();
+      initSolOSApp();
     }

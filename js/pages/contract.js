@@ -1,5 +1,5 @@
 /**
- * SoloOS Page: Contract Management (계약 관리)
+ * SolOS Page: Contract Management (계약 관리)
  * Standard contract template library, 2D cross recommendation, toxic clause scanner demo, real-time contract table
  */
 

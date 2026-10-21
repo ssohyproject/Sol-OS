@@ -1,5 +1,5 @@
 /**
- * SoloOS Modal: Model Context Protocol (MCP) Integration Modal
+ * SolOS Modal: Model Context Protocol (MCP) Integration Modal
  * Stdio JSON-RPC configuration, Claude Desktop & Cursor IDE snippets, tool execution tests
  */
 

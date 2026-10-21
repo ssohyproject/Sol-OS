@@ -98,7 +98,7 @@ UI 수정이나 기능 개선을 요청할 때, 아래 표를 참조하여 관�
 
 ## 4. 모달(Modals) 파일 매핑표
 
-SoloOS는 총 25개의 독립 모달을 갖추고 있으며, 각각 `src/modals/*.html` 파일로 모듈화되어 있습니다.
+SolOS는 총 25개의 독립 모달을 갖추고 있으며, 각각 `src/modals/*.html` 파일로 모듈화되어 있습니다.
 
 | 모달 DOM ID | 모달 명칭 및 용도 | HTML 마크업 파일 | 연동 JS 컨트롤러 |
 | :--- | :--- | :--- | :--- |
@@ -152,7 +152,7 @@ SoloOS는 총 25개의 독립 모달을 갖추고 있으며, 각각 `src/modals/
 
 ## 6. HTML 빌드 시스템 (`src/` 및 `bin/build-html.js`)
 
-SoloOS는 개발할 때는 작은 조각 파일로 쾌적하게 작업하고, 브라우저가 실행할 때는 1개의 온전한 HTML로 읽도록 하는 **초경량 Node.js 빌더**를 내장하고 있습니다.
+SolOS는 개발할 때는 작은 조각 파일로 쾌적하게 작업하고, 브라우저가 실행할 때는 1개의 온전한 HTML로 읽도록 하는 **초경량 Node.js 빌더**를 내장하고 있습니다.
 
 ### 작동 원리
 - 소스 파일: [`src/index.html`](file:///Users/ssohy/Desktop/Project/DAY22-27/solo-os/src/index.html)
@@ -185,7 +185,7 @@ npm test
 
 ## 7. 상태 관리 및 데이터 라이프사이클 (`appState`)
 
-SoloOS의 모든 비즈니스 데이터는 [`js/core/state.js`](file:///Users/ssohy/Desktop/Project/DAY22-27/solo-os/js/core/state.js)의 `appState` 객체에 집중되어 있습니다.
+SolOS의 모든 비즈니스 데이터는 [`js/core/state.js`](file:///Users/ssohy/Desktop/Project/DAY22-27/solo-os/js/core/state.js)의 `appState` 객체에 집중되어 있습니다.
 
 ```javascript
 const appState = {

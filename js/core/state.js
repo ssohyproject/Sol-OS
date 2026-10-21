@@ -1,5 +1,5 @@
 /**
- * SoloOS Core: State Management & Workspace Sync
+ * SolOS Core: State Management & Workspace Sync
  * Central reactive state (appState), demo vs guest storage, persistence, and refresh triggers
  */
 
@@ -224,7 +224,7 @@ let isAppBootstrapping = true;
         localStorage.setItem(WORKSPACE_STORAGE_KEY, JSON.stringify(payload));
         syncGuestOverlayVisibility();
       } catch (e) {
-        console.warn("[SoloOS] Failed to save workspace to localStorage:", e);
+        console.warn("[SolOS] Failed to save workspace to localStorage:", e);
       }
     }
 
@@ -237,7 +237,7 @@ let isAppBootstrapping = true;
           return parsed;
         }
       } catch (e) {
-        console.warn("[SoloOS] Failed to load workspace from localStorage:", e);
+        console.warn("[SolOS] Failed to load workspace from localStorage:", e);
       }
       return null;
     }

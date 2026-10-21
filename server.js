@@ -1,5 +1,5 @@
 /**
- * SoloOS Progressive Web Service (PWS) & API Server
+ * SolOS Progressive Web Service (PWS) & API Server
  * Fully compatible with Google Cloud Run, Firebase Hosting, and Local Development
  * Zero-dependency native Node.js HTTP server supporting REST API and .env loading
  */
@@ -34,9 +34,9 @@ function loadEnv() {
           }
         }
       });
-      console.log('[SoloOS Server] Successfully loaded environment from .env');
+      console.log('[SolOS Server] Successfully loaded environment from .env');
     } catch (e) {
-      console.warn('[SoloOS Server] Warning loading .env:', e.message);
+      console.warn('[SolOS Server] Warning loading .env:', e.message);
     }
   }
 }
@@ -47,7 +47,7 @@ try {
   const { build } = require('./bin/build-html.js');
   build();
 } catch (e) {
-  console.warn('[SoloOS Server] Warning running build-html:', e.message);
+  console.warn('[SolOS Server] Warning running build-html:', e.message);
 }
 
 // ------------------------------------------------------------------------------
@@ -65,7 +65,7 @@ let McpModule = null;
 try {
   McpModule = require('./mcp/server.js');
 } catch (e) {
-  console.warn('[SoloOS Server] Could not load mcp/server.js:', e.message);
+  console.warn('[SolOS Server] Could not load mcp/server.js:', e.message);
 }
 
 const MIME_TYPES = {
@@ -165,14 +165,14 @@ const server = http.createServer(async (req, res) => {
       status: 'UP',
       uptime: process.uptime(),
       timestamp: new Date().toISOString(),
-      service: 'SoloOS PWS Engine'
+      service: 'SolOS PWS Engine'
     });
   }
 
   // Public Configuration (Safe to share with frontend)
   if (pathname === '/api/config' && req.method === 'GET') {
     return sendJSON(res, 200, {
-      appName: process.env.APP_NAME || 'SoloOS ERP',
+      appName: process.env.APP_NAME || 'SolOS ERP',
       appUrl: process.env.APP_URL || `http://localhost:${PORT}`,
       env: process.env.NODE_ENV || 'development',
       firebase: {
@@ -505,10 +505,10 @@ const server = http.createServer(async (req, res) => {
     } catch (e) {}
 
     const events = tasks.map(t => {
-      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`[SoloOS] ${t.title}`)}&dates=${(t.dueDate || '2026-10-20').replace(/-/g, '')}T090000Z/${(t.dueDate || '2026-10-20').replace(/-/g, '')}T180000Z&details=${encodeURIComponent(`클라이언트: ${t.client}\n계약금액: ₩${(t.amount || 0).toLocaleString()}\n상태: ${t.status}\n메모: ${t.memo || ''}`)}`;
+      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(`[SolOS] ${t.title}`)}&dates=${(t.dueDate || '2026-10-20').replace(/-/g, '')}T090000Z/${(t.dueDate || '2026-10-20').replace(/-/g, '')}T180000Z&details=${encodeURIComponent(`클라이언트: ${t.client}\n계약금액: ₩${(t.amount || 0).toLocaleString()}\n상태: ${t.status}\n메모: ${t.memo || ''}`)}`;
       return {
         id: t.id,
-        title: `[SoloOS] ${t.title} (${t.client})`,
+        title: `[SolOS] ${t.title} (${t.client})`,
         dueDate: t.dueDate,
         dueTime: t.dueTime || '18:00',
         amount: t.amount,
@@ -521,7 +521,7 @@ const server = http.createServer(async (req, res) => {
       success: true,
       service: 'Google Calendar API',
       syncedCount: events.length,
-      calendarName: 'SoloOS 용역 및 정산 마감 일정',
+      calendarName: 'SolOS 용역 및 정산 마감 일정',
       events: events,
       timestamp: new Date().toISOString(),
       message: `구글 캘린더에 ${events.length}건의 과업 마감 및 정산 일정이 동기화되었습니다.`
@@ -541,10 +541,10 @@ const server = http.createServer(async (req, res) => {
     let icsContent = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
-      'PRODID:-//SoloOS//SoloOS ERP Calendar Sync//KO',
+      'PRODID:-//SolOS//SolOS ERP Calendar Sync//KO',
       'CALSCALE:GREGORIAN',
       'METHOD:PUBLISH',
-      'X-WR-CALNAME:SoloOS 업무 마감 일정',
+      'X-WR-CALNAME:SolOS 업무 마감 일정',
       'X-WR-TIMEZONE:Asia/Seoul'
     ];
 
@@ -556,7 +556,7 @@ const server = http.createServer(async (req, res) => {
       icsContent.push(`DTSTAMP:${dt}T000000Z`);
       icsContent.push(`DTSTART;VALUE=DATE:${dt}`);
       icsContent.push(`DTEND;VALUE=DATE:${dt}`);
-      icsContent.push(`SUMMARY:[SoloOS] ${t.title} (${t.client})`);
+      icsContent.push(`SUMMARY:[SolOS] ${t.title} (${t.client})`);
       icsContent.push(`DESCRIPTION:클라이언트: ${t.client}\\n계약금액: ₩${(t.amount || 0).toLocaleString()}\\n상태: ${t.status}\\n메모: ${(t.memo || '').replace(/\n/g, '\\n')}`);
       icsContent.push(`STATUS:CONFIRMED`);
       icsContent.push('END:VEVENT');
@@ -584,12 +584,12 @@ const server = http.createServer(async (req, res) => {
 
     const now = new Date();
     const dateStr = now.toISOString().substring(0, 10);
-    const backupFileName = `SoloOS_재무장부백업_${dateStr}.json`;
+    const backupFileName = `SolOS_재무장부백업_${dateStr}.json`;
 
     const backupPayload = {
       version: '2.0.0',
       backupCreatedAt: now.toISOString(),
-      targetGoogleDriveFolder: '내 드라이브/SoloOS_ERP_Backups',
+      targetGoogleDriveFolder: '내 드라이브/SolOS_ERP_Backups',
       googleDriveUrl: 'https://drive.google.com/drive/my-drive',
       summary: {
         workingCapital: stateData.workingCapital || 0,
@@ -607,7 +607,7 @@ const server = http.createServer(async (req, res) => {
       success: true,
       service: 'Google Drive Sync',
       backupFile: backupFileName,
-      folder: '내 드라이브/SoloOS_ERP_Backups',
+      folder: '내 드라이브/SolOS_ERP_Backups',
       googleDriveUrl: 'https://drive.google.com/drive/my-drive',
       sizeBytes: stateSize,
       transactionsCount: (stateData.transactions || []).length,
@@ -629,13 +629,13 @@ const server = http.createServer(async (req, res) => {
 
     const now = new Date();
     const dateStr = now.toISOString().substring(0, 10);
-    const backupFileName = `SoloOS_재무장부백업_${dateStr}.json`;
+    const backupFileName = `SolOS_재무장부백업_${dateStr}.json`;
 
     const backupPayload = {
       version: '2.0.0',
       exportedAt: now.toISOString(),
-      targetGoogleDriveFolder: '내 드라이브/SoloOS_ERP_Backups',
-      appName: 'SoloOS 1인 사업가 ERP',
+      targetGoogleDriveFolder: '내 드라이브/SolOS_ERP_Backups',
+      appName: 'SolOS 1인 사업가 ERP',
       state: stateData
     };
 
@@ -661,13 +661,13 @@ const server = http.createServer(async (req, res) => {
             filename: f,
             sizeBytes: stats.size,
             createdAt: stats.mtime.toISOString(),
-            googleDriveFolder: 'SoloOS_ERP_Backups'
+            googleDriveFolder: 'SolOS_ERP_Backups'
           };
         }).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       }
     } catch (e) {}
 
-    return sendJSON(res, 200, { success: true, folder: 'SoloOS_ERP_Backups', backups: fileList });
+    return sendJSON(res, 200, { success: true, folder: 'SolOS_ERP_Backups', backups: fileList });
   }
 
   // Download Backup File
@@ -818,7 +818,7 @@ const server = http.createServer(async (req, res) => {
     const payload = await parseBody(req);
     const { query } = payload;
 
-    let responseText = `대표님, "${query || '질문'}"에 대해 SoloOS 세무·자금 분석 엔진이 브리핑을 준비했습니다.`;
+    let responseText = `대표님, "${query || '질문'}"에 대해 SolOS 세무·자금 분석 엔진이 브리핑을 준비했습니다.`;
     if (query && query.includes('세금')) {
       responseText = `현재 발행된 세금계산서의 부가세 10% 예치금과 3.3% 사업소득세를 자동 계산한 결과, 부가세 예치 통장에 최소 ₩300,000을 별도 분리 보관하셔야 추후 가산세 부담이 없습니다.`;
     } else if (query && (query.includes('미수금') || query.includes('정산'))) {
@@ -828,7 +828,7 @@ const server = http.createServer(async (req, res) => {
     } else if (query && (query.includes('구글') || query.includes('캘린더') || query.includes('드라이브'))) {
       responseText = `구글 캘린더와 구글 드라이브 연동이 활성화되어 있습니다. 과업 마감 일정은 구글 캘린더로, 장부 및 표준계약서 사본은 구글 드라이브로 1클릭 동기화 및 자동 백업됩니다.`;
     } else if (query && query.includes('mcp')) {
-      responseText = `SoloOS MCP 서버(stdio)가 가동 준비되어 있습니다. Claude Desktop 또는 Cursor에 mcp/mcp_config.json 설정을 등록하시면 AI 에이전트가 직접 사업 통장과 장부, 캘린더를 실시간 컨트롤할 수 있습니다.`;
+      responseText = `SolOS MCP 서버(stdio)가 가동 준비되어 있습니다. Claude Desktop 또는 Cursor에 mcp/mcp_config.json 설정을 등록하시면 AI 에이전트가 직접 사업 통장과 장부, 캘린더를 실시간 컨트롤할 수 있습니다.`;
     }
 
     return sendJSON(res, 200, {
@@ -969,7 +969,7 @@ const server = http.createServer(async (req, res) => {
           }
           try { fs.unlinkSync(tmpHeicPath); } catch (_) {}
         } catch (convErr) {
-          console.warn('[SoloOS OCR] HEIC conversion warning:', convErr.message);
+          console.warn('[SolOS OCR] HEIC conversion warning:', convErr.message);
         }
       } else {
         // Save non-HEIC image for local macOS Vision OCR
@@ -979,7 +979,7 @@ const server = http.createServer(async (req, res) => {
           fs.writeFileSync(tempImagePath, Buffer.from(actualBase64, 'base64'));
           shouldCleanupTemp = true;
         } catch (saveErr) {
-          console.warn('[SoloOS OCR] Temp image save warning:', saveErr.message);
+          console.warn('[SolOS OCR] Temp image save warning:', saveErr.message);
         }
       }
 
@@ -1076,7 +1076,7 @@ const server = http.createServer(async (req, res) => {
             gReq.end();
           });
         } catch (gErr) {
-          console.warn('[SoloOS OCR] Gemini OCR call failed, falling back:', gErr.message);
+          console.warn('[SolOS OCR] Gemini OCR call failed, falling back:', gErr.message);
         }
       }
 
@@ -1134,7 +1134,7 @@ const server = http.createServer(async (req, res) => {
             if (Array.isArray(parsed)) visionLines = parsed;
           }
         } catch (ocrErr) {
-          console.warn('[SoloOS OCR] Native macOS Vision OCR failed:', ocrErr.message);
+          console.warn('[SolOS OCR] Native macOS Vision OCR failed:', ocrErr.message);
         }
       }
 
@@ -1335,7 +1335,7 @@ const server = http.createServer(async (req, res) => {
 // ------------------------------------------------------------------------------
 server.listen(PORT, HOST, () => {
   console.log('================================================================');
-  console.log(`[SoloOS PWS] Server is running at http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${PORT}`);
-  console.log(`[SoloOS PWS] Google Calendar & Drive API, MCP Server, Auth Ready`);
+  console.log(`[SolOS PWS] Server is running at http://${HOST === '0.0.0.0' ? 'localhost' : HOST}:${PORT}`);
+  console.log(`[SolOS PWS] Google Calendar & Drive API, MCP Server, Auth Ready`);
   console.log('================================================================');
 });

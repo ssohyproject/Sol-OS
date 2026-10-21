@@ -1,5 +1,5 @@
 /**
- * SoloOS Core: Router & Navigation Controller
+ * SolOS Core: Router & Navigation Controller
  * Subview switching, view mode switching (Dashboard vs Conversational Agent), sidebar drawer, workstreams
  */
 

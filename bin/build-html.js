@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * SoloOS HTML Modular Builder
+ * SolOS HTML Modular Builder
  * Zero-dependency native Node.js script that compiles src/index.html and its partials into root index.html
  */
 

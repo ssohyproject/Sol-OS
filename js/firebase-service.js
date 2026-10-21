@@ -1,12 +1,12 @@
 /**
- * SoloOS Firebase & PWS Cloud Sync Service
+ * SolOS Firebase & PWS Cloud Sync Service
  * Handles Firebase Auth, Firestore real-time sync, and Local-First offline fallback
  */
 (function(root, factory) {
   if (typeof exports === 'object' && typeof module !== 'undefined') {
     module.exports = factory();
   } else {
-    root.SoloOSFirebase = factory();
+    root.SolOSFirebase = factory();
   }
 })(typeof globalThis !== 'undefined' ? globalThis : this, function() {
   'use strict';
@@ -27,13 +27,13 @@
     _initNetworkListeners() {
       window.addEventListener('online', () => {
         this.isOnline = true;
-        console.log('[SoloOS PWS] Network connection restored: Online');
+        console.log('[SolOS PWS] Network connection restored: Online');
         this.syncOfflineQueue();
       });
 
       window.addEventListener('offline', () => {
         this.isOnline = false;
-        console.log('[SoloOS PWS] Running in Offline mode (Local-First IndexedDB active)');
+        console.log('[SolOS PWS] Running in Offline mode (Local-First IndexedDB active)');
       });
     }
 
@@ -50,10 +50,10 @@
             window.googleClientId = config.google.clientId;
             localStorage.setItem('soloos_google_client_id', config.google.clientId);
           }
-          console.log('[SoloOS Firebase] Loaded config for project:', this.config?.projectId || 'local');
+          console.log('[SolOS Firebase] Loaded config for project:', this.config?.projectId || 'local');
         }
       } catch (e) {
-        console.warn('[SoloOS Firebase] Running in standalone local mode (no server API config)');
+        console.warn('[SolOS Firebase] Running in standalone local mode (no server API config)');
       }
 
       // Firebase CDN SDK가 index.html에 로드되어 있는 경우 초기화
@@ -93,19 +93,19 @@
               } catch (be) {}
               if (typeof window.updateUserAuthUI === 'function') window.updateUserAuthUI();
               if (typeof window.applyWorkspaceData === 'function') window.applyWorkspaceData(authUser, false);
-              console.log('[SoloOS Firebase] Google redirect sign-in completed:', user.email);
+              console.log('[SolOS Firebase] Google redirect sign-in completed:', user.email);
             }
           }).catch((rErr) => {
-            console.warn('[SoloOS Firebase] Redirect result check:', rErr.message);
+            console.warn('[SolOS Firebase] Redirect result check:', rErr.message);
           });
 
           this.initialized = true;
-          console.log('[SoloOS Firebase] Real Cloud Firebase SDK initialized for project:', this.config.projectId);
+          console.log('[SolOS Firebase] Real Cloud Firebase SDK initialized for project:', this.config.projectId);
         } catch (err) {
-          console.warn('[SoloOS Firebase] Firebase SDK init error:', err.message);
+          console.warn('[SolOS Firebase] Firebase SDK init error:', err.message);
         }
       } else {
-        console.log('[SoloOS Firebase] Running in standalone mode');
+        console.log('[SolOS Firebase] Running in standalone mode');
       }
 
       return this.initialized;
@@ -127,7 +127,7 @@
             });
           return { success: true, id: docRef.id, source: 'firestore' };
         } catch (err) {
-          console.error('[SoloOS Firebase] Firestore save error:', err);
+          console.error('[SolOS Firebase] Firestore save error:', err);
           this.queueOfflineAction('saveTransaction', transaction);
         }
       }
@@ -182,11 +182,11 @@
       } catch (err) {
         // 모바일 브라우저 팝업 차단 발생 시 자동으로 안전한 리디렉션 로그인으로 전환
         if (err.code === 'auth/popup-blocked' || err.code === 'auth/cancelled-popup-request') {
-          console.log('[SoloOS Firebase] Popup blocked or mobile browser detected, redirecting to Google sign-in...');
+          console.log('[SolOS Firebase] Popup blocked or mobile browser detected, redirecting to Google sign-in...');
           await window.firebase.auth().signInWithRedirect(provider);
           return { success: false, redirecting: true };
         }
-        console.warn('[SoloOS Firebase] Google login error:', err);
+        console.warn('[SolOS Firebase] Google login error:', err);
         throw err;
       }
     }
@@ -206,13 +206,13 @@
       try {
         const queue = JSON.parse(stored);
         if (queue.length > 0) {
-          console.log(`[SoloOS Firebase] Syncing ${queue.length} offline actions to cloud...`);
+          console.log(`[SolOS Firebase] Syncing ${queue.length} offline actions to cloud...`);
           // 순차 동기화
           this.offlineQueue = [];
           localStorage.removeItem('soloos_offline_queue');
         }
       } catch (err) {
-        console.error('[SoloOS Firebase] Queue sync error:', err);
+        console.error('[SolOS Firebase] Queue sync error:', err);
       }
     }
   }

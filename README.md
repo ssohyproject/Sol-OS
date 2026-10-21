@@ -1,6 +1,6 @@
-# SoloOS - 1인 사업가를 위한 올인원 ERP & 워크웨어 서비스
+# SolOS - 1인 사업가를 위한 올인원 ERP & 워크웨어 서비스
 
-> **SoloOS**는 디지털 프리랜서, 1인 창업가, 콘텐츠 크리에이터(디자이너·외주 개발자·작가·강사)를 위한 **안심 자금 관리(런웨이·손익표), 세무 3대 역산 자동분개, 실제 작업 기반 마감 일정, 계약 안전망 & 분쟁 대응**을 지원하는 올인원 워크웨어(Workwear) 웹 애플리케이션입니다.
+> **SolOS**는 디지털 프리랜서, 1인 창업가, 콘텐츠 크리에이터(디자이너·외주 개발자·작가·강사)를 위한 **안심 자금 관리(런웨이·손익표), 세무 3대 역산 자동분개, 실제 작업 기반 마감 일정, 계약 안전망 & 분쟁 대응**을 지원하는 올인원 워크웨어(Workwear) 웹 애플리케이션입니다.
 
 ---
 
@@ -34,15 +34,15 @@
 - **납품 및 대금 미지급 분쟁**: 고의적인 검수 지연, 수정 무한 요구(Scope Creep), 대금 입금 지체 시 법적 대응 수단이 없습니다.
 - **개인정보/금융 보안 거부감**: 공인인증서나 홈택스 비밀번호를 외부 서버에 등록하는 방식에 심한 거부감을 느낍니다.
 
-**SoloOS는 100% 브라우저 로컬 데이터 처리(Privacy-First), 직관적인 3초 비주얼 손익표, 정부 공인 표준계약서 연계 및 신뢰 기반의 품격 있는 언어로 1인 사업가의 비즈니스를 단단하게 지킵니다.**
+**SolOS는 100% 브라우저 로컬 데이터 처리(Privacy-First), 직관적인 3초 비주얼 손익표, 정부 공인 표준계약서 연계 및 신뢰 기반의 품격 있는 언어로 1인 사업가의 비즈니스를 단단하게 지킵니다.**
 
 ---
 
 ## ✍️ UX Writing 헌장 (Reliable Voice)
 
-SoloOS는 사용자의 불안감을 조장하거나 경박한 구어체를 일절 배제하며, 품격 있는 전문 금융 비즈니스 파트너다운 **정제된 비즈니스 한국어(Reliable Voice)**를 엄격히 준수합니다.
+SolOS는 사용자의 불안감을 조장하거나 경박한 구어체를 일절 배제하며, 품격 있는 전문 금융 비즈니스 파트너다운 **정제된 비즈니스 한국어(Reliable Voice)**를 엄격히 준수합니다.
 
-| 기존 회계/지양 표현 | SoloOS 표준 표현 (Reliable Voice) | 개선 의도 및 신뢰 원칙 |
+| 기존 회계/지양 표현 | SolOS 표준 표현 (Reliable Voice) | 개선 의도 및 신뢰 원칙 |
 | :--- | :--- | :--- |
 | **가용 현금** | **실제 쓸 수 있는 잔액** | 통장 잔고 중 세금 준비금을 제외한 실질 지출 가능 금액임을 명확히 규정 |
 | **매출 채권** | **받을 돈 (입금 예정 대금)** | 어려운 회계 용어 대신 1인 사업가가 직관적으로 이해할 수 있는 어휘 적용 |
@@ -149,10 +149,10 @@ SoloOS는 사용자의 불안감을 조장하거나 경박한 구어체를 일�
   - 체험용 1클릭 데모 계정 지원 (`demo@soloos.io` / `demo1234`).
 - **Google Workspace 양방향 백업**:
   - **Google Calendar 실시간 동기화**: 프로젝트 마감일 및 정기 세무 신고 일정 자동 등록.
-  - **Google Drive ERP 클라우드 백업**: `내 드라이브/SoloOS_ERP_Backups` 폴더에 장부 및 설정 자동 백업/복원.
+  - **Google Drive ERP 클라우드 백업**: `내 드라이브/SolOS_ERP_Backups` 폴더에 장부 및 설정 자동 백업/복원.
 
 ### 9) Model Context Protocol (MCP) 서버
-SoloOS는 Claude Desktop, Cursor, Antigravity AI Agent 등 차세대 AI 에이전트와 표준 `stdio` 프로토콜로 실시간 소통하는 전용 MCP 서버를 탑재하고 있습니다.
+SolOS는 Claude Desktop, Cursor, Antigravity AI Agent 등 차세대 AI 에이전트와 표준 `stdio` 프로토콜로 실시간 소통하는 전용 MCP 서버를 탑재하고 있습니다.
 
 | 도구명 (Tool Name) | 기능 및 역할 |
 | :--- | :--- |
@@ -163,7 +163,7 @@ SoloOS는 Claude Desktop, Cursor, Antigravity AI Agent 등 차세대 AI 에이�
 | `analyze_client_risk` | 클라이언트 정산 지연 이력 및 계약 리스크 티어 진단 |
 | `scan_contract_risks` | 용역 계약서 텍스트 독소조항 스캔 및 3대 표준 안전 특약 추천 |
 | `sync_google_calendar_schedule` | 마감 및 세무 일정을 Google Calendar에 동기화 |
-| `backup_to_google_drive` | SoloOS 장부 전체 데이터를 Google Drive 전용 폴더에 백업 |
+| `backup_to_google_drive` | SolOS 장부 전체 데이터를 Google Drive 전용 폴더에 백업 |
 
 ---
 
@@ -224,7 +224,7 @@ npm start
 npm run mcp
 ```
 
-### 3. Claude Desktop에 SoloOS MCP 등록
+### 3. Claude Desktop에 SolOS MCP 등록
 `~/Library/Application Support/Claude/claude_desktop_config.json`에 아래 설정을 추가합니다:
 ```json
 {
@@ -243,13 +243,13 @@ npm run mcp
 
 ## 📑 기획 명세서 및 플레이북 링크
 
-SoloOS의 상세 기획 문서와 바이브 코딩 플레이북은 프로젝트 내 `concept/` 디렉토리에서 웹 브라우저로 직접 열람하실 수 있습니다:
+SolOS의 상세 기획 문서와 바이브 코딩 플레이북은 프로젝트 내 `concept/` 디렉토리에서 웹 브라우저로 직접 열람하실 수 있습니다:
 
-- 📘 [SoloOS 기획안 v1.0 명세서 (Original Specification)](concept/soloos-planning-guide-v1.html)
+- 📘 [SolOS 기획안 v1.0 명세서 (Original Specification)](concept/soloos-planning-guide-v1.html)
   - 10개 핵심 섹션, 1인 사업가 문제 정의, 3대 세무 역산 매트릭스, UX Writing 지양 vs 지향 전수 대비표.
-- 📙 [SoloOS 기획안 v2.0 Vibe 코딩 플레이북 (Vibe Playbook)](concept/soloos-planning-guide-v2.html)
+- 📙 [SolOS 기획안 v2.0 Vibe 코딩 플레이북 (Vibe Playbook)](concept/soloos-planning-guide-v2.html)
   - 15개 섹션, 서브뷰 아키텍처, 6대 전문 계산기, 4단계 분쟁 대응 로드맵, T01~T08 검증 테스트 케이스.
 
 ---
 
-© 2026 SoloOS Team. All rights reserved. Confidential & Proprietary.
+© 2026 SolOS Team. All rights reserved. Confidential & Proprietary.

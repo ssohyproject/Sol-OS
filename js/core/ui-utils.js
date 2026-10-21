@@ -1,5 +1,5 @@
 /**
- * SoloOS Core: UI Utilities & Helpers
+ * SolOS Core: UI Utilities & Helpers
  * Toast alerts, HTML sanitization, accounting plain language terms, PWS install, QR modal, Onboarding
  */
 

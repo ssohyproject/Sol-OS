@@ -1,5 +1,5 @@
 /**
- * SoloOS Modal: Client Profile & Checklist Editor Modal
+ * SolOS Modal: Client Profile & Checklist Editor Modal
  * Register/edit clients, document submission checklist, preferred communication channel selectors
  */
 
