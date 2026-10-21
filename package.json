@@ -4,12 +4,13 @@
   "description": "SoloOS Progressive Web Service (PWS) for 1-Person Business ERP",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
+    "build": "node bin/build-html.js",
+    "start": "node bin/build-html.js && node server.js",
+    "dev": "node bin/build-html.js && node server.js",
     "deploy:cloudrun": "./deploy-cloudrun.sh",
     "mcp": "node mcp/server.js",
     "py": "python3 app.py",
-    "test": "node -e \"console.log('PWS syntax test passed');\" && node -c server.js js/tax-engine.js js/firebase-service.js js/app.js && python3 -m py_compile app.py"
+    "test": "node bin/build-html.js && node -e \"console.log('PWS syntax test passed');\" && node -c server.js js/tax-engine.js js/firebase-service.js js/core/*.js js/pages/*.js js/modals/*.js js/app.js && python3 -m py_compile app.py"
   },
   "keywords": [
     "pws",

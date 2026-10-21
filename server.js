@@ -42,6 +42,14 @@ function loadEnv() {
 }
 loadEnv();
 
+// Automatic HTML Modular Build on Server Startup
+try {
+  const { build } = require('./bin/build-html.js');
+  build();
+} catch (e) {
+  console.warn('[SoloOS Server] Warning running build-html:', e.message);
+}
+
 // ------------------------------------------------------------------------------
 // 2. Configuration & Engine
 // ------------------------------------------------------------------------------
@@ -928,9 +936,9 @@ const server = http.createServer(async (req, res) => {
       let shouldCleanupTemp = false;
 
       // Handle image writing & HEIC/HEIF conversion
-      const isHeic = (mimeType && mimeType.toLowerCase().includes('heic')) ||
-                     (fileName && fileName.toLowerCase().endsWith('.heic')) ||
-                     (imageBase64 && (imageBase64.slice(0, 40).includes('ZnR5cGhlaWM') || imageBase64.slice(0, 40).includes('ZnR5cG1pZjE')));
+      const isHeic = (mimeType && /heic|heif/i.test(mimeType)) ||
+                     (fileName && /\.(heic|heif)$/i.test(fileName)) ||
+                     (imageBase64 && (imageBase64.slice(0, 50).includes('ZnR5cGhlaWM') || imageBase64.slice(0, 50).includes('ZnR5cG1pZjE') || imageBase64.slice(0, 50).includes('ZnR5cE1TVA')));
 
       const tmpDir = os.tmpdir();
       if (isHeic) {
@@ -940,7 +948,8 @@ const server = http.createServer(async (req, res) => {
           fs.writeFileSync(tmpHeicPath, Buffer.from(imageBase64, 'base64'));
 
           // Use macOS native sips to convert HEIC to standard JPEG
-          execSync(`/usr/bin/sips -s format jpeg "${tmpHeicPath}" --out "${tmpJpgPath}"`, { stdio: 'pipe', timeout: 8000 });
+          const sipsBin = fs.existsSync('/usr/bin/sips') ? '/usr/bin/sips' : 'sips';
+          execSync(`"${sipsBin}" -s format jpeg "${tmpHeicPath}" --out "${tmpJpgPath}"`, { stdio: 'pipe', timeout: 8000 });
           if (fs.existsSync(tmpJpgPath)) {
             const jpgBuf = fs.readFileSync(tmpJpgPath);
             actualBase64 = jpgBuf.toString('base64');
@@ -966,18 +975,25 @@ const server = http.createServer(async (req, res) => {
       }
 
       let geminiResult = null;
-      const apiKey = process.env.GEMINI_API_KEY;
+      let apiKey = process.env.GEMINI_API_KEY;
+      if (!apiKey) {
+        try {
+          const envContent = fs.readFileSync(path.join(__dirname, '.env'), 'utf8');
+          const m = envContent.match(/GEMINI_API_KEY=([^\r\n]+)/);
+          if (m) apiKey = m[1].trim();
+        } catch (_) {}
+      }
 
       if (apiKey) {
         try {
           geminiResult = await new Promise((resolve, reject) => {
             const promptText = `이 영수증 이미지의 실제 결제 정보를 정확히 인식해 순수 JSON으로만 출력하세요. 상호명(가게이름), 결제일자(승인일시 YYYY-MM-DD), 결제총금액(양수 정수), 세금(부가세 정수), 적절한 세무 계정과목을 추출하세요.
 규칙:
-1. 상호명: 영수증에 인쇄된 실제 가게명(예: 카페앙떼떼, 메가MGC커피 송파점, 스타벅스 강남점 등).
-2. 결제일자: 영수증에 인쇄된 실제 승인일시/거래일(YYYY-MM-DD).
-3. 결제총금액: 실제 영수증의 합계/승인/결제금액(숫자만, 예: 11500).
-4. 부가세: 영수증에 적힌 부가세(숫자만, 없으면 0).
-5. 계정과목: 카페/커피/음료/식당이면 '복리후생비(식음료/카페)', 비품/소모품이면 '사업소모품비', 미팅/접대면 '접대비', 교통비면 '여비교통비', 통신/SaaS면 '지급수수료/통신'.
+1. 상호명: 영수증에 인쇄된 실제 가게명(예: 카페앙떼떼, 메가MGC커피 송파점, 스타벅스 강남점 등 실제 상호). 절대 카메라 파일명(IMG_..., PHOTO... 등)을 쓰지 마세요.
+2. 결제일자: 영수증에 인쇄된 실제 승인일시/거래일(YYYY-MM-DD 형식). 영수증에 적힌 날짜를 정확히 추출하세요.
+3. 결제총금액: 실제 영수증의 합계/승인/결제금액(숫자만 정수, 예: 11500).
+4. 부가세: 영수증에 적힌 부가세(숫자만 정수, 없으면 0).
+5. 계정과목: 카페/커피/음료/식당/식사/디저트/베이커리면 반드시 '복리후생비(식음료/카페)', 비품/소모품/문구면 '사업소모품비', 미팅/선물/접대면 '접대비', 택시/대중교통/유류비면 '여비교통비', 통신/서버/수수료면 '지급수수료/통신'.
 6. domain: 'operation', proofType: '신용카드전표'.
 형식: {"storeName": "가게상호명", "date": "YYYY-MM-DD", "totalAmount": 11500, "taxAmount": 1045, "category": "복리후생비(식음료/카페)", "domain": "operation", "proofType": "신용카드전표"}`;
 
@@ -1026,7 +1042,16 @@ const server = http.createServer(async (req, res) => {
                   let cleanJson = answerPart.text.replace(/```json|```/g, '').trim();
                   const jsonMatch = cleanJson.match(/\{[\s\S]*\}/);
                   if (jsonMatch) cleanJson = jsonMatch[0];
-                  resolve(JSON.parse(cleanJson));
+                  const parsedJson = JSON.parse(cleanJson);
+                  if (parsedJson.totalAmount !== undefined) {
+                    const num = parseInt(String(parsedJson.totalAmount).replace(/[^0-9]/g, ''), 10);
+                    parsedJson.totalAmount = isNaN(num) ? 0 : num;
+                  }
+                  if (parsedJson.taxAmount !== undefined) {
+                    const num = parseInt(String(parsedJson.taxAmount).replace(/[^0-9]/g, ''), 10);
+                    parsedJson.taxAmount = isNaN(num) ? 0 : num;
+                  }
+                  resolve(parsedJson);
                 } catch (e) {
                   reject(e);
                 }
@@ -1065,6 +1090,15 @@ const server = http.createServer(async (req, res) => {
         }
         if (!geminiResult.date) {
           geminiResult.date = new Date().toISOString().split('T')[0];
+        }
+
+        if (geminiResult.totalAmount !== undefined) {
+          const num = parseInt(String(geminiResult.totalAmount).replace(/[^0-9]/g, ''), 10);
+          geminiResult.totalAmount = isNaN(num) ? 0 : num;
+        }
+        if (geminiResult.taxAmount !== undefined) {
+          const num = parseInt(String(geminiResult.taxAmount).replace(/[^0-9]/g, ''), 10);
+          geminiResult.taxAmount = isNaN(num) ? 0 : num;
         }
 
         if (shouldCleanupTemp && tempImagePath) {
@@ -1177,6 +1211,7 @@ const server = http.createServer(async (req, res) => {
           extractedAmount = 11500;
         } else {
           for (const line of visionLines) {
+            if (/(?:20[12]\d[-./년\s]+[0-1]?\d[-./월\s]+[0-3]?\d|일시|일자|DATE|승인)/i.test(line)) continue;
             const matches = line.match(/\b([1-9][0-9]{2,3}(?:,[0-9]{3})+|[1-9][0-9]{3,7})\b/g);
             if (matches) {
               for (const m of matches) {
