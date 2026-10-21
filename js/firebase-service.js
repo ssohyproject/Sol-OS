@@ -46,6 +46,10 @@
         if (response.ok) {
           const config = await response.json();
           this.config = config.firebase;
+          if (config.google?.clientId) {
+            window.googleClientId = config.google.clientId;
+            localStorage.setItem('soloos_google_client_id', config.google.clientId);
+          }
           console.log('[SoloOS Firebase] Loaded config for project:', this.config?.projectId || 'local');
         }
       } catch (e) {
@@ -62,10 +66,10 @@
           this.auth = window.firebase.auth();
 
           // 모바일 및 팝업 차단 환경을 위한 리디렉션 로그인 결과 자동 수신
-          this.auth.getRedirectResult().then((result) => {
+          this.auth.getRedirectResult().then(async (result) => {
             if (result && result.user) {
               const user = result.user;
-              const token = result.credential ? result.credential.accessToken : null;
+              const token = result.credential?.accessToken || result._tokenResponse?.oauthAccessToken || null;
               if (token) {
                 window.googleAccessToken = token;
                 localStorage.setItem('soloos_google_access_token', token);
@@ -80,6 +84,13 @@
                 googleDriveConnected: true
               };
               localStorage.setItem('soloos_user', JSON.stringify(authUser));
+              try {
+                await fetch('/api/auth/google-login', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify(authUser)
+                });
+              } catch (be) {}
               if (typeof window.updateUserAuthUI === 'function') window.updateUserAuthUI();
               if (typeof window.applyWorkspaceData === 'function') window.applyWorkspaceData(authUser, false);
               console.log('[SoloOS Firebase] Google redirect sign-in completed:', user.email);
@@ -146,7 +157,7 @@
         // 모바일 및 데스크톱 팝업 로그인 우선 시도
         const result = await window.firebase.auth().signInWithPopup(provider);
         const credential = result.credential;
-        const token = credential ? credential.accessToken : null;
+        const token = credential?.accessToken || result._tokenResponse?.oauthAccessToken || null;
         const user = result.user;
 
         this.currentUser = user;

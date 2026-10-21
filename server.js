@@ -289,18 +289,24 @@ const server = http.createServer(async (req, res) => {
   // Google 원클릭 로그인 / 가입
   if (pathname === '/api/auth/google-login' && req.method === 'POST') {
     const payload = await parseBody(req);
-    const email = payload.email || 'user@gmail.com';
-    const name = payload.name || '구글 사용자';
+    const email = (payload.email || '').trim();
+    const name = (payload.name || '').trim() || (email ? email.split('@')[0] : '구글 사용자');
+    const photoURL = payload.photoURL || '';
     const businessType = payload.businessType || '디지털 1인 창업가';
+
+    if (!email) {
+      return sendJSON(res, 400, { success: false, message: 'Google 계정 이메일 정보가 누락되었습니다.' });
+    }
 
     const users = loadUsers();
     let user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
 
     if (!user) {
       user = {
-        id: `usr_g_${Date.now()}`,
+        id: payload.id || `usr_g_${Date.now()}`,
         email: email,
         name: name,
+        photoURL: photoURL,
         businessType: businessType,
         passwordHash: `google_oauth_${Date.now()}`,
         googleConnected: true,
@@ -310,6 +316,8 @@ const server = http.createServer(async (req, res) => {
       };
       users.push(user);
     } else {
+      user.name = name || user.name;
+      if (photoURL) user.photoURL = photoURL;
       user.googleConnected = true;
       user.googleCalendarConnected = true;
       user.googleDriveConnected = true;
@@ -319,11 +327,12 @@ const server = http.createServer(async (req, res) => {
 
     return sendJSON(res, 200, {
       success: true,
-      message: `Google 계정(${user.email})으로 로그인되었습니다. 구글 캘린더 및 드라이브가 연동되었습니다!`,
+      message: `Google 계정(${user.email})으로 성공적으로 로그인되었습니다. 구글 캘린더 및 드라이브가 연동되었습니다!`,
       user: {
         id: user.id,
         email: user.email,
         name: user.name,
+        photoURL: user.photoURL || '',
         businessType: user.businessType,
         googleConnected: true,
         googleCalendarConnected: true,
