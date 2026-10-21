@@ -1,0 +1,226 @@
+  <!-- MODAL 3: Legal Shield Proof Generator (3단계 입금 요청 & 내용증명) -->
+  <div id="legalCertModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-xl w-full bg-white rounded-3xl border border-slate-200 shadow-2xl flex flex-col max-h-[88vh] overflow-hidden">
+      <!-- Fixed Modal Header -->
+      <div class="p-5 pb-3 border-b border-slate-100 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900">정산 가이드라인</h2>
+            <p class="text-[11px] text-slate-500">입금이 늦어질 때 단계별로 부드럽게 알리거나 법적 서류 작성을 지원합니다.</p>
+          </div>
+        </div>
+        <button onclick="closeLegalCertModal()" class="text-slate-400 hover:text-slate-700 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Scrollable Modal Body -->
+      <div class="p-5 pt-3 overflow-y-auto flex-1 space-y-3.5">
+        <!-- 대상 선택 -->
+        <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-1 text-xs">
+          <label for="legalTargetProject" class="font-bold text-slate-800">정산 지연 프로젝트</label>
+          <select id="legalTargetProject" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 text-xs">
+            <option value="1">글로벌이커머스(주) - 프로모션 페이지 제작 잔금 (지연 18일, ₩1,200,000)</option>
+            <option value="2">테크솔루션즈 - 검수 유예 중 (정상 진행 중)</option>
+          </select>
+        </div>
+
+        <!-- 4단계 선택 탭 -->
+        <div class="flex border-b border-slate-200 gap-1 sm:gap-2 text-xs overflow-x-auto pb-0.5">
+          <button type="button" onclick="setLegalStep(1)" id="legalTabBtn1" class="pb-2 px-1 font-bold text-emerald-700 border-b-2 border-emerald-600 whitespace-nowrap">
+            1단계: 카톡 안내
+          </button>
+          <button type="button" onclick="setLegalStep(2)" id="legalTabBtn2" class="pb-2 px-1 font-medium text-slate-500 hover:text-slate-800 whitespace-nowrap">
+            2단계: 메일 리마인드
+          </button>
+          <button type="button" onclick="setLegalStep(3)" id="legalTabBtn3" class="pb-2 px-1 font-medium text-slate-500 hover:text-slate-800 whitespace-nowrap">
+            3단계: 공식 안내문 발송
+          </button>
+          <button type="button" onclick="setLegalStep(4)" id="legalTabBtn4" class="pb-2 px-1 font-medium text-slate-500 hover:text-slate-800 whitespace-nowrap">
+            4단계: 미수금 해결 지원
+          </button>
+        </div>
+
+        <!-- 1단계: 카톡 안내 -->
+        <div id="legalStepPanel1" class="space-y-2 text-xs">
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+            <div class="font-bold text-slate-800 flex items-center justify-between">
+              <span>카카오톡 / 문자 발송용 메시지</span>
+              <button onclick="copyKakaoReminder()" class="text-[11px] font-bold text-brand-600 hover:underline">문구 복사</button>
+            </div>
+            <textarea id="kakaoReminderText" readonly class="w-full h-24 bg-white border border-slate-200 rounded-lg p-2.5 text-slate-700 font-mono text-[11px] leading-relaxed resize-none">안녕하세요 대표님, 정솔로입니다!
+지난 10일 전달드린 프로모션 페이지 제작 건이 잘 마무리되어 잔금 입금 일정 확인차 연락드렸습니다.
+바쁘시겠지만 세금계산서 정산 일정 확인 부탁드립니다. 감사합니다!</textarea>
+          </div>
+        </div>
+
+        <!-- 2단계: 메일 리마인드 (이메일 요청서) -->
+        <div id="legalStepPanel2" class="space-y-2 text-xs hidden">
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+            <div class="font-bold text-slate-800 flex items-center justify-between">
+              <span>이메일 요청서 (정산 리마인드 메일)</span>
+              <button onclick="copyEmailReminder()" class="text-[11px] font-bold text-brand-600 hover:underline">전문 복사</button>
+            </div>
+            <textarea id="emailReminderText" readonly class="w-full h-36 bg-white border border-slate-200 rounded-lg p-2.5 text-slate-700 font-mono text-[11px] leading-relaxed resize-none">[제목] [정산 안내] 프로모션 페이지 제작 용역 대금 입금 일정 확인 요청의 건
+
+안녕하세요 글로벌이커머스(주) 담당자님, 솔로오에스 정솔로입니다.
+
+지난 10일 납품 완료된 '프로모션 페이지 제작' 건과 관련하여 정산 일정 확인차 메일 드립니다.
+현재 약정된 정산 기일이 경과되어 확인 부탁드리고자 합니다.
+
+- 프로젝트명: 프로모션 페이지 제작
+- 청구 금액: 금 1,200,000원 (VAT 별도)
+- 세금계산서 발행일: 2026년 10월 10일
+- 입금 계좌: 카카오뱅크 3333-01-1234567 (예금주: 정솔로)
+
+내부 정산 및 입금 일정을 확인 후 회신해 주시면 감사하겠습니다.
+추가로 필요하신 서류나 문의 사항이 있으시면 언제든 편하게 말씀해 주세요.
+
+감사합니다.
+정솔로 드림</textarea>
+          </div>
+        </div>
+
+        <!-- 3단계: 공식 안내문 발송 (기존 2단계의 공문 내용 이전) -->
+        <div id="legalStepPanel3" class="space-y-2 text-xs hidden">
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+            <div class="font-bold text-slate-800 flex items-center justify-between">
+              <span>공식 안내문 (공식 입금 요청서 공문)</span>
+              <button onclick="copyFormalNotice()" class="text-[11px] font-bold text-brand-600 hover:underline">전문 복사</button>
+            </div>
+            <textarea id="formalNoticeText" readonly class="w-full h-36 bg-white border border-slate-200 rounded-lg p-2.5 text-slate-700 font-mono text-[11px] leading-relaxed resize-none">[공문] 용역 대금 정산 확인 및 지급 요청서
+문서번호: SOL-2026-1015
+수신: 글로벌이커머스(주) 재무/정산 담당자 귀하
+발신: 솔로오에스 정솔로 대표
+
+귀사의 무궁한 발전을 기원합니다.
+
+1. 귀사와 체결한 '프로모션 페이지 제작 용역 계약'에 따른 최종 산출물은 2026년 10월 10일 검수 완료 및 납품되었습니다.
+2. 약정된 대금 지급 기일(2026-10-12)로부터 18일이 경과하였으나, 현재까지 해당 용역 대금(금 1,200,000원)이 입금되지 않았습니다.
+3. 이에 원활한 계약 이행 및 상호 신뢰 유지를 위하여 본 공문을 발송하오니, 본 공문 수령일로부터 3영업일 이내 정산 처리를 정중히 요청드립니다.
+
+※ 기한 내 입금 확인이 어려우실 경우 별도의 회신 부탁드립니다.</textarea>
+          </div>
+        </div>
+
+        <!-- 4단계: 미수금 해결 지원 -->
+        <div id="legalStepPanel4" class="space-y-3.5 text-xs hidden">
+          <!-- 상단 툴팁 -->
+          <div class="p-3 bg-amber-50/70 rounded-xl border border-amber-200 text-amber-900 leading-relaxed text-[11px] flex items-start gap-2">
+            <i data-lucide="help-circle" class="w-4 h-4 text-amber-600 shrink-0 mt-0.5"></i>
+            <div>
+              여러 차례 안내 후에도 대금이 지급되지 않았다면, 미수금 해결을 위한 추가 대응 방법을 확인해 보세요.
+            </div>
+          </div>
+
+          <!-- 1. 법률 상담 지원 — 대한법률구조공단 등 관련 기관의 상담 정보 제공 -->
+          <div class="space-y-2">
+            <div class="font-bold text-slate-800 text-xs flex flex-wrap items-center gap-1.5">
+              <div class="flex items-center gap-1 text-indigo-700">
+                <i data-lucide="scale" class="w-3.5 h-3.5"></i>
+                <span>법률 상담 지원</span>
+              </div>
+              <span class="text-[11px] font-normal text-slate-500">— 대한법률구조공단 등 관련 기관의 상담 정보 제공</span>
+            </div>
+
+            <!-- 기존 "정산 고민, 함께 해결해요" 카드 -->
+            <div class="p-3.5 bg-indigo-50/70 rounded-xl border border-indigo-200 space-y-2.5 text-xs">
+              <div class="flex items-center justify-between pb-1.5 border-b border-indigo-100">
+                <div class="font-bold text-indigo-950 flex items-center gap-1.5">
+                  <i data-lucide="landmark" class="w-4 h-4 text-indigo-600"></i>
+                  <span>정산 고민, 함께 해결해요</span>
+                </div>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-indigo-200 text-indigo-800 font-bold">무료 법률 지원</span>
+              </div>
+
+              <p class="text-[11px] text-indigo-900 leading-relaxed">
+                대금 지급 지연이나 미수금 문제로 어려움을 겪고 있다면, 관련 기관의 상담 및 지원 서비스를 확인해 보세요.
+              </p>
+
+              <div class="pt-2 border-t border-indigo-100 text-[11px]">
+                <!-- 대한법률구조공단 -->
+                <div class="p-2.5 bg-white rounded-lg border border-indigo-100 flex items-center justify-between">
+                  <span class="font-bold text-indigo-950">대한법률구조공단 법률 상담</span>
+                  <div class="flex items-center gap-2 text-[11px]">
+                    <a href="tel:132" class="px-2 py-0.5 rounded bg-indigo-600 text-white font-mono font-bold hover:bg-indigo-700 transition-colors">국번없이 132</a>
+                    <a href="https://www.klac.or.kr" target="_blank" rel="noopener noreferrer" class="text-indigo-700 hover:text-indigo-900 font-bold flex items-center gap-0.5 underline">
+                      <span>홈페이지</span>
+                      <i data-lucide="external-link" class="w-3 h-3"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. 내용증명 발송 안내 — 미지급 대금에 대한 공식적인 지급 요청 -->
+          <div class="space-y-2 pt-2 border-t border-slate-100">
+            <div class="font-bold text-slate-800 text-xs flex flex-wrap items-center gap-1.5">
+              <div class="flex items-center gap-1 text-emerald-700">
+                <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                <span>내용증명 발송 안내</span>
+              </div>
+              <span class="text-[11px] font-normal text-slate-500">— 미지급 대금에 대한 공식적인 지급 요청</span>
+            </div>
+
+            <!-- 기존 "안내 말씀" 툴팁 -->
+            <div class="p-3 bg-amber-50/70 rounded-xl border border-amber-200 text-amber-900 leading-relaxed text-[11px] flex items-start gap-2">
+              <span class="text-base leading-none">💡</span>
+              <div>
+                <strong>안내 말씀:</strong> 본 서식은 대한법률구조공단의 법률 서식을 제공하며, 작성 가이드는 일반적인 참고 정보입니다. 구체적인 사안에 대한 법적 판단은 반드시 변호사 등 법률 전문가와 상담하시기 바랍니다.
+              </div>
+            </div>
+
+            <!-- 기존 "내용증명 표준 서식 (공사대금·용역대금 청구용)" 다운로드 카드 -->
+            <div class="p-3.5 bg-emerald-50/60 rounded-xl border border-emerald-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+              <div class="space-y-0.5">
+                <div class="font-bold text-emerald-900 flex items-center gap-1.5 text-xs">
+                  <i data-lucide="file-text" class="w-4 h-4 text-emerald-600"></i>
+                  <span>내용증명 표준 서식 (공사대금·용역대금 청구용)</span>
+                </div>
+                <p class="text-[11px] text-emerald-700">대한법률구조공단 표준 HWPX 서식을 바로 다운로드하여 편집할 수 있습니다.</p>
+              </div>
+              <button type="button" onclick="downloadLegalDoc()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all shrink-0 cursor-pointer">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>양식 다운로드 (.hwpx)</span>
+              </button>
+            </div>
+
+            <!-- 기존 "내용증명 기본 작성 가이드" -->
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2 text-slate-700">
+              <div class="font-bold text-slate-900 flex items-center gap-1.5 text-xs">
+                <i data-lucide="book-open" class="w-3.5 h-3.5 text-indigo-600"></i>
+                <span>내용증명 기본 작성 가이드</span>
+              </div>
+              <p class="text-[11px] leading-relaxed text-slate-600">
+                내용증명은 A4용지를 기준으로, 상대방에게 전달할 내용을 육하원칙에 따라 알기 쉽게 작성해야 합니다. 문서 상단 또는 하단에 보내는 사람(당사자)과 받는 사람(클라이언트)의 성명·주소를 명확히 적고 아래의 필수 항목을 포함해 주세요.
+              </p>
+              <div class="space-y-1.5 text-[11px] bg-white p-2.5 rounded-lg border border-slate-200 max-h-[140px] overflow-y-auto">
+                <div class="p-1 rounded bg-slate-50/80">• <strong>보내는 사람·받는 사람:</strong> 이름(법인명), 주소, 연락처</div>
+                <div class="p-1 rounded bg-slate-50/80">• <strong>내용증명 제목:</strong> 예) 용역대금 지급 청구의 건</div>
+                <div class="p-1 rounded bg-slate-50/80">• <strong>계약 및 작업 내역:</strong> 계약일, 작업내용, 납품일, 미지급액</div>
+                <div class="p-1 rounded bg-slate-50/80">• <strong>변제 기일:</strong> 대금을 입금해 달라고 요청하는 최종 기한</div>
+                <div class="p-1 rounded bg-slate-50/80">• <strong>지급받을 계좌:</strong> 본인 명의 은행 계좌번호</div>
+                <div class="p-1 rounded bg-slate-50/80">• <strong>내용증명 발송일:</strong> 문서를 작성해 발송하는 날짜</div>
+              </div>
+              <p class="text-[10px] text-slate-500 leading-normal pt-0.5">
+                ※ 미수금·용역대금 관련 내용증명은 감정적인 표현을 배제하고, 계약 사실과 납품 내역을 육하원칙에 따라 간결하고 정확하게 작성하는 것이 좋습니다.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fixed Modal Footer (닫기 버튼만 유지) -->
+      <div class="p-4 px-6 border-t border-slate-100 flex justify-end shrink-0 bg-slate-50/50">
+        <button onclick="closeLegalCertModal()" class="px-5 py-2 rounded-xl bg-white border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-semibold shadow-2xs transition-all">
+          닫기
+        </button>
+      </div>
+    </div>
+  </div>
+
+

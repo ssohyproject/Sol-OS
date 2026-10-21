@@ -1,0 +1,88 @@
+  <!-- ==================== MODAL 10: 사업 통장 잔고 및 세금 통장 설정 ==================== -->
+  <div id="accountBalanceModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-xs">
+            <i data-lucide="wallet" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900">사업 통장 및 고정비 설정</h2>
+            <p class="text-[11px] text-slate-500">실제 사업 통장 잔액과 월 필수 고정비를 입력하여 실시간 동기화합니다.</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeBalanceSettingModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Form -->
+      <form id="accountBalanceForm" onsubmit="saveAccountBalanceSettings(event)" class="space-y-4 text-xs">
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block font-bold text-slate-700" id="modalWcFieldLabel">사업 통장 잔고</label>
+            <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded font-bold" id="modalWcModeBadge">통장 1개 운용</span>
+          </div>
+          <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₩</span>
+            <input type="number" id="inputWorkingCapital" min="0" step="10000" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3.5 py-2.5 text-slate-900 font-mono font-bold text-sm focus:outline-none focus:border-emerald-500 focus:bg-white" placeholder="0">
+          </div>
+          <p class="text-[10px] text-slate-500 mt-1" id="modalWcHint">※ 주거래 은행 통장의 현재 총 실잔액을 입력하세요.</p>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">월 필수 고정비 (임대료, 통신비, 정기 SaaS 등)</label>
+          <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₩</span>
+            <input type="number" id="inputMonthlyFixedExpense" min="0" step="10000" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3.5 py-2.5 text-slate-900 font-mono font-bold text-sm focus:outline-none focus:border-emerald-500 focus:bg-white" placeholder="0">
+          </div>
+          <p class="text-[10px] text-slate-400 mt-1">※ 신규 수주가 없더라도 매월 지출되는 필수 사업 고정비입니다.</p>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block font-bold text-slate-700" id="modalTaxFieldLabel">세금 잠금 예산 (통장 내 가상 보관액)</label>
+            <span class="text-[10px] text-indigo-700 bg-indigo-50 px-1.5 py-0.5 rounded font-bold" id="modalTaxModeBadge">이체 불필요</span>
+          </div>
+          <div class="relative">
+            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₩</span>
+            <input type="number" id="inputTaxSaved" min="0" step="10000" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-8 pr-3.5 py-2.5 text-slate-900 font-mono font-bold text-sm focus:outline-none focus:border-emerald-500 focus:bg-white" placeholder="0">
+          </div>
+          <p class="text-[10px] text-slate-500 mt-1" id="modalTaxHint">※ 총 통장 잔고 중 세금 납부용으로 묶어둘 금액입니다. (쓸 수 있는 잔액에서 안전 잠금)</p>
+        </div>
+
+        <!-- Quick Transfer Box (Only for Split Mode) -->
+        <div id="splitModeTransferBox" class="hidden p-3 rounded-xl bg-indigo-50/70 border border-indigo-200 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="font-bold text-indigo-950 flex items-center gap-1">
+              <i data-lucide="arrow-right-left" class="w-3.5 h-3.5 text-indigo-600"></i>
+              <span>통장 간 이체 기록 (사업 통장 ➡️ 세금 통장)</span>
+            </span>
+            <span class="text-[10px] text-indigo-600 font-medium">이중 차감 없음</span>
+          </div>
+          <div class="flex gap-2">
+            <div class="relative flex-1">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 font-bold">₩</span>
+              <input type="number" id="quickTransferAmount" min="0" step="10000" placeholder="이체 금액 입력" class="w-full bg-white border border-indigo-200 rounded-lg pl-7 pr-2.5 py-1.5 text-slate-900 font-mono text-xs">
+            </div>
+            <button type="button" onclick="executeQuickTaxTransfer()" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-bold text-xs shrink-0 transition-colors">
+              이체 기록
+            </button>
+          </div>
+          <p class="text-[10px] text-indigo-800/80 leading-relaxed">
+            💡 사업 통장에서 세금 통장으로 이체 시, 사업 통장 잔고가 차감되고 세금 통장 잔고로 안전하게 이동됩니다.
+          </p>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2">
+          <button type="button" onclick="closeBalanceSettingModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">취소</button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-colors flex items-center gap-1.5">
+            <i data-lucide="check" class="w-3.5 h-3.5"></i>
+            <span>설정 저장 완료</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+

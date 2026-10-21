@@ -1,0 +1,199 @@
+  <!-- ==================== MODAL 20: 일정·자금·세금·계약 4-Way 실시간 자동 얼라인 허브 및 시각화 구조도 ==================== -->
+  <div id="alignmentArchitectureModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="max-w-3xl w-full bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-2xl space-y-5 my-6 max-h-[90vh] overflow-y-auto">
+      <!-- Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-xs">
+            <i data-lucide="zap" class="w-5 h-5 text-indigo-600"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-bold text-slate-900">일정·자금·세금·계약 4대 영역 실시간 얼라인 허브</h2>
+              <span class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold border border-emerald-200">최소 입력 아키텍처</span>
+            </div>
+            <p class="text-[11px] text-slate-500">계약서 1회 등록 또는 영수증 1회 업로드 시 4대 핵심 영역이 실시간으로 상호 동기화됩니다.</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeAlignmentArchitectureModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Section 1: 4대 핵심 영역 연동 다이어그램 (Node Pipeline Visualizer) -->
+      <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+            <i data-lucide="network" class="w-4 h-4 text-brand-600"></i>
+            <span>4-Way 실시간 데이터 파이프라인 흐름도</span>
+          </span>
+          <span class="text-[10px] text-slate-500">단일 원장 (Single Source of Truth) 기준 동기화</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-2.5 text-xs">
+          <!-- Node 1: 계약 -->
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-1.5 relative group hover:border-purple-300 transition-colors">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-purple-700 flex items-center gap-1 text-[11px]">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-purple-600"></i>
+                <span>1. 계약 (Contract)</span>
+              </span>
+              <span class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></span>
+            </div>
+            <div class="font-extrabold text-slate-900 text-xs" id="alignCardContractCount">진행 계약 3건</div>
+            <p class="text-[10px] text-slate-500 leading-tight">표준계약서 체결, 분쟁 대비 특약, 대금 지급 기한 설정</p>
+            <div class="text-[10px] text-purple-600 font-semibold pt-1 border-t border-slate-100 flex items-center gap-0.5">
+              <span>➔ 착수/검수일 일정 전송</span>
+            </div>
+          </div>
+
+          <!-- Node 2: 일정 -->
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-1.5 relative group hover:border-blue-300 transition-colors">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-blue-700 flex items-center gap-1 text-[11px]">
+                <i data-lucide="calendar" class="w-3.5 h-3.5 text-blue-600"></i>
+                <span>2. 일정 (Schedule)</span>
+              </span>
+              <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+            </div>
+            <div class="font-extrabold text-slate-900 text-xs" id="alignCardTaskCount">연동 마일스톤 9건</div>
+            <p class="text-[10px] text-slate-500 leading-tight">입금 D-day, 고정비 결제일(10일/25일), 세무 마감 자동 등록</p>
+            <div class="text-[10px] text-blue-600 font-semibold pt-1 border-t border-slate-100 flex items-center gap-0.5">
+              <span>➔ 30일 잔액 예측 연동</span>
+            </div>
+          </div>
+
+          <!-- Node 3: 자금 -->
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-1.5 relative group hover:border-emerald-300 transition-colors">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-emerald-700 flex items-center gap-1 text-[11px]">
+                <i data-lucide="trending-up" class="w-3.5 h-3.5 text-emerald-600"></i>
+                <span>3. 자금 (Cashflow)</span>
+              </span>
+              <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            </div>
+            <div class="font-extrabold text-slate-900 text-xs" id="alignCardCashflowSum">채권 ₩440만 / 고정비 ₩273만</div>
+            <p class="text-[10px] text-slate-500 leading-tight">유동적 잔액 차트 예측, 가용 잔고 산출, 런웨이 자동 계산</p>
+            <div class="text-[10px] text-emerald-600 font-semibold pt-1 border-t border-slate-100 flex items-center gap-0.5">
+              <span>➔ 세무 부채 격리 연동</span>
+            </div>
+          </div>
+
+          <!-- Node 4: 세금 -->
+          <div class="p-3 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-1.5 relative group hover:border-amber-300 transition-colors">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-amber-700 flex items-center gap-1 text-[11px]">
+                <i data-lucide="receipt" class="w-3.5 h-3.5 text-amber-600"></i>
+                <span>4. 세금 (Tax)</span>
+              </span>
+              <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+            </div>
+            <div class="font-extrabold text-slate-900 text-xs">세무 유보금 ₩52만 격리</div>
+            <p class="text-[10px] text-slate-500 leading-tight">매출 VAT 10% 자동 분리, 고정비 매입세액공제 & 경비 반영</p>
+            <div class="text-[10px] text-amber-600 font-semibold pt-1 border-t border-slate-100 flex items-center gap-0.5">
+              <span>➔ 순 가용자금 재계산</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: 고정비 ₩2,730,000 출처 및 4대 영역 매핑 -->
+      <div class="p-4 rounded-2xl bg-white border border-slate-200 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-slate-900 text-xs flex items-center gap-1.5">
+            <i data-lucide="list-checks" class="w-4 h-4 text-rose-600"></i>
+            <span>고정비(₩2,730,000) 출처 및 전방위 얼라인 정의</span>
+          </span>
+          <span class="text-[10px] text-slate-400 font-mono">합계: ₩2,730,000 / 월</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-[11px] text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50 border-y border-slate-200 text-slate-600 font-semibold">
+                <th class="p-2">항목명</th>
+                <th class="p-2">월 결제액</th>
+                <th class="p-2">결제일 (일정 연동)</th>
+                <th class="p-2">세무 처리 (세금 연동)</th>
+                <th class="p-2">자금 관리 (장부 연동)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+              <tr>
+                <td class="p-2 font-bold text-slate-900">1. 공유오피스 월 임차료</td>
+                <td class="p-2 font-mono font-bold text-rose-600">₩1,100,000</td>
+                <td class="p-2"><span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold text-[10px]">매월 25일</span> 자동이체</td>
+                <td class="p-2 text-emerald-700 font-semibold">세금계산서 매입세액공제(₩100,000)</td>
+                <td class="p-2 text-slate-500">지급임차료 (공제 영수증)</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-bold text-slate-900">2. 업무 필수 SaaS/SW 정기구독</td>
+                <td class="p-2 font-mono font-bold text-rose-600">₩480,000</td>
+                <td class="p-2"><span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold text-[10px]">매월 25일</span> 카드결제</td>
+                <td class="p-2 text-amber-700 font-semibold">종합소득세 전액 필요경비 인정</td>
+                <td class="p-2 text-slate-500">지급수수료 (카드전표 6종)</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-bold text-slate-900">3. 업무용 유무선 통신비 & 인터넷</td>
+                <td class="p-2 font-mono font-bold text-rose-600">₩150,000</td>
+                <td class="p-2"><span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold text-[10px]">매월 25일</span> 자동이체</td>
+                <td class="p-2 text-emerald-700 font-semibold">통신사 부가세 매입세액공제</td>
+                <td class="p-2 text-slate-500">통신비 (자동납부)</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-bold text-slate-900">4. 국민연금 & 건강보험 (1인사업자)</td>
+                <td class="p-2 font-mono font-bold text-rose-600">₩400,000</td>
+                <td class="p-2"><span class="px-1.5 py-0.5 rounded bg-indigo-50 text-indigo-700 font-bold text-[10px] border border-indigo-200">매월 10일</span> 자동이체</td>
+                <td class="p-2 text-blue-700 font-semibold">종합소득세 본인부담금 소득공제</td>
+                <td class="p-2 text-slate-500">제세공과금/4대보험</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-bold text-slate-900">5. 기본 운영비 & 소모품/기장료</td>
+                <td class="p-2 font-mono font-bold text-rose-600">₩600,000</td>
+                <td class="p-2"><span class="px-1.5 py-0.5 rounded bg-slate-100 text-slate-700 font-bold text-[10px]">매월 25일</span> 체크카드</td>
+                <td class="p-2 text-amber-700 font-semibold">공제 영수증 확보 시 전액 경비 인정</td>
+                <td class="p-2 text-slate-500">사업소모품비/수수료</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr class="bg-rose-50/50 font-bold text-slate-900 border-t border-rose-200">
+                <td class="p-2">월 필수 고정비 합계</td>
+                <td class="p-2 font-mono text-rose-700 text-xs">₩2,730,000</td>
+                <td class="p-2 text-[10px] text-slate-600">10일(₩40만) + 25일(₩233만)</td>
+                <td class="p-2 text-[10px] text-emerald-700">매입공제 ₩168,181 + 경비인정 ₩2,330,000</td>
+                <td class="p-2 text-[10px] text-slate-600">전 항목 캘린더/장부 자동연동</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+
+      <!-- Section 3: 1클릭 최소 입력 시뮬레이터 -->
+      <div class="p-4 rounded-2xl bg-indigo-50/50 border border-indigo-200 space-y-3">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <div class="font-bold text-indigo-950 text-xs flex items-center gap-1.5">
+              <i data-lucide="play" class="w-3.5 h-3.5 text-indigo-600"></i>
+              <span>최소 입력 동기화 시뮬레이터 (Interactive Simulator)</span>
+            </div>
+            <p class="text-[11px] text-indigo-700 mt-0.5">실제 프리랜서 업무에서 1번만 입력했을 때 4대 영역이 어떻게 동시 갱신되는지 직접 체험해보세요.</p>
+          </div>
+          <button type="button" onclick="run4WaySimulateContract()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all shrink-0">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            <span>신규 계약 체결 시뮬레이션 실행</span>
+          </button>
+        </div>
+
+        <!-- Simulation result container -->
+        <div id="alignSimResultBox" class="hidden"></div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="flex items-center justify-between pt-3 border-t border-slate-100">
+        <span class="text-[11px] text-slate-400">※ 솔로OS 아키텍처 기획안이 문서 및 마크다운으로 영구 보존됩니다.</span>
+        <button type="button" onclick="closeAlignmentArchitectureModal()" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors">
+          확인 완료
+        </button>
+      </div>
+    </div>
+  </div>
+

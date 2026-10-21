@@ -1,0 +1,517 @@
+        <!-- ==================== SUBVIEW 4-A: 계약 ==================== -->
+        <div id="subview-contract" class="space-y-6 hidden">
+          <!-- Subview Header -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200/80">
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-lg lg:text-xl font-black text-slate-900 flex items-center gap-2">
+                  <i data-lucide="file-check" class="w-5 h-5 text-indigo-600"></i>
+                  <span>계약 관리 & 주요 항목 확인</span>
+                </h2>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">업무 관리 도구</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">
+                공식 표준계약서 안내부터 계약서 내 주요 기재 항목(금액, 납품일, 검수 조건 등) 확인 및 일정 연동까지 체계적인 업무 관리를 지원합니다.
+              </p>
+            </div>
+            <div class="flex items-center gap-2 self-start sm:self-auto">
+              <button onclick="switchSubView('legal')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition-colors">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i>
+                <span>법적 보호 페이지 이동</span>
+              </button>
+              <button onclick="switchSubView('overview')" class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-brand-600"></i>
+                <span>대시보드로 돌아가기</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Section 1: [P1] 내 업무에 맞는 표준계약서 찾기 (인터랙티브 추천 툴) -->
+          <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <i data-lucide="compass" class="w-4 h-4 text-indigo-600"></i>
+                  <span>내 업무에 맞는 표준계약서 찾기</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">업무 분야와 계약 유형을 선택하시면 가장 적합한 정부 공인 서식과 추천 이유를 즉시 안내해 드립니다.</p>
+              </div>
+              <div class="flex items-center gap-2 self-start sm:self-auto">
+                <span class="text-[10px] px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold">
+                  정부 부처 공식 고시 서식 직결
+                </span>
+                <button type="button" onclick="toggleContractLibrary()" id="btnToggleContractLibHeader" class="text-xs px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold border border-slate-200 flex items-center gap-1 transition-all" title="공식 용역 표준계약서 자료실 열기/닫기">
+                  <i data-lucide="library" class="w-3.5 h-3.5 text-indigo-600"></i>
+                  <span>공식 자료실</span>
+                  <i id="contractLibChevronHeaderIcon" data-lucide="chevron-down" class="w-3.5 h-3.5 transition-transform duration-200"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 1: 업무 분야 선택 칩 -->
+            <div class="space-y-2">
+              <span class="text-xs font-bold text-slate-700 block">1. 어떤 업무를 진행하시나요?</span>
+              <div class="flex flex-wrap gap-2 text-xs" id="contractDomainFilterChips">
+                <button type="button" onclick="setContractDomainFilter('all')" id="cdChip-all" class="px-3 py-1.5 rounded-xl bg-indigo-600 text-white font-bold transition-all shadow-xs">
+                  전체
+                </button>
+                <button type="button" onclick="setContractDomainFilter('design')" id="cdChip-design" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  🎨 디자인 (시각·제품·UI/UX)
+                </button>
+                <button type="button" onclick="setContractDomainFilter('it')" id="cdChip-it" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  💻 개발·IT (SW·데이터)
+                </button>
+                <button type="button" onclick="setContractDomainFilter('content')" id="cdChip-content" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  🎬 영상·콘텐츠
+                </button>
+                <button type="button" onclick="setContractDomainFilter('publishing')" id="cdChip-publishing" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  📚 출판·전자책
+                </button>
+                <button type="button" onclick="setContractDomainFilter('general')" id="cdChip-general" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  ✍️ 일반 용역·기타
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 2: 계약 유형 선택 칩 -->
+            <div class="space-y-2 pt-2 border-t border-slate-100">
+              <span class="text-xs font-bold text-slate-700 block">2. 계약 유형을 선택해 주세요:</span>
+              <div class="flex flex-wrap gap-2 text-xs" id="contractTypeFilterChips">
+                <button type="button" onclick="setContractTypeFilter('all')" id="ctChip-all" class="px-3 py-1.5 rounded-xl bg-slate-900 text-white font-bold transition-all shadow-xs">
+                  전체 유형
+                </button>
+                <button type="button" onclick="setContractTypeFilter('new')" id="ctChip-new" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  신규 프로젝트 제작
+                </button>
+                <button type="button" onclick="setContractTypeFilter('maintenance')" id="ctChip-maintenance" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  유지보수 및 운영
+                </button>
+                <button type="button" onclick="setContractTypeFilter('license')" id="ctChip-license" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  저작권 이용허락 (라이선스)
+                </button>
+                <button type="button" onclick="setContractTypeFilter('transfer')" id="ctChip-transfer" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  저작재산권 양도
+                </button>
+              </div>
+            </div>
+
+            <!-- Dynamic Recommendation Box -->
+            <div id="contractRecommendationBox" class="p-4 sm:p-5 rounded-2xl bg-indigo-50/70 border border-indigo-200 space-y-3 transition-all">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded bg-indigo-600 text-white text-[10px] font-bold">맞춤 추천 서식</span>
+                  <span class="text-xs font-bold text-indigo-950" id="recContractName">SW 용역 표준계약서 (과학기술정보통신부 공식 고시)</span>
+                </div>
+                <span class="text-[11px] text-slate-500 font-mono" id="recContractSource">과기정통부 고시 제2023-14호</span>
+              </div>
+
+              <div class="p-3 bg-white rounded-xl border border-indigo-100 text-xs text-slate-700 space-y-1.5">
+                <div class="font-bold text-indigo-900 flex items-center gap-1.5">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
+                  <span>추천 이유:</span>
+                </div>
+                <p id="recContractReason" class="text-[11px] text-slate-600 leading-relaxed">
+                  개발·IT 프로젝트에 가장 적합한 공식 서식으로, 과업 범위 변경 시 대금 조정 절차와 소프트웨어 산출물의 지식재산권 귀속 기준 및 계약서상 검수 기한이 명확히 규정되어 있습니다.
+                </p>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
+                <div class="p-2.5 rounded-lg bg-white/80 border border-indigo-100 space-y-0.5">
+                  <span class="font-bold text-slate-800">✓ 주요 보호 조항</span>
+                  <p class="text-slate-600 text-[10px]" id="recKeyClause">업무 범위 변경 대금 증액, 저작권 완납 시 이전</p>
+                </div>
+                <div class="p-2.5 rounded-lg bg-white/80 border border-indigo-100 space-y-0.5">
+                  <span class="font-bold text-slate-800">✓ 검수 및 정산</span>
+                  <p class="text-slate-600 text-[10px]" id="recInspectionClause">검수 기한 명시, 지연 시 알림 기준 제공</p>
+                </div>
+                <div class="p-2.5 rounded-lg bg-white/80 border border-indigo-100 space-y-0.5">
+                  <span class="font-bold text-slate-800">✓ 공식 출처</span>
+                  <p class="text-slate-600 text-[10px]" id="recTrustInfo">과기정통부 공식 포털 서식 자료실</p>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <button type="button" onclick="openContractPreviewModal('it')" class="px-3.5 py-2 rounded-xl bg-white hover:bg-slate-50 border border-indigo-300 text-indigo-700 font-bold text-xs flex items-center gap-1.5 transition-all shadow-2xs">
+                  <i data-lucide="eye" class="w-3.5 h-3.5"></i>
+                  <span>서식 미리보기</span>
+                </button>
+                <a id="recDownloadLink" href="https://www.msit.go.kr/bbs/view.do?sCode=user&mId=245&mPid=243&bbsSeqNo=67&nttSeqNo=3139474" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  <span>공식 사이트에서 다운로드</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: [P1] 정부·공공기관 공식 용역 표준계약서 자료실 (기업 관리카드 포맷 + 접기/펼치기 지원) -->
+          <div id="sectionContractLibrary" class="clean-card rounded-2xl p-5 sm:p-6 space-y-4 transition-all duration-300">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <i data-lucide="library" class="w-4 h-4 text-indigo-600"></i>
+                  <span>정부·공공기관 공식 용역 표준계약서 자료실</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">산업통상자원부, 과학기술정보통신부, 문화체육관광부, 공정거래위원회가 공식 고시한 공인 표준 서식 모음입니다.</p>
+              </div>
+              <div class="flex items-center gap-2 self-start sm:self-auto">
+                <span class="text-[10px] px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold" id="contractLibCountBadge">
+                  6종 공식 서식 등록
+                </span>
+                <button type="button" onclick="toggleContractLibrary()" id="btnToggleContractLib" class="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-all" title="자료실 접기/펼치기">
+                  <i id="contractLibChevronIcon" data-lucide="chevron-up" class="w-4 h-4 transition-transform duration-200"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Collapsible Content Wrapper -->
+            <div id="contractLibContentWrapper" class="space-y-4">
+              <!-- 검색창 및 분야 필터 칩 -->
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 bg-slate-50 rounded-2xl border border-slate-200">
+                <div class="relative flex-1">
+                  <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                  <input type="text" id="contractLibSearchInput" oninput="filterContractLibList(this.value)" placeholder="계약서 서식명, 소관 부처(KIDP, 과기부, 문체부, 공정위), 키워드 검색..." class="w-full pl-9 pr-3 py-2 bg-white rounded-xl border border-slate-200 text-xs focus:outline-none focus:border-indigo-500">
+                </div>
+                <div class="flex items-center gap-1.5 text-xs shrink-0 overflow-x-auto pb-1 sm:pb-0" id="contractLibDomainFilterBar">
+                  <button type="button" onclick="filterContractLibByDomain('all')" class="contract-lib-filter-btn px-2.5 py-1 rounded-lg text-xs font-bold transition-all bg-slate-900 text-white" data-domain="all">전체</button>
+                  <button type="button" onclick="filterContractLibByDomain('design')" class="contract-lib-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all bg-white hover:bg-slate-100 text-slate-700 border border-slate-200" data-domain="design">디자인</button>
+                  <button type="button" onclick="filterContractLibByDomain('it')" class="contract-lib-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all bg-white hover:bg-slate-100 text-slate-700 border border-slate-200" data-domain="it">개발·IT</button>
+                  <button type="button" onclick="filterContractLibByDomain('content')" class="contract-lib-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all bg-white hover:bg-slate-100 text-slate-700 border border-slate-200" data-domain="content">영상·콘텐츠</button>
+                  <button type="button" onclick="filterContractLibByDomain('publishing')" class="contract-lib-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all bg-white hover:bg-slate-100 text-slate-700 border border-slate-200" data-domain="publishing">출판·전자책</button>
+                  <button type="button" onclick="filterContractLibByDomain('general')" class="contract-lib-filter-btn px-2.5 py-1 rounded-lg text-xs font-semibold transition-all bg-white hover:bg-slate-100 text-slate-700 border border-slate-200" data-domain="general">일반·저작권</button>
+                </div>
+              </div>
+
+              <!-- 확장형 2열 레이아웃: 좌측 표준계약서 목록 + 우측 세부 열람 및 보호 조항 카드 -->
+              <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+                <!-- 좌측: 표준계약서 리스트 -->
+                <div class="lg:col-span-5 space-y-2.5 max-h-[580px] overflow-y-auto pr-1" id="contractLibListBox">
+                  <!-- Dynamically populated via renderContractLibList() -->
+                </div>
+
+                <!-- 우측: 선택 계약서 세부내용 카드 -->
+                <div class="lg:col-span-7" id="contractLibDetailBox">
+                  <!-- Dynamically populated via renderContractLibDetail(id) -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: [C-01 ~ C-05] 계약서 주요 항목 확인 도우미 (문서 정보 추출 및 일반 작성 가이드) -->
+          <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <i data-lucide="file-search" class="w-4 h-4 text-indigo-600"></i>
+                  <span>계약서 주요 항목 확인 도우미</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">
+                  계약서에서 금액·날짜·납품·검수·권리 관련 기재 위치를 찾고 정리합니다. 문서에 없는 내용을 임의로 보완하거나 조항의 유·불리, 유효성 또는 위법 여부를 판정하지 않습니다.
+                </p>
+              </div>
+              <button onclick="scanContractDemo()" class="px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs border border-indigo-200 transition-colors self-start sm:self-auto">
+                예시 계약서 불러와 항목 찾기
+              </button>
+            </div>
+
+            <!-- Disclaimer Banner (업무 보조 도구 안내) -->
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-slate-700 text-[11px] leading-relaxed flex items-start gap-2">
+              <i data-lucide="info" class="w-4 h-4 text-indigo-600 shrink-0 mt-0.5"></i>
+              <div>
+                <strong>업무 보조 도구 안내:</strong> 본 도구는 계약서의 주요 기재 정보를 검색·추출하여 일정 및 정산 관리를 돕는 업무 관리 보조 도구이며, 법률적 위험이나 계약의 유효성·적법성을 평가하지 않습니다. 구체적인 법률 판단이나 법적 자문이 필요하신 경우 변호사 등 법률 전문가의 검토를 받으시기 바랍니다.
+              </div>
+            </div>
+
+            <div class="space-y-3.5 text-xs">
+              <!-- Upload & Direct Input Switcher -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <!-- Dropzone for Files (C-06) -->
+                <div class="border-2 border-dashed border-slate-200 hover:border-indigo-400 rounded-2xl p-4 bg-slate-50/50 flex flex-col items-center justify-center text-center transition-all cursor-pointer" onclick="document.getElementById('contractFileInput').click()">
+                  <input type="file" id="contractFileInput" accept=".pdf,.docx,.txt,.jpg,.jpeg,.png" class="hidden" onchange="handleContractFileUpload(event)">
+                  <div class="w-10 h-10 rounded-2xl bg-white border border-slate-200 shadow-2xs flex items-center justify-center text-indigo-600 mb-2">
+                    <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+                  </div>
+                  <span class="font-bold text-slate-800 text-xs">계약서 파일 업로드 (PDF, DOCX, TXT, 이미지)</span>
+                  <p class="text-[11px] text-slate-500 mt-0.5" id="contractFileNameDisplay">클릭하여 파일 선택 (기재 정보 추출 목적 · 분석 즉시 메모리 파기)</p>
+                </div>
+
+                <!-- Scope & Security Controls -->
+                <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3 flex flex-col justify-between">
+                  <div class="space-y-2">
+                    <span class="font-bold text-slate-800 block text-xs">확인 대상 범위:</span>
+                    <div class="flex items-center gap-3">
+                      <label class="flex items-center gap-1.5 cursor-pointer text-slate-700 font-medium">
+                        <input type="radio" name="contractScope" value="all" checked class="text-indigo-600 focus:ring-indigo-500">
+                        <span>계약서 전체 기재 항목 찾기</span>
+                      </label>
+                      <label class="flex items-center gap-1.5 cursor-pointer text-slate-700 font-medium">
+                        <input type="radio" name="contractScope" value="clause" class="text-indigo-600 focus:ring-indigo-500">
+                        <span>특정 조항 기재 내용 찾기</span>
+                      </label>
+                    </div>
+                  </div>
+                  <div class="text-[10.5px] text-slate-500 flex items-center gap-1.5 bg-white p-2 rounded-xl border border-slate-200">
+                    <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-600 shrink-0"></i>
+                    <span>🔒 개인정보 보호: 업로드된 문서는 주요 항목 추출 후 즉시 메모리에서 파기되며 외부로 유출되지 않습니다.</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Textarea for paste -->
+              <div>
+                <label class="block font-bold text-slate-700 mb-1">계약서 내용 붙여넣기 또는 추출 텍스트:</label>
+                <textarea id="contractScanInput" placeholder="계약서 조항을 복사하여 붙여넣거나 파일을 업로드해 주세요. 상단 [예시 계약서 불러와 항목 찾기]를 누르면 샘플 계약서가 입력됩니다." class="w-full h-28 p-3.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-700 text-xs font-mono resize-none focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 outline-none"></textarea>
+              </div>
+
+              <!-- Action Button -->
+              <div class="flex items-center justify-end gap-2">
+                <button type="button" onclick="runContractAnalysis()" id="btnRunContractScan" class="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-2 shadow-sm transition-all cursor-pointer">
+                  <i data-lucide="shield-check" class="w-4 h-4"></i>
+                  <span>계약서 내용 검수하기</span>
+                </button>
+              </div>
+
+              <!-- Scanner Results Area (C-03: 발견 / 확인 필요 / 추출 불확실) - 미입력/검수 전 숨김 처리 -->
+              <div id="contractScanResult" class="p-4 sm:p-5 rounded-2xl bg-indigo-50/50 border border-indigo-200 space-y-4 text-xs hidden">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-indigo-100">
+                  <div class="flex items-center gap-2">
+                    <div class="w-7 h-7 rounded-lg bg-indigo-100 flex items-center justify-center text-indigo-700">
+                      <i data-lucide="file-check-2" class="w-4 h-4"></i>
+                    </div>
+                    <div>
+                      <h4 class="font-bold text-indigo-950 text-xs">계약서 주요 기재 항목 확인 결과</h4>
+                      <p class="text-[11px] text-slate-600">주요 계약 항목 3건의 기재 위치 발견 · 직접 확인 권장 항목 2건</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-900 font-bold self-start sm:self-auto">
+                    공식 표준계약서 참고 서식 대조
+                  </span>
+                </div>
+
+                <!-- 3 Diagnostic Cards (Neutral Extraction & Official Templates) -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-3.5 pt-1 text-[11px]">
+                  <!-- Clause 1 -->
+                  <div class="p-3.5 bg-white rounded-xl border border-slate-200 space-y-2 flex flex-col justify-between shadow-2xs">
+                    <div class="space-y-1.5">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">기재 위치 발견</span>
+                        <span class="text-[10px] text-slate-400 font-mono">제8조 (손해배상)</span>
+                      </div>
+                      <div class="font-bold text-slate-900">지체상금 요율 기재 (1일당 0.5%)</div>
+                      <div class="p-2 bg-slate-50 rounded-lg text-slate-600 text-[10.5px] italic">
+                        "을이 납기를 지연할 경우 지체 1일당 총 계약금액의 0.5%를 지체상금으로 공제한다."
+                      </div>
+                      <p class="text-slate-600 text-[10.5px] leading-relaxed">
+                        <strong>일반적인 확인 사항:</strong> 정부 공공 표준계약서(과기정통부 SW용역, 한국디자인진흥원)는 통상 1일 0.05%~0.1% 수준을 참고 기준으로 제시하고 있습니다. 발주처 검수 지연 기간의 산입 제외 여부 등 계약상 기재 조건을 확인해 보세요.
+                      </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100 space-y-1.5">
+                      <div class="text-[10px] font-bold text-indigo-700">공식 표준 서식 예시 문구:</div>
+                      <p class="text-[10px] text-slate-700 bg-slate-50 p-2 rounded-lg border border-slate-200" id="clauseModText1">
+                        "지체상금 요율은 1일 0.1%로 하되, 갑의 검수 지연이나 피드백 지연으로 발생한 기간은 지체 일수에서 제외한다."
+                      </p>
+                      <button type="button" onclick="copyClauseText('clauseModText1')" class="w-full py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[10.5px] flex items-center justify-center gap-1 transition-colors">
+                        <i data-lucide="copy" class="w-3 h-3 text-indigo-600"></i>
+                        <span>참고 예시 문구 복사</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Clause 2 -->
+                  <div class="p-3.5 bg-white rounded-xl border border-slate-200 space-y-2 flex flex-col justify-between shadow-2xs">
+                    <div class="space-y-1.5">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-700 border border-blue-200">기재 위치 발견</span>
+                        <span class="text-[10px] text-slate-400 font-mono">제12조 (저작권)</span>
+                      </div>
+                      <div class="font-bold text-slate-900">저작재산권 귀속 시점 기재</div>
+                      <div class="p-2 bg-slate-50 rounded-lg text-slate-600 text-[10.5px] italic">
+                        "본 용역의 결과물에 대한 모든 지식재산권은 계약 체결과 동시에 갑에게 영구 귀속된다."
+                      </div>
+                      <p class="text-slate-600 text-[10.5px] leading-relaxed">
+                        <strong>일반적인 확인 사항:</strong> 정부 공공 표준계약서 서식에서는 통상 용역 대금(잔금) 전액 완납 시점에 저작재산권이 발주자에게 이전되는 조항 형태를 일반적인 예시로 안내하고 있습니다.
+                      </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100 space-y-1.5">
+                      <div class="text-[10px] font-bold text-indigo-700">공식 표준 서식 예시 문구:</div>
+                      <p class="text-[10px] text-slate-700 bg-slate-50 p-2 rounded-lg border border-slate-200" id="clauseModText2">
+                        "본 용역 결과물의 저작재산권은 갑이 을에게 용역 대금 전액을 완납한 시점에 갑에게 이전된다."
+                      </p>
+                      <button type="button" onclick="copyClauseText('clauseModText2')" class="w-full py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[10.5px] flex items-center justify-center gap-1 transition-colors">
+                        <i data-lucide="copy" class="w-3 h-3 text-indigo-600"></i>
+                        <span>참고 예시 문구 복사</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Clause 3 -->
+                  <div class="p-3.5 bg-white rounded-xl border border-slate-200 space-y-2 flex flex-col justify-between shadow-2xs">
+                    <div class="space-y-1.5">
+                      <div class="flex items-center justify-between">
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-50 text-amber-700 border border-amber-200">확인 필요</span>
+                        <span class="text-[10px] text-slate-400 font-mono">제5조 (검수·수정)</span>
+                      </div>
+                      <div class="font-bold text-slate-900">검수 및 수정 범위 기재</div>
+                      <div class="p-2 bg-slate-50 rounded-lg text-slate-600 text-[10.5px] italic">
+                        "을은 갑이 만족하여 승인할 때까지 무상으로 수정을 반복하여 완료하여야 한다."
+                      </div>
+                      <p class="text-slate-600 text-[10.5px] leading-relaxed">
+                        <strong>일반적인 확인 사항:</strong> 명확한 검수 기한(예: 10일~14일) 및 무상 수정 횟수 기준이 계약서에 기재되어 있는지 확인해 보세요.
+                      </p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100 space-y-1.5">
+                      <div class="text-[10px] font-bold text-indigo-700">공식 표준 서식 예시 문구:</div>
+                      <p class="text-[10px] text-slate-700 bg-slate-50 p-2 rounded-lg border border-slate-200" id="clauseModText3">
+                        "무상 수정은 최종 시안 전달 후 최대 2회까지 제공하며, 이를 초과하는 수정은 별도 견적에 따라 추가 비용을 청구한다."
+                      </p>
+                      <button type="button" onclick="copyClauseText('clauseModText3')" class="w-full py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[10.5px] flex items-center justify-center gap-1 transition-colors">
+                        <i data-lucide="copy" class="w-3 h-3 text-indigo-600"></i>
+                        <span>참고 예시 문구 복사</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- [C-05] 계약할 때 확인해볼 주요 기재 항목 체크리스트 -->
+                <div class="p-3.5 bg-white rounded-xl border border-slate-200 space-y-2.5">
+                  <div class="flex items-center justify-between">
+                    <span class="font-bold text-slate-900 flex items-center gap-1.5">
+                      <i data-lucide="clipboard-check" class="w-4 h-4 text-indigo-600"></i>
+                      <span>계약할 때 확인해볼 주요 기재 항목</span>
+                    </span>
+                    <span class="text-[10px] text-slate-500">일반적인 계약 이해를 돕기 위한 항목별 기재 확인 목록</span>
+                  </div>
+                  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-2 text-[10.5px]">
+                    <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                      <span>1. 업무 범위·산출물</span>
+                      <span class="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">✓ 기재 발견 (제1조)</span>
+                    </div>
+                    <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                      <span>2. 작업 일정·마일스톤</span>
+                      <span class="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">✓ 기재 발견 (제3조)</span>
+                    </div>
+                    <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                      <span>3. 수정 횟수·추가 과업</span>
+                      <span class="font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">⚠️ 확인 필요 (기재 검토)</span>
+                    </div>
+                    <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                      <span>4. 분할 대금 지급 조건</span>
+                      <span class="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">✓ 기재 발견 (제4조)</span>
+                    </div>
+                    <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                      <span>5. 검수 절차 및 검수 기한</span>
+                      <span class="font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">⚠️ 확인 필요 (기재 검토)</span>
+                    </div>
+                    <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                      <span>6. 저작권 귀속 완납 시점</span>
+                      <span class="font-bold text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-300">🔍 관련 기재 미발견 (수동 확인 필요)</span>
+                    </div>
+                    <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                      <span>7. 계약 해지·분쟁 관할</span>
+                      <span class="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">✓ 기재 발견 (제15조)</span>
+                    </div>
+                    <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-between">
+                      <span>확인 상태 요약</span>
+                      <span class="font-bold text-indigo-800 bg-indigo-50 px-1.5 py-0.5 rounded border border-indigo-200">주요 5건 확인 · 2건 수동 확인 권장</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- One-click Safe Clause Copy Bar -->
+                <button onclick="copyContractClause()" class="w-full py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                  <span>정부 공인 표준계약서 참고 서식 문구 전체 복사</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 4: [P2] 진행 중인 계약 및 이력 관리 (일정 관리 실시간 연동) -->
+          <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <i data-lucide="layers" class="w-4 h-4 text-indigo-600"></i>
+                    <span>진행 중인 계약 및 체결 이력 관리</span>
+                  </h3>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200 flex items-center gap-1">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
+                    <span>메인 대시보드·일정·자금·정산 100% 실시간 자동 얼라인</span>
+                  </span>
+                </div>
+                <p class="text-xs text-slate-500 mt-0.5">체결된 계약 정보는 메인 대시보드(30일 자금 예측), 일정 관리(캘린더·간트), 자금 관리(미수금), 법적 보호(검수 일정)와 100% 자동 연동되며, 별도의 수동 이동이 필요 없습니다.</p>
+              </div>
+              <div class="flex items-center gap-2 self-start sm:self-auto">
+                <button type="button" onclick="openContractRegisterModal()" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-all">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  <span>새 계약 등록 (전체 자동 연동)</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Auto-Alignment System Notice Banner -->
+            <div class="p-3.5 rounded-xl bg-indigo-50/70 border border-indigo-200 flex items-start gap-2.5 text-xs text-indigo-950">
+              <i data-lucide="refresh-cw" class="w-4 h-4 text-indigo-600 shrink-0 mt-0.5"></i>
+              <div class="space-y-0.5">
+                <span class="font-bold">계약-일정-자금-정산 100% 실시간 자동 동기화 시스템:</span>
+                <p class="text-[11px] text-indigo-800 leading-relaxed">
+                  등록된 모든 계약은 <strong>메인 대시보드(월간 캘린더 및 30일 현금 예측)</strong>, <strong>일정 관리(마감 태스크)</strong>, <strong>자금 현황(미수금 정산)</strong>, <strong>법적 보호(검수 일정)</strong>에 실시간 자동 반영됩니다. 일일이 '일정 이동' 버튼을 눌러 옮기거나 다른 화면으로 이동하실 필요 없이 시스템 전체에서 완벽히 얼라인되어 작동합니다.
+                </p>
+              </div>
+            </div>
+
+            <!-- Schedule & Contract Alignment Metric Cards -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+              <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                <span class="text-[11px] font-medium text-slate-500">진행 중 계약 프로젝트</span>
+                <div class="text-lg font-black text-slate-900" id="contractMetricActiveCount">3건</div>
+                <p class="text-[10px] text-slate-500">대시보드·일정·자금 자동 연동됨</p>
+              </div>
+              <div class="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200 space-y-1">
+                <span class="text-[11px] font-bold text-amber-800">납품·검수 마감 임박 (D-7)</span>
+                <div class="text-lg font-black text-amber-700" id="contractMetricUrgentDeadline">1건</div>
+                <p class="text-[10px] text-amber-600">글로벌이커머스 (10.18 마감)</p>
+              </div>
+              <div class="p-3.5 rounded-xl bg-indigo-50/70 border border-indigo-200 space-y-1">
+                <span class="text-[11px] font-bold text-indigo-800">총 계약 체결액</span>
+                <div class="text-lg font-black text-indigo-900 font-mono" id="contractMetricTotalRevenue">₩6,400,000</div>
+                <p class="text-[10px] text-indigo-600">30일 자금 예측 자동 반영</p>
+              </div>
+              <div class="p-3.5 rounded-xl bg-rose-50/70 border border-rose-200 space-y-1">
+                <span class="text-[11px] font-bold text-rose-800">정산 대기 / 미수금</span>
+                <div class="text-lg font-black text-rose-600 font-mono" id="contractMetricUnpaidBalance">₩3,200,000</div>
+                <p class="text-[10px] text-rose-600">정산 현황 타임라인 연동</p>
+              </div>
+            </div>
+
+            <!-- Lifecycle Stage Bar & Filter -->
+            <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-2">
+              <div class="flex items-center gap-1.5 overflow-x-auto text-[11px]">
+                <span class="font-bold text-slate-700 shrink-0 mr-1">보기 필터:</span>
+                <button type="button" onclick="filterContractProjects('all')" id="cpfBtn-all" class="px-2.5 py-1 rounded-lg bg-slate-900 text-white font-bold transition-all shadow-2xs">전체 (3)</button>
+                <button type="button" onclick="filterContractProjects('signed')" id="cpfBtn-signed" class="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-700 font-medium border border-slate-200 transition-all">체결 완료 (2)</button>
+                <button type="button" onclick="filterContractProjects('negotiating')" id="cpfBtn-negotiating" class="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-700 font-medium border border-slate-200 transition-all">수정 협의 중 (1)</button>
+                <button type="button" onclick="filterContractProjects('inspecting')" id="cpfBtn-inspecting" class="px-2.5 py-1 rounded-lg bg-white hover:bg-slate-100 text-slate-700 font-medium border border-slate-200 transition-all">검수·정산 진행 (2)</button>
+              </div>
+            </div>
+
+            <!-- Active Contracts Table (동적 렌더링) -->
+            <div class="overflow-x-auto text-xs">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-200 text-slate-500 font-bold bg-slate-50/50">
+                    <th class="p-3">프로젝트명 &amp; 발주처</th>
+                    <th class="p-3">납품 및 검수 일정 (캘린더 연동)</th>
+                    <th class="p-3">계약 총액 / 잔금</th>
+                    <th class="p-3">계약 상태</th>
+                    <th class="p-3">이행 단계</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100" id="contractProjectsTableBody">
+                  <!-- Dynamically populated via renderContractProjectsTable() -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+

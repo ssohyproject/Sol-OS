@@ -1,0 +1,543 @@
+        <!-- ==================== SUBVIEW 4-B: 법적 보호 ==================== -->
+        <div id="subview-legal" class="space-y-6 hidden">
+          <!-- Subview Header -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200/80">
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-lg lg:text-xl font-black text-slate-900 flex items-center gap-2">
+                  <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600"></i>
+                  <span>법적 보호 &amp; 납품·정산 관리</span>
+                </h2>
+                <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">업무 관리 &amp; 기록 도구</span>
+              </div>
+              <p class="text-xs text-slate-500 mt-1">
+                산출물 납품부터 계약상 약정된 검수 일정 확인, 정산 현황 기록, 일정 확인용 일반 업무 문구, 공공 법률 지원 기관 안내까지 안전한 업무 관리를 지원합니다.
+              </p>
+            </div>
+            <div class="flex items-center gap-2 self-start sm:self-auto">
+              <button onclick="switchSubView('contract')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition-colors">
+                <i data-lucide="file-check" class="w-3.5 h-3.5 text-indigo-600"></i>
+                <span>계약 페이지 이동</span>
+              </button>
+              <button onclick="switchSubView('overview')" class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-brand-600"></i>
+                <span>대시보드로 돌아가기</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Service Scope & Legal Disclaimer Banner (L-01) -->
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-slate-700 text-[11px] leading-relaxed flex items-start gap-2">
+            <i data-lucide="info" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+            <div>
+              <strong>업무 기록 및 일반 안내 서비스 고지:</strong> 본 화면은 사용자가 등록한 계약·납품·정산 정보를 정리하고 일반적인 업무 소통과 공공기관 절차를 안내하는 도구입니다. 채권의 존재 여부, 법적 청구 가능성 또는 분쟁의 승패 등 개별 사건에 관한 법률적 판단을 제공하지 않습니다.
+            </div>
+          </div>
+
+          <!-- Section 1: [L-01] 정산 현황 대시보드 (자금 현황 연동) -->
+          <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <i data-lucide="receipt" class="w-4 h-4 text-rose-600"></i>
+                  <span>정산 현황 대시보드 (자금 현황 연동)</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">계약서에 입력된 잔금 지급일 경과 일수를 확인하고 자금 현황의 예정 입금과 자동으로 연동합니다. (채권의 존재·청구 가능 여부를 판정하지 않습니다)</p>
+              </div>
+              <button type="button" onclick="switchSubView('statements')" class="text-xs text-brand-600 hover:underline font-bold flex items-center gap-1 self-start sm:self-auto">
+                <span>자금 현황 예정 입금 확인</span>
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+
+            <!-- 3 Summary Metrics -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <div class="p-4 rounded-xl bg-rose-50/70 border border-rose-200 space-y-1">
+                <span class="text-[11px] font-bold text-rose-800">현재 총 미수 잔금</span>
+                <div class="text-xl font-mono font-black text-rose-600" id="legalTotalUnpaid">₩3,200,000</div>
+                <p class="text-[10px] text-rose-700">약정 지급일이 경과한 정산 대상 잔금 총액 (사용자 입력 기준)</p>
+              </div>
+              <div class="p-4 rounded-xl bg-amber-50/70 border border-amber-200 space-y-1">
+                <span class="text-[11px] font-bold text-amber-800">정산 일정 경과 프로젝트</span>
+                <div class="text-xl font-mono font-black text-amber-700" id="legalOverdueCount">2건</div>
+                <p class="text-[10px] text-amber-700">지급 일정 확인 및 정산 리마인드 대상</p>
+              </div>
+              <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
+                <span class="text-[11px] font-bold text-slate-700">평균 지급 경과 기간</span>
+                <div class="text-xl font-mono font-black text-slate-800" id="legalAvgOverdueDays">8.5일</div>
+                <p class="text-[10px] text-slate-500">최대 경과: 12일 (스타트업알파)</p>
+              </div>
+            </div>
+
+            <!-- Overdue Projects Detail Cards (동적 렌더링) -->
+            <div id="legalOverdueCardsContainer" class="space-y-3 pt-1">
+              <!-- Dynamically populated via renderLegalProtectionDashboard() -->
+            </div>
+          </div>
+
+          <!-- Section 2: [L-03 & C-07] 산출물 납품 및 검수 일정 관리 -->
+          <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+                  <span>산출물 납품 및 검수 일정 관리</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">
+                  계약서에 기재된 검수 기간과 잔금 지급 조건을 확인하고 일정을 관리합니다.
+                </p>
+              </div>
+              <button type="button" onclick="openLegalPdfModal()" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-xs transition-all self-start sm:self-auto">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>납품·검수 기록 PDF 내려받기</span>
+              </button>
+            </div>
+
+            <!-- Active Deliverable Management Card (동적 렌더링) -->
+            <div id="legalDeliverableContainer">
+              <!-- Dynamically populated via renderLegalProtectionDashboard() -->
+            </div>
+          </div>
+
+          <!-- Section 3: [L-04] 프로젝트 납품·검수 업무 기록 타임라인 (사실관계 기록) -->
+          <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <i data-lucide="history" class="w-4 h-4 text-indigo-600"></i>
+                  <span>프로젝트 납품·검수 업무 기록 타임라인 (사실관계 기록)</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">
+                  계약 이행 과정의 산출물 전달, 수정 요청, 안내 발송 등 업무 진행 사실을 시계열로 정리하여 보관합니다.
+                </p>
+              </div>
+              <div class="flex items-center gap-2 self-start sm:self-auto">
+                <button type="button" onclick="openAddTimelineModal()" class="px-3 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-xs border border-indigo-200 transition-colors flex items-center gap-1">
+                  <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                  <span>새 증빙 기록 추가</span>
+                </button>
+                <button type="button" onclick="exportAuditTimeline()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors flex items-center gap-1">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  <span>기록 내보내기</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Distinction Legend & Legal Proof Disclaimer -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] text-slate-500 pb-1">
+              <div class="flex items-center gap-4">
+                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-500"></span> <strong>시스템 자동 기록:</strong> 앱 내 발송·연동 사실 기록</span>
+                <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> <strong>사용자 등록 기록:</strong> 파일 첨부 및 자체 입력 기록</span>
+              </div>
+              <span class="text-[10px] text-slate-400">※ 본 기록 보관 기능은 사용자의 업무 이력을 정리하기 위한 것이며, 법원 등에서의 증거능력이나 증명력을 보증하지 않습니다.</span>
+            </div>
+
+            <!-- Chronological Timeline List (동적 렌더링) -->
+            <div id="legalAuditTimelineContainer" class="relative pl-6 space-y-4 before:content-[''] before:absolute before:left-2.5 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-200 text-xs">
+              <!-- Dynamically populated via renderLegalProtectionDashboard() -->
+            </div>
+          </div>
+
+          <!-- Section 4: [L-01 & L-02] 정산 현황별 일반 절차 안내 & 업무 확인 문구 -->
+          <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <i data-lucide="message-square" class="w-4 h-4 text-emerald-600"></i>
+                  <span>정산 현황별 일반 절차 안내 &amp; 업무 확인 문구</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">
+                  정산 지연이나 검수 일정에 대한 일반적인 업무 소통 절차와 함께 프로젝트 데이터가 단순 대입되는 안내 문구를 제공합니다.
+                </p>
+              </div>
+            </div>
+
+            <!-- Problem Selection Tabs -->
+            <div class="space-y-2">
+              <span class="text-xs font-bold text-slate-700 block">현재 어떤 정산 상황이 발생했나요?</span>
+              <div class="flex flex-wrap gap-1.5 text-xs" id="legalProblemTabs">
+                <button type="button" onclick="selectLegalProblem(1)" id="lpTab-1" class="px-3 py-1.5 rounded-xl bg-emerald-600 text-white font-bold transition-all shadow-xs">
+                  ⏱️ 1. 지급 예정일 경과 (지연 1~7일)
+                </button>
+                <button type="button" onclick="selectLegalProblem(2)" id="lpTab-2" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  📵 2. 연락 지연 상황 (14일 이상)
+                </button>
+                <button type="button" onclick="selectLegalProblem(3)" id="lpTab-3" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  ⏳ 3. 검수 일정 미회신
+                </button>
+                <button type="button" onclick="selectLegalProblem(4)" id="lpTab-4" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  📈 4. 추가 작업 범위 협의
+                </button>
+                <button type="button" onclick="selectLegalProblem(5)" id="lpTab-5" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium transition-all">
+                  🛑 5. 정산 관련 이견 및 분쟁 발생
+                </button>
+              </div>
+            </div>
+
+            <!-- Dynamic Problem Guidance Roadmap -->
+            <div id="legalRoadmapCard" class="p-4 rounded-xl bg-indigo-50/70 border border-indigo-200 space-y-2 text-xs">
+              <div class="flex items-center justify-between">
+                <span class="font-bold text-indigo-950 flex items-center gap-1.5" id="legalRoadmapTitle">
+                  <i data-lucide="help-circle" class="w-4 h-4 text-indigo-600"></i>
+                  <span>지급 예정일 경과 (지연 1~7일) 권장 대응 절차</span>
+                </span>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-200 text-indigo-900 font-bold" id="legalRoadmapBadge">1단계: 정중한 확인</span>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-relaxed" id="legalRoadmapDesc">
+                대부분의 초기 지연은 실무 담당자의 세무 결재 일정 누락이나 단순 일정 착오로 발생합니다. 감정적인 독촉 대신 공급가액, 입금 계좌, 발행된 세금계산서 일자를 첨부하여 정중하게 회신을 요청하세요.
+              </p>
+            </div>
+
+            <!-- Message Generation Controls -->
+            <div class="space-y-3 pt-1">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">대상 프로젝트 선택:</label>
+                  <select id="legalMessageProjectSelect" onchange="updateGeneratedLegalMessage()" class="w-full p-2.5 rounded-xl border border-slate-200 bg-white font-medium focus:border-emerald-500 outline-none">
+                    <option value="p1" selected>브랜드 홈페이지 제작 - 글로벌이커머스(주) (미수금 ₩1,500,000, 지연 4일)</option>
+                    <option value="p2">소셜 마케팅 배너 디자인 - 스타트업알파 (미수금 ₩1,700,000, 지연 12일)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-700 mb-1">발송 어조 및 문서 유형:</label>
+                  <div class="grid grid-cols-3 gap-1.5">
+                    <button type="button" onclick="setLegalMessageTone('kakao')" id="msgToneBtn-kakao" class="p-2 rounded-xl bg-emerald-600 text-white font-bold text-center transition-colors shadow-2xs">
+                      카톡 / 문자
+                    </button>
+                    <button type="button" onclick="setLegalMessageTone('email')" id="msgToneBtn-email" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-center transition-colors">
+                      이메일 요청서
+                    </button>
+                    <button type="button" onclick="setLegalMessageTone('formal')" id="msgToneBtn-formal" class="p-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-center transition-colors">
+                      일반 업무 서한
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Message Output Textarea -->
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between text-xs">
+                  <span class="font-bold text-slate-700">작성된 업무 확인 문구 (단순 데이터 기입 서식):</span>
+                  <span class="text-[11px] text-slate-400">프로젝트명, 상대방명, 미수금액, 계좌가 자동 반영됩니다.</span>
+                </div>
+                <textarea id="legalGeneratedMessage" rows="5" class="w-full p-3.5 rounded-xl border border-slate-200 bg-slate-50 text-slate-800 font-mono text-xs leading-relaxed focus:bg-white focus:border-emerald-500 outline-none resize-none"></textarea>
+              </div>
+
+              <!-- Actions & Disclaimer -->
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1">
+                <span class="text-[10px] text-slate-400">※ 본 문구는 사용자가 입력한 거래 정보를 단순 대입한 일반 업무 서식이며, 법률관계 문서가 아닙니다.</span>
+                <div class="flex items-center gap-2 self-end sm:self-auto">
+                  <button type="button" onclick="logLegalMessageSent()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">
+                    발송 기록 남기기
+                  </button>
+                  <button type="button" onclick="copyLegalGeneratedMessage()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all">
+                    <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                    <span>안내 문구 복사하기</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 5: [L-04] 업무 기록 묶음 및 공인 법률 지원 기관 안내 -->
+          <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4">
+            <div class="pb-2 border-b border-slate-100">
+              <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <i data-lucide="scale" class="w-4 h-4 text-indigo-600"></i>
+                <span>업무 기록 묶음 및 공인 법률 지원 기관 안내</span>
+              </h3>
+              <p class="text-xs text-slate-500 mt-0.5">
+                원만한 정산 합의가 어려운 경우 대한법률구조공단(132) 및 공정거래조정원, 대법원 전자소송 등 공식 공공 구제 기관의 일반 절차를 확인하실 수 있습니다.
+              </p>
+            </div>
+
+            <!-- Preparation Checklist -->
+            <div class="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2.5 text-xs">
+              <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="briefcase" class="w-4 h-4 text-indigo-600"></i>
+                <span>상담 및 절차 확인 전 준비 자료 체크리스트:</span>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2 text-[11px]">
+                <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                  <span>1. 체결 계약서 사본</span>
+                  <span class="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">✓ 준비됨</span>
+                </div>
+                <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                  <span>2. 산출물 납품 내역·일시</span>
+                  <span class="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">✓ 타임라인 확보</span>
+                </div>
+                <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                  <span>3. 피드백·수정본 송수신</span>
+                  <span class="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">✓ 이메일 기록</span>
+                </div>
+                <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                  <span>4. 승인 증빙 자료</span>
+                  <span class="font-bold text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">! 캡처 보완 필요</span>
+                </div>
+                <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                  <span>5. 미수금 정산 독촉 이력</span>
+                  <span class="font-bold text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">✓ 2회 발송 기록</span>
+                </div>
+                <div class="p-2.5 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
+                  <span>기록 묶음 다운로드</span>
+                  <button type="button" onclick="exportAuditTimeline()" class="font-bold text-indigo-700 hover:underline">TXT/ZIP 다운로드</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- 1. 용역대금 정산 4단계 일반 업무 절차 & 법령 참고 가이드라인 -->
+            <div class="p-4 sm:p-5 bg-gradient-to-br from-indigo-50/80 via-white to-slate-50 rounded-2xl border border-indigo-200 space-y-3.5 text-xs">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-indigo-100">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-bold text-xs">
+                    <i data-lucide="shield-alert" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-indigo-950 text-xs">용역대금 정산 4단계 일반 업무 절차 &amp; 법령 참고 가이드라인</h4>
+                    <p class="text-[11px] text-indigo-700">납품 직후부터 미수 잔금 정산까지 단계별 권장 업무 소통 채널과 법령 참고 기준을 안내합니다.</p>
+                  </div>
+                </div>
+                <span class="text-[10px] px-2.5 py-1 rounded-full bg-indigo-100 text-indigo-800 font-bold self-start sm:self-auto">
+                  일반 업무 절차 및 관련 법령 안내
+                </span>
+              </div>
+
+              <!-- 4-Step Process Grid -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-[11px]">
+                <!-- Step 1 -->
+                <div class="p-3.5 bg-white rounded-xl border border-indigo-100 space-y-2 flex flex-col justify-between shadow-2xs">
+                  <div class="space-y-1.5">
+                    <div class="flex items-center justify-between">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">1단계 · 납품 당일 (D+0)</span>
+                      <span class="text-[10px] text-slate-400 font-medium">이메일 / 업무 메신저</span>
+                    </div>
+                    <div class="font-bold text-slate-900 text-xs">산출물 전달 및 계약상 검수 일정 안내</div>
+                    <p class="text-slate-600 leading-relaxed text-[10.5px]">
+                      최종 산출물을 공식 채널로 인도하고, 계약서에 약정된 검수 기간 동안의 확인을 요청하며 전달 사실을 기록 보관합니다.
+                    </p>
+                  </div>
+                  <div class="pt-2 border-t border-slate-100 text-[10px] text-indigo-700 font-mono">
+                    참고: 계약서 기재 검수 기한 확인 및 전달 사실 기록
+                  </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="p-3.5 bg-white rounded-xl border border-indigo-100 space-y-2 flex flex-col justify-between shadow-2xs">
+                  <div class="space-y-1.5">
+                    <div class="flex items-center justify-between">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">2단계 · 검수 일정 중 (D+10)</span>
+                      <span class="text-[10px] text-slate-400 font-medium">카카오톡 / 메신저</span>
+                    </div>
+                    <div class="font-bold text-slate-900 text-xs">검수 피드백 확인 및 정산 일정 리마인드</div>
+                    <p class="text-slate-600 leading-relaxed text-[10.5px]">
+                      검수 마감 전 실무자에게 피드백 유무를 가볍게 확인하며 예정 정산 일정(입금일)을 사전 조율합니다.
+                    </p>
+                  </div>
+                  <div class="pt-2 border-t border-slate-100 text-[10px] text-indigo-700 font-mono">
+                    참고: 약정 기한 사전 고지 및 정산 일정 확인
+                  </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="p-3.5 bg-white rounded-xl border border-indigo-100 space-y-2 flex flex-col justify-between shadow-2xs">
+                  <div class="space-y-1.5">
+                    <div class="flex items-center justify-between">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200">3단계 · 검수 기한 경과 (D+14)</span>
+                      <span class="text-[10px] text-slate-400 font-medium">공식 이메일 / 세금계산서</span>
+                    </div>
+                    <div class="font-bold text-slate-900 text-xs">계약상 검수 기간 경과에 따른 대금 정산 요청</div>
+                    <p class="text-slate-600 leading-relaxed text-[10.5px]">
+                      계약서에 정한 검수 기한이 경과한 경우, 계약 조건에 따른 잔금 세금계산서 청구 및 정산 일정을 안내합니다.
+                    </p>
+                  </div>
+                  <div class="pt-2 border-t border-slate-100 text-[10px] text-indigo-700 font-mono">
+                    참고: 계약서상 검수 및 인수 조항 확인
+                  </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="p-3.5 bg-white rounded-xl border border-indigo-100 space-y-2 flex flex-col justify-between shadow-2xs">
+                  <div class="space-y-1.5">
+                    <div class="flex items-center justify-between">
+                      <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">4단계 · 장기 미정산 (D+28~)</span>
+                      <span class="text-[10px] text-slate-400 font-medium">우체국 내용증명 / 공공 상담</span>
+                    </div>
+                    <div class="font-bold text-slate-900 text-xs">정식 서면 안내문 발송 및 공공 기관 상담</div>
+                    <p class="text-slate-600 leading-relaxed text-[10.5px]">
+                      기한을 명시한 정식 서면(내용증명 등)으로 지급을 요청하고, 해결되지 않을 경우 대한법률구조공단 등 공공 기관 상담을 활용합니다.
+                    </p>
+                  </div>
+                  <div class="pt-2 border-t border-slate-100 text-[10px] text-rose-700 font-mono">
+                    참고: 대한법률구조공단(132) 및 대법원 전자소송 절차
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. 용역대금 정산 요청용 내용증명 기본 서식 안내 -->
+            <div class="p-4 sm:p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-3.5 text-xs text-slate-700">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-200">
+                <div class="font-bold text-slate-900 flex items-center gap-2 text-xs">
+                  <i data-lucide="book-open" class="w-4 h-4 text-indigo-600"></i>
+                  <span>용역대금 정산 요청용 내용증명 기본 작성 가이드라인</span>
+                </div>
+                <span class="text-[10px] px-2 py-0.5 rounded bg-indigo-100 text-indigo-800 font-bold self-start sm:self-auto">
+                  대한법률구조공단 실무 서식 참고
+                </span>
+              </div>
+              <p class="text-[11px] leading-relaxed text-slate-600">
+                내용증명은 A4용지를 기준으로, 상대방에게 전달할 내용을 <strong>육하원칙(누가, 언제, 어디서, 무엇을, 어떻게, 왜)</strong>에 따라 명확히 작성하는 일반적인 통지 서식입니다. 문서 상단 또는 하단에 발신인과 수신인의 성명·주소를 명확히 적고 아래의 <strong>필수 6대 항목</strong>을 포함하여 사실관계를 명확히 정리합니다.
+              </p>
+
+              <!-- 6대 필수 기재 항목 그리드 -->
+              <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 text-[11px]">
+                <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+                  <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+                    <span>1. 당사자 인적사항</span>
+                  </div>
+                  <p class="text-[10.5px] text-slate-500 leading-relaxed">
+                    발신인 및 수신인의 성명(법인명 및 대표자 성명), 실제 우편 송달이 가능한 주소와 연락처를 기재합니다.
+                  </p>
+                </div>
+
+                <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+                  <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+                    <span>2. 명확한 문서 제목</span>
+                  </div>
+                  <p class="text-[10.5px] text-slate-500 leading-relaxed">
+                    예시: <code>'용역대금(미수금) 지급 요청의 건'</code> 또는 <code>'계약 이행에 따른 정산 촉구의 건'</code>과 같이 취지를 명확히 합니다.
+                  </p>
+                </div>
+
+                <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+                  <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+                    <span>3. 계약 및 납품 사실 적시</span>
+                  </div>
+                  <p class="text-[10.5px] text-slate-500 leading-relaxed">
+                    계약 체결일, 프로젝트명, 총 계약금액, 산출물 최종 납품 일시를 육하원칙에 따라 객관적 사실로 기술합니다.
+                  </p>
+                </div>
+
+                <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+                  <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+                    <span>4. 미지급 잔액 및 지급 기한</span>
+                  </div>
+                  <p class="text-[10.5px] text-slate-500 leading-relaxed">
+                    미지급된 잔금 원금(VAT 포함/별도 명시)과 본 서면 도달일로부터 통상 7일 이내의 기한을 지정합니다.
+                  </p>
+                </div>
+
+                <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+                  <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+                    <span>5. 입금 지정 계좌</span>
+                  </div>
+                  <p class="text-[10.5px] text-slate-500 leading-relaxed">
+                    발신인(계약 당사자) 명의의 거래 은행, 계좌번호, 예금주를 정확히 기재하여 안내합니다.
+                  </p>
+                </div>
+
+                <div class="p-3 bg-white rounded-xl border border-slate-200 space-y-1">
+                  <div class="font-bold text-slate-800 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+                    <span>6. 미이행 시 후속 절차 안내</span>
+                  </div>
+                  <p class="text-[10.5px] text-slate-500 leading-relaxed">
+                    기한 내 미입금 시 공정거래조정원 분쟁 조정 신청 또는 관할 법원 지급명령 신청 등 후속 절차 착수 예정 사실을 기재합니다.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Practical Tip Box -->
+              <div class="p-3 bg-indigo-50/70 rounded-xl border border-indigo-200 text-indigo-950 text-[11px] flex items-start gap-2">
+                <i data-lucide="lightbulb" class="w-4 h-4 text-indigo-600 shrink-0 mt-0.5"></i>
+                <div class="leading-relaxed">
+                  <strong>💡 실무 작성 팁:</strong> 감정적인 비난을 배제하고, 계약 체결 사실-납품 내역-약정 기일-미입금 사실을 육하원칙에 따라 건조하고 엄정하게 서술하는 것이 객관적 증빙 정리에 유리합니다.<br>
+                  <span class="text-[10px] text-slate-500">※ 본 가이드는 사실관계 정리를 돕는 일반적인 작성 서식 안내이며, 개별 사안에 관한 법률서면 작성 대행이나 법률자문이 아닙니다.</span>
+                </div>
+              </div>
+            <!-- 4 Official Government Legal Support Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs">
+              <!-- 1. 대한법률구조공단 -->
+              <div class="p-3.5 bg-white rounded-xl border border-slate-200 space-y-2 flex flex-col justify-between">
+                <div>
+                  <span class="font-bold text-slate-900 block">대한법률구조공단</span>
+                  <p class="text-[11px] text-slate-500 mt-0.5">전국 무료 법률상담 및 소송 지원 (기준 중위소득 충족 시 무료 지원)</p>
+                </div>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                  <a href="tel:132" class="text-emerald-700 font-mono font-bold hover:underline">국번없이 132</a>
+                  <a href="https://www.klac.or.kr" target="_blank" rel="noopener noreferrer" class="text-indigo-600 font-bold hover:underline flex items-center gap-1">
+                    <span>홈페이지</span>
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 2. 대법원 전자소송 -->
+              <div class="p-3.5 bg-white rounded-xl border border-slate-200 space-y-2 flex flex-col justify-between">
+                <div>
+                  <span class="font-bold text-slate-900 block">대법원 전자소송 포털</span>
+                  <p class="text-[11px] text-slate-500 mt-0.5">변호사 없이 온라인으로 진행하는 나홀로 지급명령 및 소액 소송</p>
+                </div>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                  <span class="text-slate-400 text-[10px]">지급명령 신청</span>
+                  <a href="https://ecfs.scourt.go.kr" target="_blank" rel="noopener noreferrer" class="text-indigo-600 font-bold hover:underline flex items-center gap-1">
+                    <span>전자소송 접수</span>
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 3. 한국공정거래조정원 -->
+              <div class="p-3.5 bg-white rounded-xl border border-slate-200 space-y-2 flex flex-col justify-between">
+                <div>
+                  <span class="font-bold text-slate-900 block">한국공정거래조정원</span>
+                  <p class="text-[11px] text-slate-500 mt-0.5">용역 하도급 대금 미지급 및 불공정 거래 행위 무료 분쟁 조정</p>
+                </div>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                  <span class="font-mono font-bold text-slate-700">1588-1490</span>
+                  <a href="https://www.kofair.or.kr" target="_blank" rel="noopener noreferrer" class="text-indigo-600 font-bold hover:underline flex items-center gap-1">
+                    <span>분쟁조정 신청</span>
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                  </a>
+                </div>
+              </div>
+
+              <!-- 4. 한국예술인복지재단 -->
+              <div class="p-3.5 bg-white rounded-xl border border-slate-200 space-y-2 flex flex-col justify-between">
+                <div>
+                  <span class="font-bold text-slate-900 block">한국예술인복지재단</span>
+                  <p class="text-[11px] text-slate-500 mt-0.5">문화·예술·디자인·출판 분야 예술인 신문고 및 법률 컨설팅</p>
+                </div>
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                  <span class="font-mono font-bold text-slate-700">02-3668-0200</span>
+                  <a href="http://www.kawf.kr" target="_blank" rel="noopener noreferrer" class="text-indigo-600 font-bold hover:underline flex items-center gap-1">
+                    <span>신문고 접수</span>
+                    <i data-lucide="external-link" class="w-3 h-3"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 내용증명 표준 HWPX 서식 다운로드 바 -->
+            <div class="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+              <div class="space-y-0.5">
+                <div class="font-bold text-emerald-950 flex items-center gap-1.5">
+                  <i data-lucide="file-text" class="w-4 h-4 text-emerald-600"></i>
+                  <span>내용증명 표준 서식 (대한법률구조공단 용역대금 청구용 HWPX)</span>
+                </div>
+                <p class="text-[11px] text-emerald-800">우체국 내용증명 발송에 최적화된 공인 표준 서식 파일을 바로 다운로드할 수 있습니다.</p>
+              </div>
+              <button type="button" onclick="downloadLegalDoc()" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all shrink-0">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>양식 다운로드 (.hwpx)</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+

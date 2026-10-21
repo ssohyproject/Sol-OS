@@ -1,0 +1,42 @@
+  <!-- ==================== MODAL 12: 입금 예정 대금(받을 돈) 상세 내역 ==================== -->
+  <div id="receivablesDetailModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shadow-xs">
+            <i data-lucide="arrow-down-left" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900">입금 예정 대금 (정산 대기) 상세</h2>
+            <p class="text-[11px] text-slate-500">클라이언트별 계약 정산일 및 입금 대기 상태를 실시간 확인합니다.</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeReceivablesDetailModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Total Summary Bar -->
+      <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between text-xs">
+        <div>
+          <span class="text-slate-500">총 미수 채권:</span>
+          <strong class="font-mono text-base font-black text-blue-700 ml-1.5" id="rdmTotalAmount">₩0</strong>
+        </div>
+        <span class="text-[11px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-bold" id="rdmCountBadge">0건</span>
+      </div>
+
+      <!-- Receivables List Container -->
+      <div class="max-h-[260px] overflow-y-auto space-y-2 pr-1 text-xs" id="rdmListContainer">
+        <!-- Dynamically injected -->
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+        <button type="button" onclick="closeReceivablesDetailModal(); switchSubView('settlement');" class="text-blue-600 font-bold text-xs hover:underline flex items-center gap-1">
+          <span>정산 관리 페이지에서 미수금 수금 관리하기</span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+        </button>
+        <button type="button" onclick="closeReceivablesDetailModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">닫기</button>
+      </div>
+    </div>
+  </div>
+

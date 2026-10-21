@@ -1,0 +1,55 @@
+  <!-- ==================== MODAL 17: 검수 결과 및 승인 기록 모달 ==================== -->
+  <div id="recordInspectionModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-md w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-xs">
+            <i data-lucide="clipboard-check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900">검수 결과 및 승인 기록</h2>
+            <p class="text-[11px] text-slate-500">클라이언트의 피드백이나 최종 승인 내역을 기록합니다.</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeRecordInspectionModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="recordInspectionForm" onsubmit="handleRecordInspectionSubmit(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">대상 프로젝트</label>
+          <input type="text" id="rifProjectName" readonly value="브랜드 홈페이지 제작" class="w-full p-2.5 rounded-xl border border-slate-200 bg-slate-50 font-bold text-slate-900">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">검수 상태 변경 <span class="text-rose-500">*</span></label>
+          <select id="rifStatusSelect" class="w-full p-2.5 rounded-xl border border-slate-200 bg-white font-bold text-slate-900">
+            <option value="waiting">검수 진행 대기 중</option>
+            <option value="revision">클라이언트 수정 요청 접수</option>
+            <option value="approved">최종 승인 완료 (검수 통과)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">검수 의견 / 피드백 메모</label>
+          <textarea id="rifNotes" rows="3" placeholder="예: 메인 배너 슬라이더 속도 조절 요청 수신 또는 이메일로 최종 승인 회신 수신" class="w-full p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-emerald-500 text-xs resize-none"></textarea>
+        </div>
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input type="checkbox" id="rifVerifiedCheck" class="rounded text-emerald-600 focus:ring-emerald-500">
+            <span class="font-bold text-slate-800 text-[11px]">클라이언트의 서면/이메일 승인 증빙 확보됨</span>
+          </label>
+          <p class="text-[10px] text-slate-500 leading-normal">
+            ※ 승인 근거 없이 임의로 '승인 완료' 처리할 경우 분쟁 시 법적 입증에 불리할 수 있습니다.
+          </p>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+          <button type="button" onclick="closeRecordInspectionModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">취소</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-sm transition-all">
+            검수 기록 저장
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+

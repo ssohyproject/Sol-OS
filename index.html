@@ -160,7 +160,9 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-brand-500/20 selection:text-brand-700 h-screen flex flex-col font-sans overflow-hidden">
 
-  <!-- ==================== TOP NAVIGATION HEADER ==================== -->
+
+  <!-- TOP NAVIGATION HEADER -->
+    <!-- ==================== TOP NAVIGATION HEADER ==================== -->
   <header class="shrink-0 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md px-4 lg:px-6 py-2.5 flex items-center justify-between gap-3 shadow-sm z-30">
     <!-- Left: Brand Logo & Workstream Dropdown placed together on Left -->
     <div class="flex items-center gap-3">
@@ -242,10 +244,13 @@
     </div>
   </header>
 
+
   <!-- ==================== MAIN CONTENT WRAPPER ==================== -->
   <div class="flex-1 flex overflow-hidden relative">
 
-    <!-- MOBILE SIDEBAR BACKDROP OVERLAY -->
+
+    <!-- SIDEBAR NAVIGATION & OVERLAY -->
+        <!-- MOBILE SIDEBAR BACKDROP OVERLAY -->
     <div id="sidebarBackdrop" onclick="closeSidebarDrawer()" class="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm hidden lg:hidden transition-opacity"></div>
 
     <!-- LEFT SIDEBAR (반응형 유동적 Drawer / Desktop Fixed Navigation) -->
@@ -422,12 +427,15 @@
     </aside>
 
     <!-- RIGHT MAIN SCROLLABLE CONTAINER (독립 스크롤 영역) -->
+
     <main class="flex-1 overflow-y-auto px-4 lg:px-8 py-6 space-y-6 bg-slate-50" id="mainContentArea">
 
       <!-- ==================== VIEW 1: DASHBOARD MODE (메인 대시보드) ==================== -->
       <div id="dashboardView" class="space-y-6">
         
-        <!-- ==================== SUBVIEW 1: 메인 대시보드 (일정 좌측, 자금 흐름 우측 배치) ==================== -->
+
+        <!-- SUBVIEWS (1~6) -->
+                <!-- ==================== SUBVIEW 1: 메인 대시보드 (일정 좌측, 자금 흐름 우측 배치) ==================== -->
         <div id="subview-overview" class="space-y-6">
           
           <!-- Overview Executive Header -->
@@ -658,7 +666,8 @@
 
         </div>
 
-        <!-- ==================== SUBVIEW 1.5: 세부 일정 관리 (전체 캘린더 & 세부 프로젝트 관리) ==================== -->
+
+                <!-- ==================== SUBVIEW 1.5: 세부 일정 관리 (전체 캘린더 & 세부 프로젝트 관리) ==================== -->
         <div id="subview-schedule" class="space-y-6 hidden">
           
           <!-- Header -->
@@ -927,7 +936,8 @@
           </div>
         </div>
 
-        <!-- ==================== SUBVIEW 2: 자금 현황 ==================== -->
+
+                <!-- ==================== SUBVIEW 2: 자금 현황 ==================== -->
         <div id="subview-statements" class="space-y-6 hidden">
           
           <!-- Subview Header -->
@@ -1320,7 +1330,8 @@
 
         </div>
 
-        <!-- ==================== SUBVIEW 3: 자금 정리 ==================== -->
+
+                <!-- ==================== SUBVIEW 3: 자금 정리 ==================== -->
         <div id="subview-ledger" class="space-y-6 hidden">
           
           <!-- Subview Header -->
@@ -1489,7 +1500,8 @@
           </div>
         </div>
 
-        <!-- ==================== SUBVIEW: 세금 관리 ==================== -->
+
+                <!-- ==================== SUBVIEW: 세금 관리 ==================== -->
         <div id="subview-tax" class="space-y-6 hidden">
           
           <!-- Subview Header -->
@@ -1971,7 +1983,8 @@
 
         </div>
 
-        <!-- ==================== SUBVIEW 4-A: 계약 ==================== -->
+
+                <!-- ==================== SUBVIEW 4-A: 계약 ==================== -->
         <div id="subview-contract" class="space-y-6 hidden">
           <!-- Subview Header -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200/80">
@@ -2488,7 +2501,8 @@
           </div>
         </div>
 
-        <!-- ==================== SUBVIEW 4-B: 법적 보호 ==================== -->
+
+                <!-- ==================== SUBVIEW 4-B: 법적 보호 ==================== -->
         <div id="subview-legal" class="space-y-6 hidden">
           <!-- Subview Header -->
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200/80">
@@ -3031,7 +3045,8 @@
         </div>
       </div>
 
-        <!-- ==================== SUBVIEW 5: 정산관리 ==================== -->
+
+                <!-- ==================== SUBVIEW 5: 정산관리 ==================== -->
         <div id="subview-settlement" class="space-y-6 hidden">
           
           <!-- Subview Header: 제목 + 청구 내역 등록 버튼 -->
@@ -3101,7 +3116,8 @@
 
         </div>
 
-        <!-- ==================== SUBVIEW 6: 클라이언트 관리 ==================== -->
+
+                <!-- ==================== SUBVIEW 6: 클라이언트 관리 ==================== -->
         <div id="subview-clients" class="space-y-6 hidden">
           
           <!-- Subview Header: 제목 + 등급 기준 툴팁(호버 팝오버) + 기업 등록 버튼 -->
@@ -3209,7 +3225,10 @@
 
       </div>
 
-      <!-- ==================== VIEW 2: CONVERSATIONAL AGENT MODE (대화형 에이전트 모드) ==================== -->
+      </div>
+
+      <!-- VIEW 2: CONVERSATIONAL AGENT MODE -->
+            <!-- ==================== VIEW 2: CONVERSATIONAL AGENT MODE (대화형 에이전트 모드) ==================== -->
       <div id="conversationalView" class="hidden max-w-4xl mx-auto space-y-6">
         
         <!-- Conversational Header -->
@@ -3288,12 +3307,13 @@
 
       </div>
 
+
+
     </main>
   </div>
 
   <!-- ==================== MODALS ==================== -->
-
-  <!-- MODAL 1: First Visit Onboarding Modal -->
+    <!-- MODAL 1: First Visit Onboarding Modal -->
   <div id="onboardingModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-xl w-full bg-white rounded-3xl p-6 lg:p-8 border border-slate-200 shadow-2xl space-y-6 relative">
       <!-- Close Button -->
@@ -3352,7 +3372,8 @@
     </div>
   </div>
 
-  <!-- MODAL 2: Realistic Privacy-First Smart Ingestion Modal (3대 세무 정밀 반영) -->
+
+    <!-- MODAL 2: Realistic Privacy-First Smart Ingestion Modal (3대 세무 정밀 반영) -->
   <div id="smartIngestionModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-2xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5">
       <div class="flex items-center justify-between">
@@ -3371,7 +3392,7 @@
       </div>
 
       <!-- Hidden File Input for Real Drag/Drop & File Selection -->
-      <input type="file" id="ledgerFileInput" accept=".xlsx,.xls,.csv,.pdf,.jpg,.jpeg,.png,.heic" class="hidden" onchange="handleLedgerFileInput(event)">
+      <input type="file" id="ledgerFileInput" accept=".xlsx,.xls,.csv,.pdf,.jpg,.jpeg,.png,.heic,.heif,.webp,image/*" class="hidden" onchange="handleLedgerFileInput(event)">
 
       <!-- Ingestion Tabs (중복된 PDF 탭 삭제 후 3개 탭 구성) -->
       <div class="flex border-b border-slate-200 gap-2 text-xs">
@@ -3549,7 +3570,8 @@
     </div>
   </div>
 
-  <!-- MODAL: Receipt OCR Confirmation & Auto-Journaling Modal -->
+
+    <!-- MODAL: Receipt OCR Confirmation & Auto-Journaling Modal -->
   <div id="receiptConfirmModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-2xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5 max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -3639,7 +3661,8 @@
     </div>
   </div>
 
-  <!-- MODAL 3: Legal Shield Proof Generator (3단계 입금 요청 & 내용증명) -->
+
+    <!-- MODAL 3: Legal Shield Proof Generator (3단계 입금 요청 & 내용증명) -->
   <div id="legalCertModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-xl w-full bg-white rounded-3xl border border-slate-200 shadow-2xl flex flex-col max-h-[88vh] overflow-hidden">
       <!-- Fixed Modal Header -->
@@ -3865,7 +3888,8 @@
   </div>
 
 
-  <!-- MODAL 5: Detailed Task Modal & MCP Calendar Integration -->
+
+    <!-- MODAL 5: Detailed Task Modal & MCP Calendar Integration -->
   <div id="taskModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -4027,7 +4051,8 @@
     </div>
   </div>
 
-  <!-- MODAL 6: Mobile QR Code & PWS Modal -->
+
+    <!-- MODAL 6: Mobile QR Code & PWS Modal -->
   <div id="qrModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-md w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5 text-center">
       <div class="flex items-center justify-between pb-2 border-b border-slate-100">
@@ -4081,7 +4106,8 @@
     </div>
   </div>
 
-  <!-- MODAL 7: Client Profile Registration & Edit Modal -->
+
+    <!-- MODAL 7: Client Profile Registration & Edit Modal -->
   <div id="clientModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -4203,7 +4229,8 @@
     </div>
   </div>
 
-  <!-- MODAL 8: Settlement & Receivable Entry/Edit Modal -->
+
+    <!-- MODAL 8: Settlement & Receivable Entry/Edit Modal -->
   <div id="receivableModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-lg w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -4276,6 +4303,7 @@
     </div>
   </div>
 
+  
   <!-- ==================== MODAL 7: 회원가입 & 로그인 모달 (Auth Modal) ==================== -->
   <div id="authModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 md:p-6">
     <div class="max-w-4xl w-full bg-white rounded-3xl border border-slate-200 shadow-2xl overflow-hidden max-h-[92vh] flex flex-col md:flex-row">
@@ -4508,7 +4536,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 8: Google Workspace 연동 센터 (Calendar & Drive) ==================== -->
+
+    <!-- ==================== MODAL 8: Google Workspace 연동 센터 (Calendar & Drive) ==================== -->
   <div id="googleModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-2xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5 max-h-[92vh] overflow-y-auto">
       <!-- Modal Header -->
@@ -4643,7 +4672,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 9: Model Context Protocol (MCP) 연동 센터 ==================== -->
+
+    <!-- ==================== MODAL 9: Model Context Protocol (MCP) 연동 센터 ==================== -->
   <div id="mcpModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-2xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5 max-h-[92vh] overflow-y-auto">
       <!-- Modal Header -->
@@ -4863,7 +4893,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 10: 사업 통장 잔고 및 세금 통장 설정 ==================== -->
+
+    <!-- ==================== MODAL 10: 사업 통장 잔고 및 세금 통장 설정 ==================== -->
   <div id="accountBalanceModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-md w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5">
       <!-- Modal Header -->
@@ -4951,7 +4982,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 11: 현금 유지 가능 기간(Runway) 계산 기준 ==================== -->
+
+    <!-- ==================== MODAL 11: 현금 유지 가능 기간(Runway) 계산 기준 ==================== -->
   <div id="runwayFormulaModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-lg w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -5024,7 +5056,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 12: 입금 예정 대금(받을 돈) 상세 내역 ==================== -->
+
+    <!-- ==================== MODAL 12: 입금 예정 대금(받을 돈) 상세 내역 ==================== -->
   <div id="receivablesDetailModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -5066,7 +5099,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 13: 예정 지출 및 세무 부채 상세 내역 ==================== -->
+
+    <!-- ==================== MODAL 13: 예정 지출 및 세무 부채 상세 내역 ==================== -->
   <div id="liabilitiesDetailModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="max-w-xl w-full bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-2xl space-y-4 my-6 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -5227,7 +5261,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL: 매월 고정 지출 및 출금일(결제일) 설정 모달 ==================== -->
+
+    <!-- ==================== MODAL: 매월 고정 지출 및 출금일(결제일) 설정 모달 ==================== -->
   <div id="fixedExpenseScheduleModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -5305,7 +5340,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 20: 일정·자금·세금·계약 4-Way 실시간 자동 얼라인 허브 및 시각화 구조도 ==================== -->
+
+    <!-- ==================== MODAL 20: 일정·자금·세금·계약 4-Way 실시간 자동 얼라인 허브 및 시각화 구조도 ==================== -->
   <div id="alignmentArchitectureModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
     <div class="max-w-3xl w-full bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-2xl space-y-5 my-6 max-h-[90vh] overflow-y-auto">
       <!-- Header -->
@@ -5504,7 +5540,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 14: 세무 일정 상세 확인 및 조치 가이드 ==================== -->
+
+    <!-- ==================== MODAL 14: 세무 일정 상세 확인 및 조치 가이드 ==================== -->
   <div id="taxActionModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-lg w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -5566,7 +5603,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 15: 공식 표준계약서 서식 미리보기 모달 ==================== -->
+
+    <!-- ==================== MODAL 15: 공식 표준계약서 서식 미리보기 모달 ==================== -->
   <div id="contractPreviewModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-2xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -5624,7 +5662,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 16: 새 계약 등록 모달 ==================== -->
+
+    <!-- ==================== MODAL 16: 새 계약 등록 모달 ==================== -->
   <div id="contractRegisterModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-md w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -5692,7 +5731,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 17: 검수 결과 및 승인 기록 모달 ==================== -->
+
+    <!-- ==================== MODAL 17: 검수 결과 및 승인 기록 모달 ==================== -->
   <div id="recordInspectionModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-md w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -5747,7 +5787,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 18: [L-03] 납품·검수 기록 문서 생성 (PDF) 모달 ==================== -->
+
+    <!-- ==================== MODAL 18: [L-03] 납품·검수 기록 문서 생성 (PDF) 모달 ==================== -->
   <div id="legalDocPdfModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-lg w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -5835,7 +5876,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 19: 새 증빙 타임라인 기록 추가 모달 ==================== -->
+
+    <!-- ==================== MODAL 19: 새 증빙 타임라인 기록 추가 모달 ==================== -->
   <div id="addTimelineModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-md w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4">
       <div class="flex items-center justify-between pb-3 border-b border-slate-100">
@@ -5884,7 +5926,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 21: 체결 계약 통합 상세 & 4-Way 실시간 자동 얼라인 검토 모달 ==================== -->
+
+    <!-- ==================== MODAL 21: 체결 계약 통합 상세 & 4-Way 실시간 자동 얼라인 검토 모달 ==================== -->
   <div id="contractDetailModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-2xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5 max-h-[92vh] overflow-y-auto">
       <!-- Modal Header -->
@@ -6002,7 +6045,8 @@
     </div>
   </div>
 
-  <!-- ==================== MODAL 22: 서비스 이용약관 및 개인정보 처리방침 전문 모달 ==================== -->
+
+    <!-- ==================== MODAL 22: 서비스 이용약관 및 개인정보 처리방침 전문 모달 ==================== -->
   <div id="privacyTermsModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="max-w-2xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
       <!-- Modal Header -->
@@ -6104,6 +6148,7 @@
     </div>
   </div>
 
+
   <!-- ==================== JAVASCRIPT MODULAR ARCHITECTURE ==================== -->
   <!-- 0. Firebase Official SDK (Compat Mode for PWS: Auth & Firestore) -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
@@ -6123,10 +6168,39 @@
   </script>
 
   <!-- 1. Pure Tax & Financial Engine (Calculations, 3.3% Reverse, Waterfall, Runway) -->
-  <script src="./js/tax-engine.js?v=20261017_11"></script>
+  <script src="./js/tax-engine.js?v=20261021_v11"></script>
   <!-- 2. Firebase & PWS Cloud Sync Layer (Auth, Firestore, Offline Sync) -->
-  <script src="./js/firebase-service.js?v=20261017_11"></script>
-  <!-- 3. Main PWS App Controller (UI, Charts, Calendar, Modals, State) -->
-  <script src="./js/app.js?v=20261019_v10receipts"></script>
+  <script src="./js/firebase-service.js?v=20261021_v11"></script>
+
+  <!-- 3. SoloOS Modular Core Layer -->
+  <script src="./js/core/ui-utils.js?v=20261021_v11"></script>
+  <script src="./js/core/state.js?v=20261021_v11"></script>
+  <script src="./js/core/router.js?v=20261021_v11"></script>
+  <script src="./js/core/auth.js?v=20261021_v11"></script>
+
+  <!-- 4. SoloOS Domain Pages Layer -->
+  <script src="./js/pages/overview.js?v=20261021_v11"></script>
+  <script src="./js/pages/schedule.js?v=20261021_v11"></script>
+  <script src="./js/pages/statements.js?v=20261021_v11"></script>
+  <script src="./js/pages/ledger.js?v=20261021_v11"></script>
+  <script src="./js/pages/settlement.js?v=20261021_v11"></script>
+  <script src="./js/pages/clients.js?v=20261021_v11"></script>
+  <script src="./js/pages/tax.js?v=20261021_v11"></script>
+  <script src="./js/pages/contract.js?v=20261021_v11"></script>
+  <script src="./js/pages/legal.js?v=20261021_v11"></script>
+  <script src="./js/pages/agent.js?v=20261021_v11"></script>
+
+  <!-- 5. SoloOS Modals Layer -->
+  <script src="./js/modals/smart-ingestion.js?v=20261021_v11"></script>
+  <script src="./js/modals/task-modal.js?v=20261021_v11"></script>
+  <script src="./js/modals/client-modal.js?v=20261021_v11"></script>
+  <script src="./js/modals/receivable-modal.js?v=20261021_v11"></script>
+  <script src="./js/modals/contract-detail-modal.js?v=20261021_v11"></script>
+  <script src="./js/modals/google-modal.js?v=20261021_v11"></script>
+  <script src="./js/modals/mcp-modal.js?v=20261021_v11"></script>
+  <script src="./js/modals/privacy-terms.js?v=20261021_v11"></script>
+
+  <!-- 6. Main Application Bootstrap Entry Point -->
+  <script src="./js/app.js?v=20261021_v11"></script>
 </body>
 </html>

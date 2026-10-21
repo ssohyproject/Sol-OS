@@ -1,0 +1,177 @@
+    <!-- MOBILE SIDEBAR BACKDROP OVERLAY -->
+    <div id="sidebarBackdrop" onclick="closeSidebarDrawer()" class="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm hidden lg:hidden transition-opacity"></div>
+
+    <!-- LEFT SIDEBAR (반응형 유동적 Drawer / Desktop Fixed Navigation) -->
+    <aside id="mainSidebar" class="fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 px-3.5 pt-2 pb-3 flex flex-col justify-between shadow-2xl lg:shadow-none transition-transform duration-300 -translate-x-full lg:static lg:translate-x-0 lg:w-64 lg:shrink-0 lg:flex h-full overflow-y-auto">
+      
+      <div class="space-y-3">
+        <!-- Mobile Drawer Close Header -->
+        <div class="flex items-center justify-between lg:hidden pb-1.5 border-b border-slate-100">
+          <span class="font-bold text-sm text-slate-900 flex items-center gap-2">
+            <i data-lucide="shield" class="w-4 h-4 text-brand-600"></i>
+            <span>SoloOS 메뉴</span>
+          </span>
+          <button type="button" onclick="closeSidebarDrawer()" class="p-1 text-slate-400 hover:text-slate-700 rounded-lg">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- Quick Working Capital Status (여백 3/4 축소) -->
+        <div class="p-3.5 rounded-2xl bg-gradient-to-br from-slate-50 to-indigo-50/40 border border-slate-200">
+          <div class="flex items-center justify-between text-xs text-slate-500 mb-1">
+            <span class="term-working-capital font-medium">사업 통장 잔고</span>
+            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          </div>
+          <div class="text-xl font-black tracking-tight text-slate-900 mb-1" id="sidebarBalanceText">₩0</div>
+          <div class="flex items-center justify-between text-[11px] text-slate-500 pt-1.5 border-t border-slate-200">
+            <span>유지 가능 기간:</span>
+            <span class="font-bold text-emerald-600" id="sidebarRunwayText">0.0개월 (비움)</span>
+          </div>
+        </div>
+
+        <!-- Navigation Links (1뎁스 메인 대시보드 및 3대 관리 계층형 IA) -->
+        <nav class="flex flex-col gap-2 text-xs font-medium" id="sidebarNav">
+          <!-- 1. 메인 대시보드 (1뎁스 최상위) -->
+          <button type="button" onclick="switchSubView('overview')" id="nav-overview" class="sidebar-nav-link flex items-center gap-2.5 px-3 py-2 rounded-xl bg-brand-50 text-brand-700 font-bold border border-brand-200 transition-all text-left">
+            <i data-lucide="layout-grid" class="w-4 h-4 text-brand-600"></i>
+            <span class="text-xs">메인 대시보드</span>
+          </button>
+
+          <!-- 2. 일정 관리 (1뎁스 그룹) -->
+          <div class="space-y-1 pt-1">
+            <button type="button" onclick="toggleNavGroup('schedule')" class="w-full flex items-center justify-between px-2.5 py-1 text-xs font-bold text-slate-700 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors group">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="chevron-down" id="navGroupIcon-schedule" class="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 transition-transform"></i>
+                <i data-lucide="calendar" class="w-3.5 h-3.5 text-indigo-600"></i>
+                <span>일정 관리</span>
+              </span>
+            </button>
+            <!-- 하위 2뎁스 세부 페이지 (Image 2 채널 스타일) -->
+            <div id="navGroupContent-schedule" class="ml-3 pl-2.5 border-l border-slate-200 space-y-0.5">
+              <button type="button" onclick="switchSubView('schedule')" id="nav-schedule" class="sidebar-nav-link w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all text-left">
+                <span class="text-slate-400 font-mono text-[11px]">#</span>
+                <span class="truncate">세부 일정 관리</span>
+              </button>
+              <button type="button" onclick="switchSubView('settlement')" id="nav-settlement" class="sidebar-nav-link w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all text-left">
+                <span class="text-slate-400 font-mono text-[11px]">#</span>
+                <span class="truncate">정산 관리</span>
+              </button>
+              <button type="button" onclick="switchSubView('clients')" id="nav-clients" class="sidebar-nav-link w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all text-left">
+                <span class="text-slate-400 font-mono text-[11px]">#</span>
+                <span class="truncate">클라이언트 관리</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. 자금 관리 (1뎁스 그룹) -->
+          <div class="space-y-1 pt-1">
+            <button type="button" onclick="toggleNavGroup('finance')" class="w-full flex items-center justify-between px-2.5 py-1 text-xs font-bold text-slate-700 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors group">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="chevron-down" id="navGroupIcon-finance" class="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 transition-transform"></i>
+                <i data-lucide="wallet" class="w-3.5 h-3.5 text-emerald-600"></i>
+                <span>자금 관리</span>
+              </span>
+            </button>
+            <!-- 하위 2뎁스 세부 페이지 -->
+            <div id="navGroupContent-finance" class="ml-3 pl-2.5 border-l border-slate-200 space-y-0.5">
+              <button type="button" onclick="switchSubView('statements')" id="nav-statements" class="sidebar-nav-link w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all text-left">
+                <span class="text-slate-400 font-mono text-[11px]">#</span>
+                <span class="truncate">자금 현황</span>
+              </button>
+              <button type="button" onclick="switchSubView('ledger')" id="nav-ledger" class="sidebar-nav-link w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all text-left">
+                <span class="text-slate-400 font-mono text-[11px]">#</span>
+                <span class="truncate">자금 정리</span>
+              </button>
+              <button type="button" onclick="switchSubView('tax')" id="nav-tax" class="sidebar-nav-link w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all text-left">
+                <span class="text-slate-400 font-mono text-[11px]">#</span>
+                <span class="truncate">세금 관리</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. 계약 관리 (1뎁스 그룹) -->
+          <div class="space-y-1 pt-1">
+            <button type="button" onclick="toggleNavGroup('legal')" class="w-full flex items-center justify-between px-2.5 py-1 text-xs font-bold text-slate-700 hover:text-slate-900 rounded-lg hover:bg-slate-100 transition-colors group">
+              <span class="flex items-center gap-1.5">
+                <i data-lucide="chevron-down" id="navGroupIcon-legal" class="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 transition-transform"></i>
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-blue-600"></i>
+                <span>계약 관리</span>
+              </span>
+            </button>
+            <!-- 하위 2뎁스 세부 페이지 ("계약", "법적 보호" 분리 및 묶음) -->
+            <div id="navGroupContent-legal" class="ml-3 pl-2.5 border-l border-slate-200 space-y-0.5">
+              <button type="button" onclick="switchSubView('contract')" id="nav-contract" class="sidebar-nav-link w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all text-left">
+                <span class="text-slate-400 font-mono text-[11px]">#</span>
+                <span class="truncate">계약</span>
+              </button>
+              <button type="button" onclick="switchSubView('legal')" id="nav-legal" class="sidebar-nav-link w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-all text-left">
+                <span class="text-slate-400 font-mono text-[11px]">#</span>
+                <span class="truncate">법적 보호</span>
+              </button>
+            </div>
+          </div>
+        </nav>
+      </div>
+
+      <!-- Bottom Sidebar: 계정 프로필 & 연동 메뉴 (상단 네비게이션 바 우측에서 이전 통합) -->
+      <div id="sidebarAuthArea" class="pt-3 border-t border-slate-200 relative">
+        <!-- 비로그인 게스트 안내 미니 카드 (로그인/회원가입 위) -->
+        <div id="guestProtectionBanner" class="mb-2.5 p-3 rounded-xl bg-slate-100/90 border border-slate-200/90 text-slate-700 transition-all space-y-2">
+          <p class="text-[11px] text-slate-500 leading-relaxed break-keep font-medium">
+            로그인하여 나만의 워크스페이스를 시작하세요.
+          </p>
+          <button type="button" onclick="loadSampleDemoWorkspace()" class="w-full py-1.5 px-2.5 rounded-lg bg-white hover:bg-slate-50 text-slate-700 hover:text-brand-600 text-[11px] font-bold border border-slate-200 shadow-2xs flex items-center justify-center gap-1.5 transition-all">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
+            <span>샘플 데이터 복구</span>
+          </button>
+        </div>
+
+        <!-- 비로그인 상태 (기본 숨김 또는 미인증 시 노출) -->
+        <div id="sidebarAuthButtons" class="flex items-center gap-2">
+          <button type="button" onclick="openAuthModal('login')" id="sidebarLoginBtn" class="flex-1 py-2 rounded-xl text-xs font-bold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-all text-center">
+            로그인
+          </button>
+          <button type="button" onclick="openAuthModal('register')" id="sidebarRegisterBtn" class="flex-1 py-2 rounded-xl text-xs font-bold bg-brand-600 hover:bg-brand-700 text-white shadow-xs transition-all text-center">
+            회원가입
+          </button>
+        </div>
+
+        <!-- 로그인 상태: 계정 카드 & 클릭 시 위로 펼쳐지는 드롭다운 메뉴 -->
+        <div id="sidebarUserBadge" class="hidden relative">
+          <button type="button" onclick="toggleUserDropdown(event)" class="w-full flex items-center justify-between p-2 rounded-2xl bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-all group">
+            <div class="flex items-center gap-2.5 truncate">
+              <div class="w-8 h-8 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs font-bold shrink-0 shadow-xs" id="sidebarAvatarText">
+                SO
+              </div>
+              <div class="text-left truncate">
+                <div class="font-bold text-slate-900 text-xs truncate" id="sidebarUserNameText">정솔로 대표</div>
+                <div class="text-[10px] text-slate-500 truncate" id="sidebarUserEmailText">demo@soloos.io</div>
+              </div>
+            </div>
+            <i data-lucide="chevron-up" class="w-4 h-4 text-slate-400 group-hover:text-slate-600 shrink-0 transition-transform"></i>
+          </button>
+
+          <!-- 위쪽으로 열리는 팝업 메뉴 (bottom-full) -->
+          <div id="userDropdownMenu" class="hidden absolute bottom-full mb-2 left-0 right-0 w-full bg-white rounded-2xl shadow-2xl border border-slate-200 p-2 z-50 text-xs space-y-1">
+            <div class="px-2.5 py-2 border-b border-slate-100 bg-slate-50/70 rounded-xl mb-1">
+              <div class="font-bold text-slate-900 flex items-center justify-between">
+                <span id="userMenuName">정솔로 대표</span>
+                <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-slate-200 text-slate-700" id="userMenuBadge">미연동</span>
+              </div>
+              <div class="text-[10px] text-slate-500 truncate" id="userMenuEmail">로그인 필요</div>
+            </div>
+            <button type="button" onclick="openGoogleModal()" class="w-full text-left px-2.5 py-2 rounded-xl flex items-center gap-2 hover:bg-blue-50 text-slate-700 hover:text-blue-700 font-semibold transition-colors">
+              <i data-lucide="calendar" class="w-3.5 h-3.5 text-blue-600"></i>
+              <span>Google 캘린더·드라이브 연동</span>
+            </button>
+            <div class="border-t border-slate-100 pt-1"></div>
+            <button type="button" onclick="handleLogout()" class="w-full text-left px-2.5 py-2 rounded-xl flex items-center gap-2 hover:bg-rose-50 text-rose-600 font-bold transition-colors">
+              <i data-lucide="log-out" class="w-3.5 h-3.5 text-rose-500"></i>
+              <span>로그아웃</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT MAIN SCROLLABLE CONTAINER (독립 스크롤 영역) -->

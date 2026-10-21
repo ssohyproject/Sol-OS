@@ -1,0 +1,161 @@
+  <!-- ==================== MODAL 13: 예정 지출 및 세무 부채 상세 내역 ==================== -->
+  <div id="liabilitiesDetailModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="max-w-xl w-full bg-white rounded-3xl p-5 sm:p-6 border border-slate-200 shadow-2xl space-y-4 my-6 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shadow-xs">
+            <i data-lucide="arrow-up-right" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900">예정 지출 (고정비 + 세금) 세부 명세</h2>
+            <p class="text-[11px] text-slate-500">월 필수 고정비(₩2,730,000)와 세무 부채(₩520,000)의 정확한 산출 근거입니다.</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeLiabilitiesDetailModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3.5 text-xs">
+        <!-- Item 1: 월 필수 고정비 헤더 및 5대 항목 세부 목록 -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="font-bold text-slate-900 flex items-center gap-1.5">
+                <i data-lucide="check-circle" class="w-4 h-4 text-rose-600"></i>
+                <span>1. 사업 필수 월 고정비 (총 5개 항목)</span>
+              </div>
+              <p class="text-[11px] text-slate-500 mt-0.5">일정 캘린더(10일/25일) 및 장부(고정비 태그)와 실시간 연동</p>
+            </div>
+            <div class="text-right">
+              <span class="font-mono font-black text-rose-700 text-sm" id="ldmFixedExpense">₩2,730,000</span>
+              <div class="text-[10px] text-slate-400">월 고정 지출</div>
+            </div>
+          </div>
+
+          <!-- Dynamic 5 Items Container -->
+          <div class="space-y-1.5 pt-1 border-t border-slate-200/80" id="ldmFixedExpensesList">
+            <!-- Rendered by openLiabilitiesDetailModal() -->
+          </div>
+        </div>
+
+        <!-- Item 2: 다가오는 세무 부채 분리 유보액 (VAT + 종소세) -->
+        <div class="p-3.5 rounded-2xl bg-amber-50/50 border border-amber-200 space-y-2">
+          <div class="flex justify-between items-center">
+            <div>
+              <div class="font-bold text-amber-950 flex items-center gap-1.5">
+                <i data-lucide="receipt" class="w-4 h-4 text-amber-600"></i>
+                <span>2. 세금 납부 준비금 (합계 ₩520,000)</span>
+              </div>
+              <p class="text-[11px] text-amber-800/80 mt-0.5">매출 세금계산서 10% 예수금 및 소득세 예치 권고액</p>
+            </div>
+            <span class="font-mono font-black text-amber-800 text-sm" id="ldmTaxReserveTotal">₩520,000</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-[11px] pt-1 border-t border-amber-200/60">
+            <div class="p-2 bg-white/80 rounded-xl border border-amber-100 flex justify-between items-center">
+              <div>
+                <span class="font-bold text-slate-800 block">부가가치세 예수금</span>
+                <span class="text-[10px] text-slate-400">2027.01.25 납부 예정</span>
+              </div>
+              <span class="font-mono font-bold text-amber-700" id="ldmVatLiability">₩320,000</span>
+            </div>
+            <div class="p-2 bg-white/80 rounded-xl border border-amber-100 flex justify-between items-center">
+              <div>
+                <span class="font-bold text-slate-800 block">종합소득세 중간예납</span>
+                <span class="text-[10px] text-slate-400">2026.11.30 납부 예정</span>
+              </div>
+              <span class="font-mono font-bold text-amber-700" id="ldmIncomeTaxReserve">₩200,000</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Item 3: 스마트 지출 최적화 & 중복 구독 권고 (툴팁 안내) -->
+        <div class="p-3.5 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="font-bold text-amber-950 flex items-center gap-1.5">
+                <i data-lucide="sparkles" class="w-4 h-4 text-amber-600"></i>
+                <span>3. 스마트 지출 최적화 &amp; 중복 구독 권고</span>
+                <span class="relative group cursor-pointer inline-flex items-center">
+                  <i data-lucide="info" class="w-3.5 h-3.5 text-amber-500 hover:text-amber-700"></i>
+                  <span class="pointer-events-none absolute left-1/2 -translate-x-1/2 bottom-full mb-1.5 hidden group-hover:block w-56 p-2 bg-slate-900 text-white text-[10px] rounded-lg shadow-lg z-50 text-center leading-relaxed">
+                    최근 60일간의 카드 결제 및 SaaS 구독 사용 이력을 분석한 지출 절감 권고 내역입니다.
+                  </span>
+                </span>
+              </div>
+              <p class="text-[11px] text-amber-800/80 mt-0.5">최근 60일 결제·SaaS 구독 이력 분석 기반 권고 (마우스 오버 시 상세 툴팁)</p>
+            </div>
+            <span class="text-[11px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300 font-bold whitespace-nowrap">연 ₩420,000 절감 가능</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <!-- Figma sub account -->
+            <div class="p-2.5 rounded-xl bg-white/90 border border-amber-100 space-y-1 relative group">
+              <div class="flex items-center justify-between text-slate-800 font-bold">
+                <span class="truncate flex items-center gap-1">
+                  <span>Figma 서브 계정 미사용</span>
+                  <i data-lucide="help-circle" class="w-3 h-3 text-slate-400 group-hover:text-amber-600 transition-colors"></i>
+                </span>
+                <span class="text-amber-700 font-mono font-bold shrink-0 text-[11px]">-₩240,000/연</span>
+              </div>
+              <p class="text-[10px] text-slate-500 leading-tight">60일간 활성 로그 없는 라이선스 1건</p>
+              <div class="pointer-events-none absolute left-0 bottom-full mb-1 hidden group-hover:block w-full p-2.5 bg-slate-900 text-white text-[10px] rounded-lg shadow-lg z-50 leading-relaxed">
+                💡 <strong>권고 사유:</strong> 60일간 에디터 활성 로그가 없는 팀 라이선스 1건 유지 중입니다. 단일 계정 전환 시 연간 ₩240,000을 절감할 수 있습니다.
+              </div>
+            </div>
+
+            <!-- Duplicate storage -->
+            <div class="p-2.5 rounded-xl bg-white/90 border border-amber-100 space-y-1 relative group">
+              <div class="flex items-center justify-between text-slate-800 font-bold">
+                <span class="truncate flex items-center gap-1">
+                  <span>중복 클라우드 스토리지</span>
+                  <i data-lucide="help-circle" class="w-3 h-3 text-slate-400 group-hover:text-amber-600 transition-colors"></i>
+                </span>
+                <span class="text-amber-700 font-mono font-bold shrink-0 text-[11px]">-₩180,000/연</span>
+              </div>
+              <p class="text-[10px] text-slate-500 leading-tight">Dropbox 및 Google One 동시 결제 중</p>
+              <div class="pointer-events-none absolute right-0 bottom-full mb-1 hidden group-hover:block w-full p-2.5 bg-slate-900 text-white text-[10px] rounded-lg shadow-lg z-50 leading-relaxed">
+                💡 <strong>권고 사유:</strong> Dropbox 2TB 및 Google One 2TB에 중복 결제 중입니다. 단일 클라우드로 통합 시 연간 ₩180,000을 절감할 수 있습니다.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Total Sum Box -->
+        <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-200 flex justify-between items-center text-xs">
+          <div>
+            <span class="font-bold text-rose-950 block">총 예정 지출액 (고정비 + 세금)</span>
+            <span class="text-[11px] text-rose-700">익월 청구 및 자동이체 총액</span>
+          </div>
+          <span class="font-mono font-black text-rose-700 text-base" id="ldmGrandTotal">-₩3,250,000</span>
+        </div>
+
+        <!-- Tax Reserve Clarification -->
+        <div class="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] text-emerald-900 leading-relaxed">
+          💡 <strong>세금 통장 분리액 감안 안내:</strong> 이미 세금 통장에 모아둔 금액(<strong id="ldmTaxSaved">₩580,000</strong>)이 있으므로, 실제 사업 운영 통장에서 추가로 빠져나갈 실질 부담금은 <strong class="text-emerald-700 font-mono" id="ldmNetDrain">₩2,730,000</strong>입니다.
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-100">
+          <div class="flex items-center gap-1.5">
+            <button type="button" onclick="closeLiabilitiesDetailModal(); switchSubView('schedule');" class="px-2.5 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-[11px] border border-indigo-200 flex items-center gap-1 transition-colors">
+              <i data-lucide="calendar" class="w-3 h-3"></i>
+              <span>일정 캘린더 확인</span>
+            </button>
+            <button type="button" onclick="closeLiabilitiesDetailModal(); switchSubView('ledger');" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-[11px] flex items-center gap-1 transition-colors">
+              <i data-lucide="book-open" class="w-3 h-3"></i>
+              <span>장부 고정비 내역</span>
+            </button>
+          </div>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeLiabilitiesDetailModal()" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">닫기</button>
+            <button type="button" onclick="closeLiabilitiesDetailModal(); switchSubView('tax');" class="px-3.5 py-1.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs transition-colors">
+              세금 관리 페이지로 이동
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

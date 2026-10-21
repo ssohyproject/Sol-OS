@@ -1,0 +1,73 @@
+  <!-- ==================== MODAL 11: 현금 유지 가능 기간(Runway) 계산 기준 ==================== -->
+  <div id="runwayFormulaModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-lg w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-xs">
+            <i data-lucide="timer" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900">현금 유지 가능 기간(Runway) 산출 근거</h2>
+            <p class="text-[11px] text-slate-500">모든 지표에 동일한 단일 기준 데이터를 적용하여 산출합니다.</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeRunwayFormulaModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-4 text-xs">
+        <!-- 1. 기본 산식 -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2">
+          <div class="flex justify-between items-center text-slate-700 font-bold">
+            <span>표준 산출 공식:</span>
+            <span class="text-emerald-700 font-mono text-[11px]">실제 쓸 수 있는 잔액 ÷ 월 필수 고정비</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 text-[11px] pt-1 border-t border-slate-200/80">
+            <div>
+              <span class="text-slate-500">현재 통장 총 잔액:</span>
+              <strong class="font-mono text-slate-900 block" id="rfWorkingCapital">₩0</strong>
+            </div>
+            <div>
+              <span class="text-slate-500">세금 별도 분리액:</span>
+              <strong class="font-mono text-slate-900 block" id="rfTaxSaved">₩0</strong>
+            </div>
+            <div>
+              <span class="text-slate-500">실제 쓸 수 있는 잔액:</span>
+              <strong class="font-mono text-indigo-700 block" id="rfAvailableCash">₩0</strong>
+            </div>
+            <div>
+              <span class="text-slate-500">월 필수 고정비:</span>
+              <strong class="font-mono text-rose-700 block" id="rfMonthlyExpense">₩0 / 월</strong>
+            </div>
+          </div>
+          <div class="p-2.5 bg-emerald-100/60 rounded-xl text-emerald-950 font-bold flex justify-between items-center text-xs mt-2">
+            <span>기본 생존 가능 기간:</span>
+            <span class="font-mono text-base font-black text-emerald-800" id="rfRunwayResult">0.0개월</span>
+          </div>
+          <p class="text-[10px] text-slate-500 leading-tight">
+            * 신규 매출 0원 가정 시, 실제 쓸 수 있는 잔액으로 월 고정비를 감당할 수 있는 기간입니다.
+          </p>
+        </div>
+
+        <!-- 2. 예정 입출금 반영 시뮬레이션 -->
+        <div class="p-3.5 rounded-2xl bg-indigo-50/50 border border-indigo-200 space-y-2">
+          <span class="font-bold text-indigo-950 block">예정 입출금 반영 시 확장 Runway:</span>
+          <div class="flex justify-between items-center text-[11px] text-indigo-900">
+            <span>(쓸 수 있는 잔액 + 예정입금 ₩<span id="rfReceivables">0</span> - 예정지출 ₩<span id="rfLiabilities">0</span>) ÷ 고정비:</span>
+            <strong class="text-indigo-700 font-mono font-bold text-xs" id="rfAdjustedRunway">0.0개월</strong>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex items-center justify-end gap-2 pt-1">
+          <button type="button" onclick="closeRunwayFormulaModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">닫기</button>
+          <button type="button" onclick="closeRunwayFormulaModal(); openBalanceSettingModal('balance');" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-xs transition-colors flex items-center gap-1.5">
+            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+            <span>잔고·고정비 수정</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+

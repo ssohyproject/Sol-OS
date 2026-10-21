@@ -1,0 +1,58 @@
+  <!-- ==================== MODAL 15: 공식 표준계약서 서식 미리보기 모달 ==================== -->
+  <div id="contractPreviewModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-xs">
+            <i data-lucide="file-text" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900" id="cpmTitle">SW 용역 표준계약서 미리보기</h2>
+            <p class="text-[11px] text-slate-500" id="cpmSubtitle">과학기술정보통신부 공식 고시 표준 서식</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeContractPreviewModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3.5 text-xs">
+        <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-1.5">
+          <span class="font-bold text-slate-900 block" id="cpmOverviewTitle">핵심 권리 보호 조항 요약</span>
+          <p class="text-[11px] text-slate-600 leading-relaxed" id="cpmOverviewDesc">
+            본 서식은 개발자의 지식재산권을 보호하고, 발주자의 일방적인 과업 변경 및 지체상금 남용을 방지하기 위한 표준 조항들로 구성되어 있습니다.
+          </p>
+        </div>
+
+        <div class="space-y-2">
+          <span class="font-bold text-slate-800 block text-xs">주요 표준 조항 구성:</span>
+          <div class="space-y-2 max-h-56 overflow-y-auto pr-1" id="cpmClauseList">
+            <div class="p-3 rounded-xl bg-white border border-slate-200 space-y-1">
+              <span class="font-bold text-slate-900">제4조 (과업의 변경 및 계약금액 조정)</span>
+              <p class="text-[11px] text-slate-600">발주자의 요구로 과업 내용이나 사양이 변경될 경우, 수급인은 추가 일정 및 견적 증액을 서면으로 요청할 수 있으며 상호 합의 하에 계약을 변경한다.</p>
+            </div>
+            <div class="p-3 rounded-xl bg-white border border-slate-200 space-y-1">
+              <span class="font-bold text-slate-900">제7조 (산출물 검수 및 잔금 지급)</span>
+              <p class="text-[11px] text-slate-600">수급인이 최종 산출물을 전달한 날로부터 계약서에 정한 검수 기한 내에 서면으로 검수 결과를 통보해야 하며, 기한 경과 시 검수가 합격된 것으로 간주한다.</p>
+            </div>
+            <div class="p-3 rounded-xl bg-white border border-slate-200 space-y-1">
+              <span class="font-bold text-slate-900">제11조 (지식재산권 귀속 및 권리 이전 시점)</span>
+              <p class="text-[11px] text-slate-600">본 용역으로 창작된 최종 산출물의 저작재산권은 발주자가 수급인에게 계약상 용역 대금 전액을 완납한 시점에 발주자에게 이전된다.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+          <span class="text-[11px] text-slate-500">출처: 정부 부처 공식 웹사이트 서식 자료실</span>
+          <div class="flex items-center gap-2">
+            <button type="button" onclick="closeContractPreviewModal()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors">닫기</button>
+            <a id="cpmDownloadLink" href="https://www.msit.go.kr" target="_blank" rel="noopener noreferrer" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center gap-1.5 shadow-sm transition-all">
+              <i data-lucide="download" class="w-3.5 h-3.5"></i>
+              <span>공식 포털에서 서식 받기</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+

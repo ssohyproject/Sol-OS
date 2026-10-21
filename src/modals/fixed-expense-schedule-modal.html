@@ -1,0 +1,78 @@
+  <!-- ==================== MODAL: 매월 고정 지출 및 출금일(결제일) 설정 모달 ==================== -->
+  <div id="fixedExpenseScheduleModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-xs">
+            <i data-lucide="calendar-clock" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900">매월 고정 지출 및 출금일(결제일) 설정</h2>
+            <p class="text-[11px] text-slate-500">항목별 매월 출금일과 금액을 설정하면 캘린더와 30일 잔액 예측에 자동 반영됩니다.</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeFixedExpenseScheduleModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Total Fixed Expense Summary Box -->
+      <div class="p-3.5 rounded-2xl bg-indigo-50/70 border border-indigo-200 flex items-center justify-between text-xs">
+        <div>
+          <span class="font-bold text-indigo-950 block">월간 필수 고정비 합계</span>
+          <span class="text-[11px] text-indigo-700">등록된 고정 지출 항목의 매월 총 출금액</span>
+        </div>
+        <div class="text-right">
+          <span class="font-mono font-black text-indigo-900 text-base" id="fesModalTotal">₩2,730,000</span>
+          <div class="text-[10px] text-slate-500">/ 월 기준</div>
+        </div>
+      </div>
+
+      <!-- Fixed Expense Items Table -->
+      <div class="space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-slate-800">등록된 고정 지출 항목 (<span id="fesItemCount">5</span>개)</span>
+          <button type="button" onclick="addFixedExpenseRow()" class="px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1 transition-all">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+            <span>항목 추가</span>
+          </button>
+        </div>
+
+        <div class="overflow-x-auto border border-slate-200 rounded-2xl">
+          <table class="w-full text-left text-xs text-slate-700">
+            <thead class="bg-slate-50 border-b border-slate-200 font-bold text-slate-600">
+              <tr>
+                <th class="py-2.5 px-3">고정 지출 항목명</th>
+                <th class="py-2.5 px-3">매월 출금일</th>
+                <th class="py-2.5 px-3 text-right">월 지출액 (원)</th>
+                <th class="py-2.5 px-2 text-center w-12">삭제</th>
+              </tr>
+            </thead>
+            <tbody id="fesTableBody" class="divide-y divide-slate-100 bg-white">
+              <!-- Dynamically populated via renderFixedExpenseScheduleRows() -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-[11px] text-slate-600 space-y-1">
+        <div class="font-bold text-slate-800 flex items-center gap-1">
+          <i data-lucide="info" class="w-3.5 h-3.5 text-indigo-600"></i>
+          <span>출금일 설정 안내</span>
+        </div>
+        <p>• 매월 설정하신 출금일(예: 10일, 25일)에 맞춰 장부 분개장 및 캘린더 자동이체 일정으로 연동됩니다.<br>
+        • 설정된 고정비 총액은 '자금 현황'의 현금 유지 가능 기간(Runway)과 '30일 현금 잔액 예측'에 실시간 반영됩니다.</p>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-2 border-t border-slate-100">
+        <button type="button" onclick="closeFixedExpenseScheduleModal()" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-700 font-bold text-xs transition-all">
+          취소
+        </button>
+        <button type="button" onclick="saveFixedExpenseSchedule()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-xs transition-all flex items-center gap-1.5">
+          <i data-lucide="check" class="w-3.5 h-3.5"></i>
+          <span>설정 저장 완료</span>
+        </button>
+      </div>
+    </div>
+  </div>
+

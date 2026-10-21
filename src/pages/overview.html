@@ -1,0 +1,231 @@
+        <!-- ==================== SUBVIEW 1: 메인 대시보드 (일정 좌측, 자금 흐름 우측 배치) ==================== -->
+        <div id="subview-overview" class="space-y-6">
+          
+          <!-- Overview Executive Header -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200/80">
+            <div>
+              <h1 class="text-xl lg:text-2xl font-black tracking-tight text-slate-900 flex items-center gap-2">
+                <span>사업 운영 현황 대시보드</span>
+                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200" id="currentDomainBadge">전체 통합 뷰</span>
+              </h1>
+              <p class="text-xs text-slate-500 mt-0.5">자금 입출금 흐름과 분야별 업무 일정을 한눈에 확인합니다.</p>
+            </div>
+          </div>
+
+          <!-- THE 2 CORE COMPONENTS: Left Schedule + Right Cashflow Timeline (동일한 세로 높이 정렬) -->
+          <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 items-stretch">
+            
+            <!-- LEFT COLUMN: 업무 일정 관리 (세로 확장 캘린더 + 2주 일정 3개 노출) -->
+            <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4 shadow-sm border border-slate-200 flex flex-col justify-between h-full">
+              <div>
+                <!-- Header: 좌우 대칭 min-h-[48px] 한 줄 정렬 -->
+                <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-100 min-h-[48px]">
+                  <div>
+                    <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                      <i data-lucide="calendar" class="w-5 h-5 text-indigo-600"></i>
+                      <span>업무 일정 관리</span>
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-0.5">월간 달력 및 분야별 업무 세부 일정</p>
+                  </div>
+                  <button onclick="openTaskModal()" class="px-3 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all shrink-0">
+                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                    <span>일정 추가</span>
+                  </button>
+                </div>
+
+                <!-- PART 1: 상단 월 달력 (Monthly Calendar Widget - 우측 그래프와 동일한 h-[280px] 규격) -->
+                <div class="p-3 sm:p-3.5 rounded-2xl bg-slate-50 border border-slate-200 mt-3 h-[280px] flex flex-col justify-between">
+                  <div class="flex items-center justify-between text-xs px-1">
+                    <div class="flex items-center gap-1.5 font-bold text-slate-800">
+                      <button type="button" onclick="changeCalMonth(-1)" class="p-1 hover:bg-slate-200 rounded text-slate-600 transition-colors">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                      </button>
+                      <span id="calMonthTitle" class="text-sm font-black tracking-tight text-slate-900">2026년 10월</span>
+                      <button type="button" onclick="changeCalMonth(1)" class="p-1 hover:bg-slate-200 rounded text-slate-600 transition-colors">
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                      </button>
+                      <button type="button" onclick="resetCalToday()" class="text-[10px] px-1.5 py-0.5 rounded-md bg-white border border-slate-200 text-brand-700 font-bold hover:bg-slate-100 ml-1 shadow-xs">오늘</button>
+                    </div>
+                    <div class="flex items-center gap-2 text-[10px] text-slate-500 font-medium">
+                      <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-blue-500"></span> 외주</span>
+                      <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> 출판</span>
+                      <span class="flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-purple-500"></span> 강의</span>
+                    </div>
+                  </div>
+
+                  <!-- Calendar Weekdays Header -->
+                  <div class="grid grid-cols-7 gap-1 text-center text-[11px] font-bold text-slate-500 border-b border-slate-200/80 pb-1">
+                    <span class="text-rose-500">일</span>
+                    <span>월</span>
+                    <span>화</span>
+                    <span>수</span>
+                    <span>목</span>
+                    <span>금</span>
+                    <span class="text-blue-500">토</span>
+                  </div>
+
+                  <!-- Calendar Days Grid (JS Rendered - 정밀 셀) -->
+                  <div id="monthlyCalDays" class="grid grid-cols-7 gap-1 text-center text-xs flex-1">
+                    <!-- Dynamically rendered via renderMonthlyCalendar() -->
+                  </div>
+                </div>
+
+                <!-- PART 2: 하단 분야별 업무일정 캘린더 (우측과 동일한 mt-4 pt-3 border-t 규격) -->
+                <div class="space-y-3 mt-4 pt-3 border-t border-slate-100">
+                  <div class="flex items-center justify-between h-6">
+                    <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                      <i data-lucide="list-todo" class="w-4 h-4 text-slate-600"></i>
+                      <span>분야별 업무일정 캘린더</span>
+                    </h3>
+                    <!-- 세부일정 관리 (상단 배치) -->
+                    <button type="button" onclick="switchSubView('schedule')" class="text-brand-600 hover:text-brand-800 font-bold text-xs flex items-center gap-1 transition-colors">
+                      <span>세부일정 관리</span>
+                      <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                  </div>
+
+                  <!-- Task List Items (정확히 3개 노출 규격: h-[216px], 4개 이상 스크롤) -->
+                  <div class="space-y-2 h-[216px] overflow-y-auto pr-0.5" id="scheduleTaskList">
+                    <div class="p-8 text-center text-xs text-slate-400 bg-slate-50/60 rounded-xl border border-dashed border-slate-200">
+                      최근 2주 간 등록된 일정이 없습니다.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 최근 2주 일정 표시 중 (하단 푸터: h-8 정렬) -->
+              <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-[11px] text-slate-500 h-8">
+                <div class="flex items-center gap-1.5" id="calFilterBadgeContainer">
+                  <i data-lucide="clock" class="w-3.5 h-3.5 text-slate-400"></i>
+                  <span id="selectedCalDateLabel" class="text-[11px] text-slate-500">최근 2주 일정 표시 중</span>
+                  <button type="button" onclick="filterTaskByDate(null)" id="btnResetDateFilter" class="hidden text-brand-600 font-semibold underline text-[11px] ml-1">전체보기</button>
+                </div>
+                <span class="text-slate-400 text-[10px]">최근 2주 기준</span>
+              </div>
+
+            </div>
+
+            <!-- RIGHT COLUMN: 자금 흐름 타임라인 (좌측과 1:1 완벽 대칭) -->
+            <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4 shadow-sm border border-slate-200 flex flex-col justify-between h-full">
+              <div>
+                <!-- Header: 좌측과 동일한 min-h-[48px] 한 줄 정렬 -->
+                <div class="flex items-center justify-between gap-2 pb-2 border-b border-slate-100 min-h-[48px]">
+                  <div>
+                    <h2 class="text-base font-bold text-slate-900 flex items-center gap-2">
+                      <i data-lucide="trending-up" class="w-5 h-5 text-sky-600"></i>
+                      <span>자금 흐름 타임라인</span>
+                    </h2>
+                    <p class="text-xs text-slate-500 mt-0.5">과거 실적부터 향후 2개월간의 입금과 지출 추이</p>
+                  </div>
+                  <!-- Legend stacked cleanly on the right (직각 칼럼 스와치) -->
+                  <div class="flex items-center gap-3 text-xs shrink-0">
+                    <span class="flex items-center gap-1.5 text-slate-800 font-semibold"><span class="w-2.5 h-2.5 rounded-full bg-sky-500 shadow-sm"></span> 잔고</span>
+                    <span class="flex items-center gap-1.5 text-slate-600 font-medium"><span class="w-2.5 h-2.5 bg-emerald-500"></span> 입금</span>
+                    <span class="flex items-center gap-1.5 text-slate-600 font-medium"><span class="w-2.5 h-2.5 bg-rose-500"></span> 지출</span>
+                  </div>
+                </div>
+                
+                <!-- Canvas Container: 좌측 캘린더와 동일한 p-3 sm:p-3.5 rounded-2xl bg-slate-50 border h-[280px] 규격 -->
+                <div class="p-3 sm:p-3.5 rounded-2xl bg-slate-50 border border-slate-200 mt-3 h-[280px] flex flex-col justify-between relative overflow-hidden">
+                  <div class="h-full w-full relative">
+                    <canvas id="cashflowChart"></canvas>
+                  </div>
+
+                  <!-- 비로그인 게스트용 차트 안내 오버레이 (로그인/둘러보기 시 hidden 처리) -->
+                  <div id="cashflowGuestOverlay" class="absolute inset-0 bg-slate-50/90 backdrop-blur-[2px] flex flex-col items-center justify-center p-4 text-center z-20 pointer-events-auto transition-all">
+                    <div class="w-10 h-10 rounded-2xl bg-white border border-slate-200 shadow-xs flex items-center justify-center text-slate-400 mb-2">
+                      <i data-lucide="lock" class="w-5 h-5 text-indigo-500"></i>
+                    </div>
+                    <p class="text-xs font-bold text-slate-800">로그인 후 실시간 자금 추이가 표시됩니다</p>
+                    <p class="text-[11px] text-slate-500 mt-0.5 mb-3">개인정보 보호를 위해 비로그인 상태에서는 금융 데이터가 비워집니다.</p>
+                    <button type="button" onclick="loadSampleDemoWorkspace()" class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 text-brand-600 font-bold text-xs border border-brand-200 shadow-2xs flex items-center gap-1.5 transition-all">
+                      <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
+                      <span>서비스 둘러보기 (샘플 보기)</span>
+                    </button>
+                  </div>
+                </div>
+                
+                <!-- PART 2: 하단 핵심 사업 자금 및 운영 지표 (좌측과 동일한 mt-4 pt-3 border-t 규격) -->
+                <div class="space-y-3 mt-4 pt-3 border-t border-slate-100">
+                  <div class="flex items-center justify-between h-6">
+                    <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+                      <i data-lucide="wallet" class="w-4 h-4 text-slate-600"></i>
+                      <span>사업 자금 및 수입·지출 현황</span>
+                    </h3>
+                    <!-- 수입·지출 내역과 사업 자금 현황 보기 (상단 배치) -->
+                    <button onclick="switchSubView('statements')" class="text-brand-600 hover:text-brand-800 font-bold text-xs flex items-center gap-1 transition-colors">
+                      <span>자금 현황 보기</span>
+                      <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+                    </button>
+                  </div>
+
+                  <!-- KPI Cards: 좌측과 동일한 h-[216px] space-y-2 규격 (각 카드 h-[64px]) -->
+                  <div class="space-y-2 h-[216px]">
+                    <!-- KPI 1: 사업 통장 잔고 -->
+                    <div class="h-[64px] p-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 flex items-center justify-between gap-3 shadow-xs transition-all">
+                      <div class="space-y-0.5 min-w-0">
+                        <div class="flex items-center gap-2">
+                          <span class="text-xs font-bold text-slate-800">사업 통장 잔고</span>
+                          <span class="px-2 py-0.5 text-[10px] font-bold rounded bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">건전</span>
+                        </div>
+                        <div class="text-[11px] text-slate-500 truncate">
+                          유지 가능: <strong class="text-emerald-600 font-bold" id="ovRunwayMonths">0.0개월</strong> <span id="ovFixedExpenseGuide" class="text-slate-400 font-normal">[월 고정비 미등록]</span>
+                        </div>
+                      </div>
+                      <div class="text-right shrink-0">
+                        <div class="text-base sm:text-lg font-black text-slate-900 font-mono" id="ovWorkingCapital">₩0</div>
+                        <div class="text-[10px] text-slate-400 font-medium">가용 운영 자금</div>
+                      </div>
+                    </div>
+
+                    <!-- KPI 2: 이번 달 총 수입 (매출) -->
+                    <div class="h-[64px] p-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 flex items-center justify-between gap-3 shadow-xs transition-all">
+                      <div class="space-y-0.5 min-w-0">
+                        <div class="flex items-center gap-2">
+                          <span class="text-xs font-bold text-slate-800">이번 달 총 수입 (매출)</span>
+                          <span class="text-[10px] px-1.5 py-0.5 rounded bg-blue-50 text-blue-700 font-semibold border border-blue-200 shrink-0" id="ovRevenueDomain">전체 통합</span>
+                        </div>
+                        <div class="text-[11px] text-slate-500 truncate">
+                          공제 후 입금액: <strong class="text-slate-800 font-bold" id="ovNetReceived">₩0</strong> (원천징수 반영)
+                        </div>
+                      </div>
+                      <div class="text-right shrink-0">
+                        <div class="text-base sm:text-lg font-black text-slate-900 font-mono" id="ovGrossRevenue">₩0</div>
+                        <div class="text-[10px] text-slate-400 font-medium">당월 청구 합계</div>
+                      </div>
+                    </div>
+
+                    <!-- KPI 3: 세금 통장으로 따로 모아둘 돈 -->
+                    <div class="h-[64px] p-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 flex items-center justify-between gap-3 shadow-xs transition-all">
+                      <div class="space-y-0.5 min-w-0">
+                        <div class="flex items-center gap-2">
+                          <span class="text-xs font-bold text-slate-800">세금 통장으로 따로 모아둘 돈</span>
+                          <span class="text-[10px] px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-bold border border-slate-200 shrink-0">세금 대비</span>
+                        </div>
+                        <div class="text-[11px] text-slate-500 truncate">
+                          5월 종합소득세 및 부가가치세 납부 대비 세금 통장에 별도 분리 보관 권장
+                        </div>
+                      </div>
+                      <div class="text-right shrink-0">
+                        <div class="text-base sm:text-lg font-black text-slate-900 font-mono" id="ovTaxBuffer">₩0</div>
+                        <div class="text-[10px] text-slate-400 font-medium">예치 권장액</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2026년 10월 기준 (하단 푸터: h-8 정렬) -->
+              <div class="flex items-center justify-between pt-2 border-t border-slate-100 text-[11px] text-slate-500 h-8">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="calendar-clock" class="w-3.5 h-3.5 text-slate-400"></i>
+                  <span>2026년 10월 기준</span>
+                </span>
+                <span class="text-slate-400 text-[10px]">실시간 업데이트</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+

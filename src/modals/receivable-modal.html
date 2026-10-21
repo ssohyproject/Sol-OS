@@ -1,0 +1,72 @@
+  <!-- MODAL 8: Settlement & Receivable Entry/Edit Modal -->
+  <div id="receivableModal" class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-lg w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+            <i data-lucide="receipt" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-slate-900" id="receivableModalTitle">청구 내역 등록 및 수정</h2>
+            <p class="text-[11px] text-slate-500">발주처별 청구 항목과 미수금, 약정 정산일 및 사전 협의 유예 설정</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeReceivableModal()" class="text-slate-400 hover:text-slate-700 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="receivableForm" onsubmit="handleReceivableFormSubmit(event)" class="space-y-3.5 text-xs">
+        <input type="hidden" id="recFormId" value="">
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">거래처 선택 <span class="text-rose-500">*</span></label>
+          <select id="recInputClient" required onchange="handleRecClientChange(this.value)" class="w-full p-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:border-emerald-500 font-semibold">
+            <!-- Dynamically populated from appState.clients -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block font-medium text-slate-700 mb-1">일정 태스크 연동 (선택)</label>
+          <select id="recInputTask" onchange="handleRecTaskChange(this.value)" class="w-full p-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:border-emerald-500">
+            <option value="">연동 안 함 (직접 입력)</option>
+            <!-- Dynamically populated from appState.tasks -->
+          </select>
+          <p class="text-[10px] text-slate-400 mt-1">업무 일정을 선택하면 청구명과 정산 예정액이 자동 입력됩니다.</p>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-700 mb-1">청구 항목명 <span class="text-rose-500">*</span></label>
+          <input type="text" id="recInputTitle" required placeholder="예: MVP 프론트엔드 반응형 마무리 잔금" class="w-full p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-emerald-500">
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">미수 금액 (원) <span class="text-rose-500">*</span></label>
+            <input type="number" id="recInputAmount" required placeholder="예: 2500000" class="w-full p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-emerald-500 font-mono font-bold">
+          </div>
+          <div>
+            <label class="block font-bold text-slate-700 mb-1">약정 정산일 <span class="text-rose-500">*</span></label>
+            <input type="date" id="recInputDueDate" required value="2026-10-25" class="w-full p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:border-emerald-500">
+          </div>
+        </div>
+
+        <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 flex items-center justify-between">
+          <div>
+            <span class="font-bold text-slate-800 block text-xs">사전 협의 유예 설정</span>
+            <span class="text-[11px] text-slate-500">발주처와 사전에 결제 연기를 합의한 경우 독촉 보류</span>
+          </div>
+          <input type="checkbox" id="recInputDeferred" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 cursor-pointer">
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2 border-t border-slate-100">
+          <button type="button" onclick="closeReceivableModal()" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold">
+            취소
+          </button>
+          <button type="submit" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold shadow-md transition-all">
+            저장하기
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>

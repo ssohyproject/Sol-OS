@@ -1,0 +1,70 @@
+        <!-- ==================== SUBVIEW 5: 정산관리 ==================== -->
+        <div id="subview-settlement" class="space-y-6 hidden">
+          
+          <!-- Subview Header: 제목 + 청구 내역 등록 버튼 -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-slate-200/80">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <i data-lucide="receipt" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <h2 class="text-lg lg:text-xl font-black text-slate-900">정산 관리</h2>
+                <p class="text-xs text-slate-500 mt-0.5">미수금 청구 내역과 발주처별 약정 정산일 및 사전 협의 유예 상태를 체계적으로 관리합니다.</p>
+              </div>
+            </div>
+            
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="openReceivableModal()" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all">
+                <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                <span>청구 내역 등록</span>
+              </button>
+              <button onclick="switchSubView('overview')" class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 shadow-sm transition-all">
+                <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-brand-600"></i>
+                <span>대시보드로 돌아가기</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 정산관리표 -->
+          <div class="clean-card rounded-2xl p-5 sm:p-6 space-y-4">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
+              <div>
+                <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <i data-lucide="receipt" class="w-4 h-4 text-emerald-600"></i>
+                  <span>정산관리표</span>
+                </h3>
+                <p class="text-xs text-slate-500 mt-0.5">거래처별 청구 항목과 미수 금액, 약정 정산일 및 사전 협의 유예 상태를 관리합니다.</p>
+              </div>
+            </div>
+
+            <!-- 사전 협의 분할 정산 유예 안내 배너 -->
+            <div class="p-3.5 rounded-xl bg-blue-50/70 border border-blue-200 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 text-xs">
+              <div class="flex items-center gap-2.5 text-blue-900">
+                <i data-lucide="info" class="w-4 h-4 text-blue-600 shrink-0"></i>
+                <span><strong>사전 협의 유예 안내:</strong> 발주처와 결제일 연기나 분할 정산을 사전 협의한 경우 유예를 체크하세요. 지정일까지 독촉 알림이 자동 보류됩니다.</span>
+              </div>
+            </div>
+
+            <!-- 정산 관리 테이블 -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs text-slate-700">
+                <thead class="bg-slate-100 text-slate-600 font-bold border-b border-slate-200">
+                  <tr>
+                    <th class="py-2.5 px-3">거래처명</th>
+                    <th class="py-2.5 px-3">청구 항목</th>
+                    <th class="py-2.5 px-3 text-right">미수 금액</th>
+                    <th class="py-2.5 px-3 text-center">약정 정산일</th>
+                    <th class="py-2.5 px-3 text-center">연체 현황</th>
+                    <th class="py-2.5 px-3 text-center">사전 협의 유예</th>
+                    <th class="py-2.5 px-3 text-center">관리 액션</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100 bg-white" id="receivablesTableBody">
+                  <!-- Dynamically populated via renderReceivablesTable() -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+

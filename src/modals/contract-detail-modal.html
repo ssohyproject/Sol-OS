@@ -1,0 +1,118 @@
+  <!-- ==================== MODAL 21: 체결 계약 통합 상세 & 4-Way 실시간 자동 얼라인 검토 모달 ==================== -->
+  <div id="contractDetailModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="max-w-2xl w-full bg-white rounded-3xl p-6 border border-slate-200 shadow-2xl space-y-5 max-h-[92vh] overflow-y-auto">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-2.5">
+          <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-xs">
+            <i data-lucide="layers" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-base font-bold text-slate-900" id="cdmProjectTitle">계약 통합 상세 정보</h2>
+              <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">100% 실시간 자동 얼라인</span>
+            </div>
+            <p class="text-[11px] text-slate-500">페이지 이동 없이 한 화면에서 대시보드·일정·자금·정산 연동 현황을 확인합니다.</p>
+          </div>
+        </div>
+        <button type="button" onclick="closeContractDetailModal()" class="text-slate-400 hover:text-slate-700 p-1 rounded-lg">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Contract Key Info Summary -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-xs">
+        <div>
+          <span class="text-[10.5px] text-slate-500 block">발주처 / 고객사</span>
+          <strong class="font-bold text-slate-900" id="cdmClientName">-</strong>
+        </div>
+        <div>
+          <span class="text-[10.5px] text-slate-500 block">총 계약금액</span>
+          <strong class="font-mono font-bold text-slate-900" id="cdmTotalAmount">₩0</strong>
+        </div>
+        <div>
+          <span class="text-[10.5px] text-slate-500 block">미수 잔금</span>
+          <strong class="font-mono font-bold text-rose-600" id="cdmUnpaidAmount">₩0</strong>
+        </div>
+        <div>
+          <span class="text-[10.5px] text-slate-500 block">최종 납품 예정일</span>
+          <strong class="font-mono font-bold text-indigo-600" id="cdmDeliveryDate">-</strong>
+        </div>
+      </div>
+
+      <!-- 4-Way Auto-Alignment Status Cards (인라인 확인으로 화면 이탈 방지) -->
+      <div class="space-y-3">
+        <h3 class="text-xs font-bold text-slate-900 flex items-center gap-1.5">
+          <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-indigo-600"></i>
+          <span>솔로OS 실시간 데이터 연동 현황</span>
+        </h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <!-- 1. 메인 대시보드 -->
+          <div class="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="layout-dashboard" class="w-3.5 h-3.5 text-brand-600"></i>
+                <span>1. 메인 대시보드</span>
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700">실시간 연동</span>
+            </div>
+            <p class="text-[11px] text-slate-500">
+              상단 핵심 지표(진행 프로젝트수, 총 미수금) 및 진행 중인 프로젝트 리스트에 자동 산입되어 실시간 표시됩니다.
+            </p>
+          </div>
+
+          <!-- 2. 일정 관리 (캘린더 & 할 일) -->
+          <div class="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="calendar" class="w-3.5 h-3.5 text-indigo-600"></i>
+                <span>2. 일정 관리 (캘린더)</span>
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700">자동 스케줄링</span>
+            </div>
+            <p class="text-[11px] text-slate-500">
+              납품 마감일 및 검수 기한이 월간 캘린더와 할 일 목록에 자동 등록되어 수동 복사·이동이 필요 없습니다.
+            </p>
+          </div>
+
+          <!-- 3. 자금 & 수지 분석 (Statements) -->
+          <div class="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="wallet" class="w-3.5 h-3.5 text-emerald-600"></i>
+                <span>3. 자금 &amp; 30일 잔고 예측</span>
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700">현금흐름 반영</span>
+            </div>
+            <p class="text-[11px] text-slate-500">
+              미수 잔금이 받을 돈(입금 예정 대금)으로 등록되어 향후 30일 현금 유지 가능 기간(Runway) 그래프에 즉시 반영됩니다.
+            </p>
+          </div>
+
+          <!-- 4. 검수 정산 & 법적 보호 (Legal) -->
+          <div class="p-3.5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-slate-800 flex items-center gap-1.5">
+                <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-600"></i>
+                <span>4. 검수 증빙 &amp; 권리 보호</span>
+              </span>
+              <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700">문서 생성 준비</span>
+            </div>
+            <p class="text-[11px] text-slate-500">
+              납품확인서(L-03) 발급 및 대금 지연 시 내용증명 서식에 계약 정보가 100% 자동 채워집니다.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer Buttons (수동 이동 강제 없음, 필요 시 닫기) -->
+      <div class="flex items-center justify-between pt-3 border-t border-slate-100 text-xs">
+        <span class="text-[11px] text-slate-400">※ 모든 계약 정보는 솔로OS 엔진이 백그라운드에서 자동 동기화합니다.</span>
+        <button type="button" onclick="closeContractDetailModal()" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold transition-colors">
+          확인 완료 (닫기)
+        </button>
+      </div>
+    </div>
+  </div>
+
