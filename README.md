@@ -224,21 +224,6 @@ npm start
 npm run mcp
 ```
 
-### 3. Claude Desktop에 SolOS MCP 등록
-`~/Library/Application Support/Claude/claude_desktop_config.json`에 아래 설정을 추가합니다:
-```json
-{
-  "mcpServers": {
-    "soloos": {
-      "command": "node",
-      "args": [
-        "/Users/ssohy/Desktop/Project/DAY22-27/solo-os/mcp-server.js"
-      ]
-    }
-  }
-}
-```
-
 ---
 
 ## 📑 기획 명세서 및 플레이북 링크
